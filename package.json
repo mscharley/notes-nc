@@ -1,0 +1,34 @@
+{
+  "name": "@mscharley/cdk-editor",
+  "version": "1.0.0",
+  "description": "",
+  "main": "build/index.js",
+  "scripts": {
+    "compile": "tsc && copyfiles -f src/index.html build",
+    "start": "npm run compile && electron .",
+    "test": "npm run test:lint",
+    "test:lint": "eslint --ext .js,.jsx,.ts,.tsx ."
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": "eslint --fix",
+    "*.json": "prettier -w"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mscharley/cdk-editor.git"
+  },
+  "author": "Matthew Scharley",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mscharley/cdk-editor/issues"
+  },
+  "homepage": "https://github.com/mscharley/cdk-editor#readme",
+  "devDependencies": {
+    "@mscharley/eslint-config": "^1.6.3",
+    "@mscharley/prettier-config": "^1.1.2",
+    "copyfiles": "^2.4.1",
+    "electron": "^16.0.4",
+    "lint-staged": "^12.1.2",
+    "typescript": "^4.5.3"
+  }
+}

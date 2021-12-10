@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "incremental": true,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "outDir": "build/",
+    "pretty": true,
+    "sourceMap": true,
+    "removeComments": false,
+    "declaration": true,
+    // For node <=> ES support check https://node.green/
+    "target": "ES2019",
+    "lib": ["ES2019", "DOM"],
+    "typeRoots": ["./@types", "./node_modules/@types"],
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "strict": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitAny": true,
+    "noImplicitOverride": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "forceConsistentCasingInFileNames": true,
+    "preserveWatchOutput": true
+  },
+  "include": ["src", "__tests__"],
+  "exclude": ["node_modules"]
+}
