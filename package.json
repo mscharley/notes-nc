@@ -2,16 +2,22 @@
   "name": "@mscharley/cdk-editor",
   "version": "1.0.0",
   "description": "",
-  "main": "build/index.js",
+  "main": "dist/entrypoint.js",
+  "engines": {
+    "node": ">= 16.13",
+    "npm": ">= 8.0"
+  },
+  "engineStrict": true,
   "scripts": {
-    "compile": "tsc && copyfiles -f src/index.html build",
-    "start": "npm run compile && electron .",
+    "start": "npm run build && echo && electron .",
+    "build": "node ./bin/build.mjs",
     "test": "npm run test:lint",
-    "test:lint": "eslint --ext .js,.jsx,.ts,.tsx ."
+    "test:lint": "eslint --ext .js,.jsx,.ts,.tsx .",
+    "prepare": "husky install"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": "eslint --fix",
-    "*.json": "prettier -w"
+    "*.{json,md}": "prettier -w"
   },
   "repository": {
     "type": "git",
@@ -23,12 +29,21 @@
     "url": "https://github.com/mscharley/cdk-editor/issues"
   },
   "homepage": "https://github.com/mscharley/cdk-editor#readme",
+  "dependencies": {
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  },
   "devDependencies": {
-    "@mscharley/eslint-config": "^1.6.3",
-    "@mscharley/prettier-config": "^1.1.2",
+    "@mscharley/eslint-config": "^1.7.0",
+    "@mscharley/prettier-config": "^1.2.0",
+    "@types/react": "^17.0.37",
+    "@types/react-dom": "^17.0.11",
     "copyfiles": "^2.4.1",
     "electron": "^16.0.4",
+    "husky": "^7.0.4",
     "lint-staged": "^12.1.2",
-    "typescript": "^4.5.3"
+    "typescript": "^4.5.3",
+    "webpack": "^5.65.0",
+    "webpack-cli": "^4.9.1"
   }
 }
