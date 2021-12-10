@@ -21,7 +21,6 @@ const system = (cmd) => {
 
 (async () => {
   await system('tsc');
-  await system('copyfiles -f src/index.html dist/');
   await system('webpack');
 })().catch((e) => {
   console.error(e);

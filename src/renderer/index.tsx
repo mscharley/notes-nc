@@ -1,5 +1,6 @@
 import { render } from 'react-dom';
 import { Root } from './Root';
 
+console.log('Injecting into page...');
 const root = document.querySelector('#root');
 render(<Root />, root);
