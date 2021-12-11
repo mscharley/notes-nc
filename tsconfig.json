@@ -4,7 +4,7 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "jsx": "react-jsx",
-    "outDir": "dist/",
+    "outDir": "ts-build/",
     "pretty": true,
     "sourceMap": true,
     "removeComments": false,

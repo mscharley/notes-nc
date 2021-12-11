@@ -1,3 +1,5 @@
+/* eng-disable REMOTE_MODULE_JS_CHECK */
+
 import { ElectronApp, ReadyHandler } from './tokens';
 import { injectToken, multiInjectToken } from 'inversify-token';
 import { BrowserWindow } from 'electron/main';
@@ -48,10 +50,14 @@ export class Main {
       width: 1024,
       height: 768,
       webPreferences: {
+        contextIsolation: true,
         nodeIntegration: false,
         nodeIntegrationInWorker: false,
-        contextIsolation: true,
-        preload: path.join(__dirname, '../renderer/preload.js'),
+        /* eng-disable PRELOAD_JS_CHECK */ preload: path.join(
+          __dirname,
+          '../renderer/preload.js',
+        ),
+        sandbox: true,
       },
     });
     this._mainWindow.on('closed', this.onClose);

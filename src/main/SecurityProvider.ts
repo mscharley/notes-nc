@@ -1,3 +1,5 @@
+/* eng-disable CSP_GLOBAL_CHECK */
+
 import { ipcMain, session } from 'electron/main';
 import { injectable } from 'inversify';
 import type { OnReadyHandler } from './OnReadyHandler';

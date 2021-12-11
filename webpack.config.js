@@ -8,10 +8,10 @@ module.exports = [
     mode: 'production',
     target: 'web',
     entry: {
-      index: './dist/renderer/index.js',
+      index: path.resolve(__dirname, 'ts-build/renderer/index.js'),
     },
     output: {
-      path: path.resolve(__dirname, 'dist/renderer'),
+      path: path.resolve(__dirname, 'ts-build/renderer'),
       filename: '[name].wp.js',
     },
     optimization: {

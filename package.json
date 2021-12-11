@@ -1,35 +1,39 @@
 {
   "name": "@mscharley/cdk-editor",
   "version": "1.0.0",
-  "description": "",
-  "main": "dist/index.js",
+  "description": "Graphical editor for CDK scripts",
+  "author": "Matthew Scharley <matt@scharley.me>",
+  "license": "MIT",
+  "main": "ts-build/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mscharley/cdk-editor.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mscharley/cdk-editor/issues"
+  },
+  "homepage": "https://github.com/mscharley/cdk-editor#readme",
   "engines": {
     "node": ">= 16.13",
     "npm": ">= 8.0"
   },
   "engineStrict": true,
   "scripts": {
+    "postinstall": "electron-builder install-app-deps",
     "start": "npm run build && echo && electron .",
-    "clean": "rimraf -rf dist",
+    "clean": "rimraf -rf build ts-build dist",
     "build": "node ./bin/build.mjs",
     "test": "npm run test:lint",
+    "test:electronegativity": "electronegativity -i ./src",
     "test:lint": "eslint --ext .js,.jsx,.ts,.tsx .",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": "eslint --fix",
     "*.{json,md}": "prettier -w"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/mscharley/cdk-editor.git"
-  },
-  "author": "Matthew Scharley",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/mscharley/cdk-editor/issues"
-  },
-  "homepage": "https://github.com/mscharley/cdk-editor#readme",
   "dependencies": {
     "@emotion/cache": "^11.6.0",
     "@emotion/react": "^11.7.0",
@@ -50,6 +54,7 @@
     "@types/react-dom": "^17.0.11",
     "@types/uuid": "^8.3.3",
     "electron": "^16.0.4",
+    "electron-builder": "^22.14.5",
     "html-webpack-plugin": "^5.5.0",
     "husky": "^7.0.4",
     "lint-staged": "^12.1.2",
