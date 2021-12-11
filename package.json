@@ -50,11 +50,13 @@
   "devDependencies": {
     "@mscharley/eslint-config": "^1.7.0",
     "@mscharley/prettier-config": "^1.2.0",
+    "@types/node": "^16.11.12",
     "@types/react": "^17.0.37",
     "@types/react-dom": "^17.0.11",
     "@types/uuid": "^8.3.3",
     "electron": "^16.0.4",
     "electron-builder": "^22.14.5",
+    "electron-devtools-installer": "^3.2.0",
     "html-webpack-plugin": "^5.5.0",
     "husky": "^7.0.4",
     "lint-staged": "^12.1.2",

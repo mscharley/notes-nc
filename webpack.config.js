@@ -15,6 +15,7 @@ module.exports = [
       filename: '[name].wp.js',
     },
     optimization: {
+      minimize: false,
       splitChunks: {
         chunks: 'all',
       },
