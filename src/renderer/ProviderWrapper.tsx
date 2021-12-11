@@ -1,5 +1,4 @@
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { Application } from './Application';
 import { CacheProvider } from '@emotion/react';
 import CssBaseline from '@mui/material/CssBaseline';
 import type { EmotionCache } from '@emotion/cache';
@@ -12,14 +11,15 @@ export interface RootProps {
   cache: EmotionCache;
 }
 
-export const Root: React.FC<RootProps> = (props) => {
+/**
+ * The root element that configures all global providers.
+ */
+export const ProviderWrapper: React.FC<RootProps> = ({ cache, children }) => {
   return (
-    <CacheProvider value={props.cache}>
+    <CacheProvider value={cache}>
       <ReduxProvider store={store}>
         <ThemeProvider theme={theme}>
-          <CssBaseline>
-            <Application />
-          </CssBaseline>
+          <CssBaseline>{children}</CssBaseline>
         </ThemeProvider>
       </ReduxProvider>
     </CacheProvider>

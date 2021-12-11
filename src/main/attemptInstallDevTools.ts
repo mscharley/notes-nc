@@ -2,6 +2,13 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable @typescript-eslint/no-require-imports */
 
+/**
+ * @file
+ *
+ * This has a lot of optional loads for development tools and exports out a set of tools whether the underlying methods
+ * exist or not.
+ */
+
 import log from 'electron-log';
 
 let isDevTmp = false;
@@ -19,12 +26,12 @@ try {
   if (isDev) {
     log.info('DEVELOPER MODE: Installing developer extensions.');
     const {
-      default: installExtension,
+      default: installer,
       REACT_DEVELOPER_TOOLS,
       REDUX_DEVTOOLS,
     } = require('electron-devtools-installer') as typeof import('electron-devtools-installer');
     installExtensions = async (): Promise<void> => {
-      await installExtension([REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS], {
+      await installer([REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS], {
         loadExtensionOptions: { allowFileAccess: true },
       });
     };

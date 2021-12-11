@@ -4,10 +4,10 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
-import type { TitleState } from './features/title/title-slice';
+import type { TitleState } from '../features/title/title-slice';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import { useAppSelector } from './app/hooks';
+import { useAppSelector } from './hooks';
 
 const renderTitle = (title: TitleState): string => {
   if (title.currentFile == null) {
@@ -17,6 +17,9 @@ const renderTitle = (title: TitleState): string => {
   }
 };
 
+/**
+ * Main application entrypoint component.
+ */
 export const Application: React.FC = () => {
   const title = useAppSelector((state) => state.title);
 

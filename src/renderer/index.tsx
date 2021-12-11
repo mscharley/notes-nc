@@ -1,6 +1,7 @@
+import { Application } from './app/Application';
 import createCache from '@emotion/cache';
+import { ProviderWrapper } from './ProviderWrapper';
 import { render } from 'react-dom';
-import { Root } from './Root';
 
 const root = document.querySelector('#root');
 if (root == null) {
@@ -8,18 +9,20 @@ if (root == null) {
 } else {
   window.log.info('Injecting React into page.');
 
-  window.cdkEditor
-    .getCspNonce()
-    .then((nonce) => {
-      const cache = createCache({
-        key: 'prefix',
-        nonce,
-        prepend: true,
-      });
-
-      render(<Root cache={cache} />, root);
-    })
-    .catch((e) => {
-      root.innerHTML = `Unable to load application.<br/><pre>${e}</pre>`;
+  (async (): Promise<void> => {
+    const cache = createCache({
+      key: 'prefix',
+      nonce: await window.cdkEditor.getCspNonce(),
+      prepend: true,
     });
+
+    render(
+      <ProviderWrapper cache={cache}>
+        <Application />
+      </ProviderWrapper>,
+      root,
+    );
+  })().catch((e) => {
+    root.innerHTML = `<p>Unable to load application.</p><br/><pre>${e}</pre>`;
+  });
 }
