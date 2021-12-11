@@ -1,3 +1,4 @@
+import 'source-map-support';
 import 'reflect-metadata';
 
 import { app } from 'electron';
