@@ -1,7 +1,7 @@
 import { ElectronApp, ReadyHandler } from './tokens';
 import { ContainerModule } from 'inversify';
-import { HelloWorld } from './HelloWorld';
 import { Main } from './Main';
+import { SecurityProvider } from './SecurityProvider';
 import { tokenBinder } from 'inversify-token';
 
 export const MainModule = (app: Electron.App): ContainerModule =>
@@ -9,6 +9,7 @@ export const MainModule = (app: Electron.App): ContainerModule =>
     const bindToken = tokenBinder(bind);
 
     bind(Main).toSelf();
+    bind(SecurityProvider).toSelf();
     bindToken(ElectronApp).toConstantValue(app);
-    bindToken(ReadyHandler).to(HelloWorld);
+    bindToken(ReadyHandler).to(SecurityProvider);
   });

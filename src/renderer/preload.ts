@@ -2,9 +2,7 @@ import { contextBridge, ipcRenderer } from 'electron/renderer';
 import type { CdkEditorApi } from './renderer';
 
 const cdkEditorApi: CdkEditorApi = {
-  helloWorld: () => {
-    ipcRenderer.invoke('hello-world').catch((e) => console.error(e));
-  },
+  getCspNonce: async () => ipcRenderer.invoke('csp-nonce') as Promise<string>,
 };
 
 contextBridge.exposeInMainWorld('cdkEditor', cdkEditorApi);

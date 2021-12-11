@@ -31,17 +31,24 @@
   },
   "homepage": "https://github.com/mscharley/cdk-editor#readme",
   "dependencies": {
+    "@emotion/cache": "^11.6.0",
+    "@emotion/react": "^11.7.0",
+    "@emotion/styled": "^11.6.0",
+    "@mui/icons-material": "^5.2.1",
+    "@mui/material": "^5.2.3",
     "inversify": "^6.0.1",
     "inversify-token": "^6.0.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "reflect-metadata": "^0.1.13"
+    "reflect-metadata": "^0.1.13",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@mscharley/eslint-config": "^1.7.0",
     "@mscharley/prettier-config": "^1.2.0",
     "@types/react": "^17.0.37",
     "@types/react-dom": "^17.0.11",
+    "@types/uuid": "^8.3.3",
     "electron": "^16.0.4",
     "html-webpack-plugin": "^5.5.0",
     "husky": "^7.0.4",

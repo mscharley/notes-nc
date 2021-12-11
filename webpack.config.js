@@ -5,7 +5,7 @@ const path = require('path');
 
 module.exports = [
   {
-    mode: 'development',
+    mode: 'production',
     target: 'web',
     entry: {
       index: './dist/renderer/index.js',
@@ -18,12 +18,16 @@ module.exports = [
       splitChunks: {
         chunks: 'all',
       },
+      runtimeChunk: 'single',
     },
     plugins: [
       new HtmlWebpackPlugin({
         template: 'src/renderer/index.html',
         filename: 'index.html',
         inject: 'body',
+        meta: {
+          viewport: 'initial-scale=1, width=device-width',
+        },
       }),
     ],
   },

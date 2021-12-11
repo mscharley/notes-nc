@@ -1,5 +1,5 @@
 export interface CdkEditorApi {
-  helloWorld: () => void;
+  getCspNonce: () => Promise<string>;
 }
 
 declare global {
