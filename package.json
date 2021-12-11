@@ -45,6 +45,7 @@
     "@mui/icons-material": "^5.2.1",
     "@mui/material": "^5.2.3",
     "@reduxjs/toolkit": "^1.7.0",
+    "electron-log": "^4.4.1",
     "inversify": "^6.0.1",
     "inversify-token": "^6.0.0",
     "react": "^17.0.2",

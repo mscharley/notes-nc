@@ -5,6 +5,7 @@ import { injectToken, multiInjectToken } from 'inversify-token';
 import { attemptInstallDevTools } from './attemptInstallDevTools';
 import { BrowserWindow } from 'electron/main';
 import { injectable } from 'inversify';
+import log from 'electron-log';
 import path from 'path';
 
 @injectable()
@@ -73,8 +74,7 @@ export class Main {
   };
 
   private readonly onFatalError = (error: unknown): never => {
-    // eslint-disable-next-line no-console
-    console.error(error);
+    log.error(error);
     // eslint-disable-next-line no-process-exit
     process.exit(1);
   };

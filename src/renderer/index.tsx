@@ -4,9 +4,9 @@ import { Root } from './Root';
 
 const root = document.querySelector('#root');
 if (root == null) {
-  console.error('Unable to find a root element.');
+  window.log.error('Unable to find a root element.');
 } else {
-  console.log('Injecting into page.', root);
+  window.log.info('Injecting React into page.');
 
   window.cdkEditor
     .getCspNonce()

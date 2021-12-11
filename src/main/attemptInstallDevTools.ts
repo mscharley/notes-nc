@@ -2,6 +2,8 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable @typescript-eslint/no-require-imports */
 
+import log from 'electron-log';
+
 let isDevTmp = false;
 try {
   const electronDev =
@@ -17,7 +19,7 @@ try {
   if (!isDev) {
     throw new Error('Loading development extensions while not in dev mode.');
   }
-  console.log('DEVELOPER MODE: Installing developer extensions.');
+  log.info('DEVELOPER MODE: Installing developer extensions.');
   const {
     default: installExtension,
     REACT_DEVELOPER_TOOLS,

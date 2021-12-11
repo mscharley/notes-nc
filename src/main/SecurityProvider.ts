@@ -3,6 +3,7 @@
 import { ipcMain, session } from 'electron/main';
 import { injectable } from 'inversify';
 import { isDev } from './attemptInstallDevTools';
+import log from 'electron-log';
 import type { OnReadyHandler } from './OnReadyHandler';
 import { v4 as uuid } from 'uuid';
 
@@ -12,7 +13,7 @@ export class SecurityProvider implements OnReadyHandler {
 
   public onAppReady = (): void => {
     if (isDev) {
-      console.log(
+      log.warn(
         'DEVELOPER MODE: CSP is disabled to prevent interactions with dev tools.',
       );
     } else {
