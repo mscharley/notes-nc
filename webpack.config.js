@@ -1,4 +1,7 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require('path');
+
+/* global __dirname */
 
 module.exports = [
   {
@@ -8,6 +11,7 @@ module.exports = [
       index: './dist/renderer/index.js',
     },
     output: {
+      path: path.resolve(__dirname, 'dist/renderer'),
       filename: '[name].wp.js',
     },
     optimization: {
@@ -18,7 +22,7 @@ module.exports = [
     plugins: [
       new HtmlWebpackPlugin({
         template: 'src/renderer/index.html',
-        filename: 'renderer/index.html',
+        filename: 'index.html',
         inject: 'body',
       }),
     ],

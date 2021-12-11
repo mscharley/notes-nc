@@ -20,6 +20,7 @@ const system = (cmd) => {
 };
 
 (async () => {
+  await system('npm run clean');
   await system('tsc');
   await system('webpack');
 })().catch((e) => {
