@@ -2,22 +2,10 @@
 
 import { ElectronApp, ReadyHandler } from './tokens';
 import { injectToken, multiInjectToken } from 'inversify-token';
+import { attemptInstallDevTools } from './attemptInstallDevTools';
 import { BrowserWindow } from 'electron/main';
 import { injectable } from 'inversify';
 import path from 'path';
-
-let installExtensions: () => Promise<void>;
-try {
-  const installer = import('electron-devtools-installer');
-  installExtensions = async (): Promise<void> => {
-    const lib = await installer;
-    await lib.default([lib.REACT_DEVELOPER_TOOLS], {
-      loadExtensionOptions: { allowFileAccess: true },
-    });
-  };
-} catch (e: unknown) {
-  installExtensions = Promise.resolve.bind(Promise);
-}
 
 @injectable()
 export class Main {
@@ -59,28 +47,29 @@ export class Main {
   };
 
   public readonly onAppReady = (): void => {
-    installExtensions()
-      .then(async () => {
-        this._mainWindow = new BrowserWindow({
-          width: 1024,
-          height: 768,
-          webPreferences: {
-            contextIsolation: true,
-            nodeIntegration: false,
-            nodeIntegrationInWorker: false,
-            /* eng-disable PRELOAD_JS_CHECK */ preload: path.join(
-              __dirname,
-              '../renderer/preload.js',
-            ),
-            sandbox: true,
-          },
-        });
-        this._mainWindow.on('closed', this.onClose);
-        return this._mainWindow.loadURL(
-          `file://${path.join(__dirname, '../renderer/index.html')}`,
-        );
-      })
-      .catch(this.onFatalError);
+    (async (): Promise<void> => {
+      await attemptInstallDevTools();
+
+      this._mainWindow = new BrowserWindow({
+        width: 1024,
+        height: 768,
+        webPreferences: {
+          contextIsolation: true,
+          nodeIntegration: false,
+          nodeIntegrationInWorker: false,
+          /* eng-disable PRELOAD_JS_CHECK */ preload: path.join(
+            __dirname,
+            '../renderer/preload.js',
+          ),
+          sandbox: true,
+        },
+      });
+      this._mainWindow.on('closed', this.onClose);
+
+      await this._mainWindow.loadURL(
+        `file://${path.join(__dirname, '../renderer/index.html')}`,
+      );
+    })().catch(this.onFatalError);
   };
 
   private readonly onFatalError = (error: unknown): never => {
