@@ -7,13 +7,13 @@ const cdkEditorApi: CdkEditorApi = {
 };
 
 const logFns: log.LogFunctions = {
-  error: async (...params) => ipcRenderer.invoke('log', 'debug', ...params),
-  warn: async (...params) => ipcRenderer.invoke('log', 'warn', ...params),
-  info: async (...params) => ipcRenderer.invoke('log', 'info', ...params),
-  verbose: async (...params) => ipcRenderer.invoke('log', 'verbose', ...params),
-  debug: async (...params) => ipcRenderer.invoke('log', 'debug', ...params),
-  silly: async (...params) => ipcRenderer.invoke('log', 'silly', ...params),
-  log: async (...params) => ipcRenderer.invoke('log', 'log', ...params),
+  error: (...params) => ipcRenderer.send('log', 'debug', ...params),
+  warn: (...params) => ipcRenderer.send('log', 'warn', ...params),
+  info: (...params) => ipcRenderer.send('log', 'info', ...params),
+  verbose: (...params) => ipcRenderer.send('log', 'verbose', ...params),
+  debug: (...params) => ipcRenderer.send('log', 'debug', ...params),
+  silly: (...params) => ipcRenderer.send('log', 'silly', ...params),
+  log: (...params) => ipcRenderer.send('log', 'log', ...params),
 };
 
 contextBridge.exposeInMainWorld('cdkEditor', cdkEditorApi);
