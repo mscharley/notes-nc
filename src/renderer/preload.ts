@@ -4,6 +4,7 @@ import type log from 'electron-log';
 
 const cdkEditorApi: CdkEditorApi = {
   getCspNonce: async () => ipcRenderer.invoke('csp-nonce') as Promise<string>,
+  isDev: ipcRenderer.invoke('is-dev') as Promise<boolean>,
 };
 
 const logFns: log.LogFunctions = {

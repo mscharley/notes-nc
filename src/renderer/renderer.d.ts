@@ -1,5 +1,6 @@
 export interface CdkEditorApi {
-  getCspNonce: () => Promise<string>;
+  readonly getCspNonce: () => Promise<string>;
+  readonly isDev: Promise<boolean>;
 }
 
 declare global {

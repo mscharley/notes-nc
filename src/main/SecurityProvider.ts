@@ -31,6 +31,7 @@ export class SecurityProvider implements OnReadyHandler {
       );
     }
 
+    ipcMain.handle('is-dev', () => isDev);
     ipcMain.handle('csp-nonce', () => {
       return this.cspNonce;
     });

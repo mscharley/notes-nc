@@ -2,6 +2,7 @@ import { Application } from './app/Application';
 import createCache from '@emotion/cache';
 import { ProviderWrapper } from './ProviderWrapper';
 import { render } from 'react-dom';
+import { sleep } from '../shared/util';
 
 const root = document.querySelector('#root');
 if (root == null) {
@@ -10,6 +11,15 @@ if (root == null) {
   window.log.info('Injecting React into page.');
 
   (async (): Promise<void> => {
+    if (await window.cdkEditor.isDev) {
+      window.log.info(
+        'DEVELOPER MODE: Delaying to allow time for Chromium to connect to a remote debugger',
+      );
+      root.innerHTML = '<p>Waiting for remote debugger...</p>';
+      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+      await sleep(1_000);
+    }
+
     const cache = createCache({
       key: 'prefix',
       nonce: await window.cdkEditor.getCspNonce(),
