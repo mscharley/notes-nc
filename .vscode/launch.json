@@ -3,6 +3,13 @@
   // Hover to view descriptions of existing attributes.
   // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
   "version": "0.2.0",
+  "compounds": [
+    {
+      "name": "Electron: All",
+      "configurations": ["Electron: Main", "Electron: Renderer"],
+      "stopAll": true
+    }
+  ],
   "configurations": [
     {
       "type": "pwa-node",
@@ -27,12 +34,6 @@
       "port": 9223,
       "webRoot": "${workspaceFolder}",
       "timeout": 30000
-    }
-  ],
-  "compounds": [
-    {
-      "name": "Electron: All",
-      "configurations": ["Electron: Main", "Electron: Renderer"]
     }
   ]
 }
