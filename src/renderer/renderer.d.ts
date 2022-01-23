@@ -1,12 +1,13 @@
-export interface CdkEditorApi {
+export interface EditorApi {
   readonly getCspNonce: () => Promise<string>;
   readonly isDev: Promise<boolean>;
 }
 
+/* eslint-disable @typescript-eslint/consistent-type-imports */
+
 declare global {
   interface Window {
-    cdkEditor: CdkEditorApi;
-    // eslint-disable-next-line @typescript-eslint/consistent-type-imports
+    editor: EditorApi;
     log: import('electron-log').LogFunctions;
   }
 }

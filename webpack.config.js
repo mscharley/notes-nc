@@ -25,7 +25,7 @@ module.exports = [
       new HtmlWebpackPlugin({
         template: 'src/renderer/index.html',
         filename: 'index.html',
-        title: 'CDK Editor',
+        title: 'Notes',
         inject: 'body',
         meta: {
           viewport: 'initial-scale=1, width=device-width',

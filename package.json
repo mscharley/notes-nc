@@ -1,18 +1,18 @@
 {
-  "name": "@mscharley/cdk-editor",
+  "name": "@mscharley/notes-nc",
   "version": "1.0.0",
-  "description": "Graphical editor for CDK scripts",
+  "description": "Note taking app for markdown folders",
   "author": "Matthew Scharley <matt@scharley.me>",
   "license": "MIT",
   "main": "ts-build/index.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mscharley/cdk-editor.git"
+    "url": "git+https://github.com/mscharley/notes-nc.git"
   },
   "bugs": {
-    "url": "https://github.com/mscharley/cdk-editor/issues"
+    "url": "https://github.com/mscharley/notes-nc/issues"
   },
-  "homepage": "https://github.com/mscharley/cdk-editor#readme",
+  "homepage": "https://github.com/mscharley/notes-nc#readme",
   "engines": {
     "node": ">= 16.13",
     "npm": ">= 8.0"

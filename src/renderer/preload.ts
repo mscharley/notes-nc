@@ -1,8 +1,8 @@
 import { contextBridge, ipcRenderer } from 'electron/renderer';
-import type { CdkEditorApi } from './renderer';
+import type { EditorApi } from './renderer';
 import type log from 'electron-log';
 
-const cdkEditorApi: CdkEditorApi = {
+const editorApi: EditorApi = {
   getCspNonce: async () => ipcRenderer.invoke('csp-nonce') as Promise<string>,
   isDev: ipcRenderer.invoke('is-dev') as Promise<boolean>,
 };
@@ -17,5 +17,6 @@ const logFns: log.LogFunctions = {
   log: (...params) => ipcRenderer.send('log', 'log', ...params),
 };
 
-contextBridge.exposeInMainWorld('cdkEditor', cdkEditorApi);
+contextBridge.exposeInMainWorld('editor', editorApi);
 contextBridge.exposeInMainWorld('log', logFns);
+contextBridge.exposeInMainWorld('simplemde', ipcRenderer.send('simplemde'));

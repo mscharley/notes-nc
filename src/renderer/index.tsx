@@ -11,7 +11,7 @@ if (root == null) {
   window.log.info('Injecting React into page.');
 
   (async (): Promise<void> => {
-    if (await window.cdkEditor.isDev) {
+    if (await window.editor.isDev) {
       window.log.info(
         'DEVELOPER MODE: Delaying to allow time for Chromium to connect to a remote debugger',
       );
@@ -22,7 +22,7 @@ if (root == null) {
 
     const cache = createCache({
       key: 'prefix',
-      nonce: await window.cdkEditor.getCspNonce(),
+      nonce: await window.editor.getCspNonce(),
       prepend: true,
     });
 
