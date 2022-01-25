@@ -55,7 +55,7 @@
     "@emotion/styled": "11.6.0",
     "@mui/icons-material": "5.2.1",
     "@mui/material": "5.2.3",
-    "@reduxjs/toolkit": "1.7.0",
+    "@reduxjs/toolkit": "1.7.1",
     "easymde": "2.16.1",
     "electron-log": "4.4.1",
     "inversify": "6.0.1",
