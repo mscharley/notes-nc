@@ -31,7 +31,7 @@
     "build": "node ./bin/build.mjs",
     "copy-files": "copyfiles -u 1 src/**/*.css ts-build/",
     "test": "npm run test:lint",
-    "test:electronegativity": "electronegativity -i ./src",
+    "test:electronegativity": "electronegativity -i ./src -e $(electron --version)",
     "test:lint": "eslint --ext .js,.jsx,.ts,.tsx .",
     "prepare": "husky install",
     "pack": "electron-builder --dir",
