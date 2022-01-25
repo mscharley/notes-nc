@@ -57,7 +57,7 @@
     "@mui/material": "5.2.3",
     "@reduxjs/toolkit": "1.7.1",
     "easymde": "2.16.1",
-    "electron-log": "4.4.1",
+    "electron-log": "4.4.5",
     "inversify": "6.0.1",
     "inversify-token": "6.0.0",
     "lodash.debounce": "4.0.8",
