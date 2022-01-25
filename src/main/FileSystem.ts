@@ -39,7 +39,7 @@ export class FileSystem implements CustomProtocolProvider, OnReadyHandler {
     session.protocol.registerFileProtocol('app', (request, cb) => {
       const url = new URL(request.url);
       const file = path.join(this.appBasePath, url.hostname, url.pathname);
-      log.debug(`${request.url} => ${file}`);
+      log.verbose(`${request.url} => ${file}`);
       cb(file);
     });
     log.debug('Registering the editor:// scheme.');
