@@ -1,5 +1,16 @@
 {
   "extends": [
-    "config:base"
+    "config:js-app",
+    "schedule:weekends",
+    ":automergeMinor",
+    ":semanticCommits",
+    ":rebaseStalePrs"
+  ],
+  "packageRules": [
+    {
+      "packageNames": ["@types/node"],
+      "allowedVersions": "^16.13.0",
+      "major": { "enabled": true }
+    }
   ]
 }
