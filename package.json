@@ -59,7 +59,7 @@
     "easymde": "2.16.1",
     "electron-log": "4.4.5",
     "inversify": "6.0.1",
-    "inversify-token": "6.0.0",
+    "inversify-token": "6.0.2",
     "lodash.debounce": "4.0.8",
     "react": "17.0.2",
     "react-dom": "17.0.2",
