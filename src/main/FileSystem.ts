@@ -1,3 +1,5 @@
+/* eng-disable PROTOCOL_HANDLER_JS_CHECK */
+
 import type { CustomProtocolProvider } from './CustomProtocolProvider';
 import { ElectronApp } from './tokens';
 import { injectable } from 'inversify';
