@@ -9,6 +9,7 @@ if (root == null) {
   log.error('Unable to find a root element.');
 } else {
   log.debug('Injecting React into page.');
+  editorApi.on('files-updated', (fs) => log.info(fs));
 
   (async (): Promise<void> => {
     if (await editorApi.isDev) {

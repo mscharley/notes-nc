@@ -4,6 +4,12 @@ declare global {
   export interface EditorApi {
     readonly getCspNonce: () => Promise<string>;
     readonly isDev: Promise<boolean>;
+    readonly listNoteFiles: () => Promise<Record<string, string[]>>;
+
+    readonly on: (
+      event: 'files-updated',
+      handler: (files: Record<string, string[]>) => void,
+    ) => void;
   }
 
   export interface EditorGlobalApi {

@@ -13,7 +13,10 @@ export class Main {
     private readonly mainWindow: MainWindow,
     @multiInjectToken(ReadyHandler)
     private readonly onReadyHandlers: ReadyHandler[],
-  ) {}
+  ) {
+    log.debug(`Config directory: ${application.getPath('userData')}`);
+    log.debug(`Log directory: ${application.getPath('logs')}`);
+  }
 
   public readonly start = (): void => {
     this.application.on('window-all-closed', this.onWindowAllClosed);

@@ -1,5 +1,6 @@
 {
   "name": "@mscharley/notes-nc",
+  "productName": "notes-nc",
   "version": "1.0.0",
   "description": "Note taking app for markdown folders",
   "author": "Matthew Scharley <matt@scharley.me>",

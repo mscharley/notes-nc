@@ -1,10 +1,10 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import EasyMDE from 'easymde';
-import { noop } from '../../shared/util';
+import { noop } from '../../../shared/util';
 import { useDebouncedState } from '../hooks';
 
 export interface MarkdownEditorProps {
-  onChange: (filename: string, contents: string) => Promise<void>;
+  onChange: (contents: string) => Promise<void>;
 }
 
 export const MarkdownEditor: React.FC<MarkdownEditorProps> = ({
@@ -56,9 +56,11 @@ export const MarkdownEditor: React.FC<MarkdownEditorProps> = ({
   useEffect(() => {
     if (saveElement != null) {
       saveElement.innerText = 'Saving...';
-      onChange('hello-world.md', contents).finally(() => {
-        saveElement.innerText = '';
-      });
+      onChange(contents)
+        .catch(log.error.bind(log))
+        .finally(() => {
+          saveElement.innerText = '';
+        });
     }
   }, [contents, saveElement, onChange]);
 
