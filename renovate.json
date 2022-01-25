@@ -1,16 +1,14 @@
 {
-  "extends": [
-    "config:js-app",
-    "schedule:weekends",
-    ":automergeMinor",
-    ":semanticCommits",
-    ":rebaseStalePrs"
-  ],
+  "extends": ["config:js-app", "schedule:weekends", ":automergeMinor", ":semanticCommits", ":rebaseStalePrs"],
   "packageRules": [
     {
       "packageNames": ["@types/node"],
       "allowedVersions": "^16.13.0",
       "major": { "enabled": true }
+    },
+    {
+      "packageNames": ["node"],
+      "rangeStrategy": "replace"
     }
   ]
 }
