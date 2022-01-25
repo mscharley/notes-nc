@@ -9,10 +9,7 @@ import debounce from 'lodash.debounce';
  *
  * @see https://nodeployfriday.com/posts/react-debounce/
  */
-export const useDebouncedState = <T>(
-  initialState: T,
-  wait = 1_000,
-): [T, (value: T) => void] => {
+export const useDebouncedState = <T>(initialState: T, wait = 1_000): [T, (value: T) => void] => {
   const [state, setState] = useState(initialState);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps

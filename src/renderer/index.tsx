@@ -13,9 +13,7 @@ if (root == null) {
 
   (async (): Promise<void> => {
     if (await editorApi.isDev) {
-      log.info(
-        'DEVELOPER MODE: Delaying to allow time for Chromium to connect to a remote debugger',
-      );
+      log.info('DEVELOPER MODE: Delaying to allow time for Chromium to connect to a remote debugger');
       root.innerHTML = '<p>Waiting for remote debugger...</p>';
       // eslint-disable-next-line @typescript-eslint/no-magic-numbers
       await sleep(1_000);

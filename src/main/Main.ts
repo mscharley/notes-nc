@@ -1,7 +1,8 @@
 /* eng-disable REMOTE_MODULE_JS_CHECK */
 
-import { ElectronApp, ReadyHandler } from './tokens';
+import { CustomProtocol, ElectronApp, ReadyHandler } from './tokens';
 import { injectToken, multiInjectToken } from 'inversify-token';
+import { protocol, session } from 'electron/main';
 import { injectable } from 'inversify';
 import log from 'electron-log';
 import { MainWindow } from './MainWindow';
@@ -9,8 +10,10 @@ import { MainWindow } from './MainWindow';
 @injectable()
 export class Main {
   public constructor(
-    @injectToken(ElectronApp) public readonly application: ElectronApp,
+    @injectToken(ElectronApp) private readonly application: ElectronApp,
     private readonly mainWindow: MainWindow,
+    @multiInjectToken(CustomProtocol)
+    private readonly customProtocols: CustomProtocol[],
     @multiInjectToken(ReadyHandler)
     private readonly onReadyHandlers: ReadyHandler[],
   ) {
@@ -19,7 +22,13 @@ export class Main {
   }
 
   public readonly start = (): void => {
+    const privSchemes = this.customProtocols.map((p) => p.privilegedSchemes).flat();
+    log.verbose('Registering schemes as privileged:', privSchemes);
+    protocol.registerSchemesAsPrivileged(privSchemes);
+
     this.application.on('window-all-closed', this.onWindowAllClosed);
+
+    // Signal to Electron that we're ready to go when it is.
     this.application.on('ready', this.onReady);
   };
 
@@ -30,11 +39,9 @@ export class Main {
   };
 
   private readonly onReady = (): void => {
+    this.customProtocols.forEach((p) => p.registerProtocols(session.defaultSession));
     this.onReadyHandlers
-      .reduce<Promise<void>>(
-        async (acc, handler) => acc.then(handler.onAppReady),
-        Promise.resolve(),
-      )
+      .reduce<Promise<void>>(async (acc, handler) => acc.then(handler.onAppReady), Promise.resolve())
       .then(async () => this.mainWindow.initialise())
       .catch(this.onFatalError);
   };

@@ -7,10 +7,7 @@ export interface MarkdownEditorProps {
   onChange: (contents: string) => Promise<void>;
 }
 
-export const MarkdownEditor: React.FC<MarkdownEditorProps> = ({
-  onChange,
-  children,
-}) => {
+export const MarkdownEditor: React.FC<MarkdownEditorProps> = ({ onChange, children }) => {
   const editorArea = useRef<HTMLTextAreaElement>(null);
   const [_editor, setEditor] = useState<EasyMDE | null>(null);
   const [saveElement, setSaveElement] = useState<HTMLElement | null>(null);

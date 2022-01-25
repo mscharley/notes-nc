@@ -20,18 +20,13 @@ export class MainWindow {
         contextIsolation: true,
         nodeIntegration: false,
         nodeIntegrationInWorker: false,
-        /* eng-disable PRELOAD_JS_CHECK */ preload: path.join(
-          __dirname,
-          '../renderer/preload.js',
-        ),
+        /* eng-disable PRELOAD_JS_CHECK */ preload: path.join(__dirname, '../renderer/preload.js'),
         sandbox: true,
       },
     });
     this._window.on('closed', this.onClose);
 
-    await this._window.loadURL(
-      `file://${path.join(__dirname, '../renderer/index.html')}`,
-    );
+    await this._window.loadURL('app://renderer/index.html');
   };
 
   private readonly onClose = (): void => {
