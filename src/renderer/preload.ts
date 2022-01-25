@@ -1,13 +1,13 @@
 import { contextBridge, ipcRenderer } from 'electron/renderer';
-import type { CdkEditorApi } from './renderer';
-import type log from 'electron-log';
+import type ElectronLog from 'electron-log';
 
-const cdkEditorApi: CdkEditorApi = {
-  getCspNonce: async () => ipcRenderer.invoke('csp-nonce') as Promise<string>,
-  isDev: ipcRenderer.invoke('is-dev') as Promise<boolean>,
+const exposeBridge = (exports: EditorGlobalApi): void => {
+  Object.entries(exports).forEach(([name, value]) => {
+    contextBridge.exposeInMainWorld(name, value);
+  });
 };
 
-const logFns: log.LogFunctions = {
+const log: ElectronLog.LogFunctions = {
   error: (...params) => ipcRenderer.send('log', 'debug', ...params),
   warn: (...params) => ipcRenderer.send('log', 'warn', ...params),
   info: (...params) => ipcRenderer.send('log', 'info', ...params),
@@ -17,5 +17,15 @@ const logFns: log.LogFunctions = {
   log: (...params) => ipcRenderer.send('log', 'log', ...params),
 };
 
-contextBridge.exposeInMainWorld('cdkEditor', cdkEditorApi);
-contextBridge.exposeInMainWorld('log', logFns);
+exposeBridge({
+  editorApi: {
+    listNoteFiles: async () => ipcRenderer.invoke('files-updated') as ReturnType<EditorApi['listNoteFiles']>,
+    getCspNonce: async () => ipcRenderer.invoke('csp-nonce') as Promise<string>,
+    isDev: ipcRenderer.invoke('is-dev') as Promise<boolean>,
+    on: (event, handler) => {
+      ipcRenderer.on(event, (_ev, value) => handler(value));
+      ipcRenderer.invoke(event).then(handler).catch(log.error.bind(log));
+    },
+  },
+  log,
+});

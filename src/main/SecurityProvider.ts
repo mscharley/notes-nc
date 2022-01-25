@@ -13,22 +13,18 @@ export class SecurityProvider implements OnReadyHandler {
 
   public onAppReady = (): void => {
     if (isDev) {
-      log.warn(
-        'DEVELOPER MODE: CSP is disabled to prevent interactions with dev tools.',
-      );
+      log.warn('DEVELOPER MODE: CSP is disabled to prevent interactions with dev tools.');
     } else {
-      session.defaultSession.webRequest.onHeadersReceived(
-        (details, callback) => {
-          callback({
-            responseHeaders: {
-              ...details.responseHeaders,
-              'Content-Security-Policy': [
-                `default-src 'self' 'nonce-${this.cspNonce}' https://fonts.googleapis.com https://fonts.gstatic.com`,
-              ],
-            },
-          });
-        },
-      );
+      session.defaultSession.webRequest.onHeadersReceived((details, callback) => {
+        callback({
+          responseHeaders: {
+            ...details.responseHeaders,
+            'Content-Security-Policy': [
+              `default-src 'self' 'nonce-${this.cspNonce}' https://fonts.googleapis.com https://fonts.gstatic.com`,
+            ],
+          },
+        });
+      });
     }
 
     ipcMain.handle('is-dev', () => isDev);

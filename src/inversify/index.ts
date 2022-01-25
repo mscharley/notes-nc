@@ -4,7 +4,7 @@ import { MainModule } from '../main/MainModule';
 
 export const getContainer = (app: Electron.App): interfaces.Container => {
   const container = new Container({
-    defaultScope: 'Singleton',
+    defaultScope: 'Request',
   });
 
   container.load(MainModule(app));

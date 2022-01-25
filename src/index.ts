@@ -2,7 +2,7 @@ import 'source-map-support';
 import 'reflect-metadata';
 
 import log from 'electron-log';
-log.debug('CDK Editor booting');
+log.debug('Notes booting');
 
 import { app } from 'electron';
 import { getContainer } from './inversify';

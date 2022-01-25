@@ -6,15 +6,14 @@ import { sleep } from '../shared/util';
 
 const root = document.querySelector('#root');
 if (root == null) {
-  window.log.error('Unable to find a root element.');
+  log.error('Unable to find a root element.');
 } else {
-  window.log.info('Injecting React into page.');
+  log.debug('Injecting React into page.');
+  editorApi.on('files-updated', (fs) => log.info(fs));
 
   (async (): Promise<void> => {
-    if (await window.cdkEditor.isDev) {
-      window.log.info(
-        'DEVELOPER MODE: Delaying to allow time for Chromium to connect to a remote debugger',
-      );
+    if (await editorApi.isDev) {
+      log.info('DEVELOPER MODE: Delaying to allow time for Chromium to connect to a remote debugger');
       root.innerHTML = '<p>Waiting for remote debugger...</p>';
       // eslint-disable-next-line @typescript-eslint/no-magic-numbers
       await sleep(1_000);
@@ -22,7 +21,7 @@ if (root == null) {
 
     const cache = createCache({
       key: 'prefix',
-      nonce: await window.cdkEditor.getCspNonce(),
+      nonce: await editorApi.getCspNonce(),
       prepend: true,
     });
 

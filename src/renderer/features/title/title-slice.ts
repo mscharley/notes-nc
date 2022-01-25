@@ -6,7 +6,7 @@ export interface TitleState {
 }
 
 const initialState: TitleState = {
-  prefix: 'CDK Editor',
+  prefix: 'Notes',
 };
 
 export const setCurrentFile = createAction<string>('setCurrentFile');

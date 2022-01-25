@@ -1,8 +1,14 @@
-import React, { useEffect } from 'react';
+// Global CSS setup...
+import '@fortawesome/fontawesome-free/css/all.min.css';
+import 'easymde/dist/easymde.min.css';
+import './index.css';
+
+// Actual application wrapper component.
+import React, { useEffect, useState } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
+import { MarkdownEditor } from './components/MarkdownEditor';
 import MenuIcon from '@mui/icons-material/Menu';
 import type { TitleState } from '../features/title/title-slice';
 import Toolbar from '@mui/material/Toolbar';
@@ -22,6 +28,7 @@ const renderTitle = (title: TitleState): string => {
  */
 export const Application: React.FC = () => {
   const title = useAppSelector((state) => state.title);
+  const [contents, setContents] = useState('# Read me\n\nHello world!');
 
   useEffect(() => {
     document.title = renderTitle(title);
@@ -32,13 +39,7 @@ export const Application: React.FC = () => {
       <Box sx={{ flexGrow: 1 }}>
         <AppBar position='static'>
           <Toolbar>
-            <IconButton
-              edge='start'
-              size='large'
-              color='inherit'
-              aria-label='menu'
-              sx={{ mr: 2 }}
-            >
+            <IconButton edge='start' size='large' color='inherit' aria-label='menu' sx={{ mr: 2 }}>
               <MenuIcon />
             </IconButton>
             <Typography variant='h6' component='div' sx={{ flexGrow: 1 }}>
@@ -46,12 +47,14 @@ export const Application: React.FC = () => {
             </Typography>
           </Toolbar>
         </AppBar>
-        <div>
-          Hello world!
-          <Button color='primary' variant='contained'>
-            &gt;&gt;
-          </Button>
-        </div>
+        <MarkdownEditor
+          // eslint-disable-next-line @typescript-eslint/require-await
+          onChange={async (newContents): Promise<void> => {
+            setContents(newContents);
+          }}
+        >
+          {contents}
+        </MarkdownEditor>
       </Box>
     </React.Fragment>
   );

@@ -1,5 +1,6 @@
-import { ElectronApp, ReadyHandler } from './tokens';
+import { CustomProtocol, ElectronApp, ReadyHandler } from './tokens';
 import { ContainerModule } from 'inversify';
+import { FileSystem } from './FileSystem';
 import { Main } from './Main';
 import { MainWindow } from './MainWindow';
 import { RendererLogging } from './RendererLogging';
@@ -12,8 +13,11 @@ export const MainModule = (app: Electron.App): ContainerModule =>
 
     bind(Main).toSelf();
     bind(MainWindow).toSelf();
-    bind(SecurityProvider).toSelf();
     bindToken(ElectronApp).toConstantValue(app);
-    bindToken(ReadyHandler).to(SecurityProvider);
+    bind(FileSystem).toSelf();
+    bindToken(CustomProtocol).toDynamicValue(({ container }) => container.get(FileSystem));
+    bindToken(ReadyHandler).toDynamicValue(({ container }) => container.get(FileSystem));
     bindToken(ReadyHandler).to(RendererLogging);
+    bind(SecurityProvider).toSelf();
+    bindToken(ReadyHandler).toDynamicValue((ctx) => ctx.container.get(SecurityProvider));
   });

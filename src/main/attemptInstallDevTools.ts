@@ -13,8 +13,7 @@ import log from 'electron-log';
 
 let isDevTmp = false;
 try {
-  const electronDev =
-    require('electron-is-dev') as typeof import('electron-is-dev');
+  const electronDev = require('electron-is-dev') as typeof import('electron-is-dev');
   isDevTmp = electronDev;
 } catch (e: unknown) {
   /* do nothing, default is already set */
