@@ -6,13 +6,13 @@ import { sleep } from '../shared/util';
 
 const root = document.querySelector('#root');
 if (root == null) {
-  window.log.error('Unable to find a root element.');
+  log.error('Unable to find a root element.');
 } else {
-  window.log.info('Injecting React into page.');
+  log.debug('Injecting React into page.');
 
   (async (): Promise<void> => {
-    if (await window.editor.isDev) {
-      window.log.info(
+    if (await editorApi.isDev) {
+      log.info(
         'DEVELOPER MODE: Delaying to allow time for Chromium to connect to a remote debugger',
       );
       root.innerHTML = '<p>Waiting for remote debugger...</p>';
@@ -22,7 +22,7 @@ if (root == null) {
 
     const cache = createCache({
       key: 'prefix',
-      nonce: await window.editor.getCspNonce(),
+      nonce: await editorApi.getCspNonce(),
       prepend: true,
     });
 
