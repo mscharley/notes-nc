@@ -3,7 +3,7 @@ import { CacheProvider } from '@emotion/react';
 import CssBaseline from '@mui/material/CssBaseline';
 import type { EmotionCache } from '@emotion/cache';
 import { Provider as ReduxProvider } from 'react-redux';
-import { store } from './app/store';
+import { store } from './store';
 
 const theme = createTheme({});
 

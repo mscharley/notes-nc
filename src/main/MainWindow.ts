@@ -1,4 +1,4 @@
-import { attemptInstallDevTools } from './attemptInstallDevTools';
+import { attemptInstallDevTools } from './dev/attemptInstallDevTools';
 import { BrowserWindow } from 'electron/main';
 import { injectable } from 'inversify';
 import path from 'path';

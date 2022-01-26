@@ -1,16 +1,11 @@
-// Global CSS setup...
-import '@fortawesome/fontawesome-free/css/all.min.css';
-import 'easymde/dist/easymde.min.css';
-import './index.css';
-
 // Actual application wrapper component.
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import { MarkdownEditor } from './components/MarkdownEditor';
 import MenuIcon from '@mui/icons-material/Menu';
-import type { TitleState } from '../features/title/title-slice';
+import type { TitleState } from './features/title/title-slice';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { useAppSelector } from './hooks';
@@ -35,7 +30,7 @@ export const Application: React.FC = () => {
   }, [title]);
 
   return (
-    <React.Fragment>
+    <>
       <Box sx={{ flexGrow: 1 }}>
         <AppBar position='static'>
           <Toolbar>
@@ -56,6 +51,6 @@ export const Application: React.FC = () => {
           {contents}
         </MarkdownEditor>
       </Box>
-    </React.Fragment>
+    </>
   );
 };

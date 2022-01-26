@@ -1,3 +1,8 @@
+// Global CSS setup...
+import '@fortawesome/fontawesome-free/css/all.min.css';
+import 'easymde/dist/easymde.min.css';
+import './index.css';
+
 import { Application } from './app/Application';
 import createCache from '@emotion/cache';
 import { ProviderWrapper } from './ProviderWrapper';

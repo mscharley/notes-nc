@@ -2,9 +2,9 @@
 
 import { ipcMain, session } from 'electron/main';
 import { injectable } from 'inversify';
-import { isDev } from './attemptInstallDevTools';
+import { isDev } from './dev/attemptInstallDevTools';
 import log from 'electron-log';
-import type { OnReadyHandler } from './OnReadyHandler';
+import type { OnReadyHandler } from './interfaces/OnReadyHandler';
 import { v4 as uuid } from 'uuid';
 
 @injectable()

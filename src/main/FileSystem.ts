@@ -2,13 +2,13 @@
 
 import type { CategoryListing, FileDescription, FileListing } from '../shared/model';
 import { v4 as createUuid } from 'uuid';
-import type { CustomProtocolProvider } from './CustomProtocolProvider';
+import type { CustomProtocolProvider } from './interfaces/CustomProtocolProvider';
 import { ElectronApp } from '../inversify/tokens';
 import { injectable } from 'inversify';
 import { injectToken } from 'inversify-token';
 import { ipcMain } from 'electron/main';
 import log from 'electron-log';
-import type { OnReadyHandler } from './OnReadyHandler';
+import type { OnReadyHandler } from './interfaces/OnReadyHandler';
 import path from 'path';
 import type { ProtocolResponse } from 'electron/main';
 import { readdir } from 'fs/promises';
@@ -26,7 +26,7 @@ export class FileSystem implements CustomProtocolProvider, OnReadyHandler {
     }
   >;
 
-  public constructor(@injectToken(ElectronApp) private readonly application: ElectronApp) {
+  public constructor(@injectToken(ElectronApp) application: ElectronApp) {
     this.appBasePath = path.join(application.getAppPath(), 'ts-build');
     this.errorBasePath = path.join(application.getAppPath(), 'static');
     // TODO: Load this from a configuration file somewhere.
