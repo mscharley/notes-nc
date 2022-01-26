@@ -1,5 +1,4 @@
 import { attemptInstallDevTools } from './attemptInstallDevTools';
-import type { Event } from 'electron/main';
 import { BrowserWindow } from 'electron/main';
 import { injectable } from 'inversify';
 import path from 'path';

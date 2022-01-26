@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-type-alias */
 
-import type { CustomProtocolProvider } from './CustomProtocolProvider';
-import type { OnReadyHandler } from './OnReadyHandler';
+import type { CustomProtocolProvider } from '../main/CustomProtocolProvider';
+import type { OnReadyHandler } from '../main/OnReadyHandler';
 import { Token } from 'inversify-token';
 import type { TokenType } from 'inversify-token';
 

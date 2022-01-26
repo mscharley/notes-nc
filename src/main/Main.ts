@@ -1,6 +1,6 @@
 /* eng-disable REMOTE_MODULE_JS_CHECK */
 
-import { CustomProtocol, ElectronApp, ReadyHandler } from './tokens';
+import { CustomProtocol, ElectronApp, ReadyHandler } from '../inversify/tokens';
 import { injectToken, multiInjectToken } from 'inversify-token';
 import { protocol, session } from 'electron/main';
 import { injectable } from 'inversify';
