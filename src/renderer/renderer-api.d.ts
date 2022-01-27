@@ -5,6 +5,7 @@ import { FileListing } from '../shared/model';
 declare global {
   export interface EditorApi {
     readonly getCspNonce: () => Promise<string>;
+    readonly isCspEnabled: Promise<boolean>;
     readonly isDev: Promise<boolean>;
     readonly listNoteFiles: () => Promise<FileListing>;
 

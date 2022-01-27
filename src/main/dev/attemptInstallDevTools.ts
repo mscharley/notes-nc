@@ -20,23 +20,24 @@ try {
 }
 export const isDev = isDevTmp;
 
-let installExtensions: () => Promise<void> = Promise.resolve.bind(Promise);
+let installExtensions: () => Promise<void>;
 try {
-  if (isDev) {
+  const {
+    default: installer,
+    REACT_DEVELOPER_TOOLS,
+    REDUX_DEVTOOLS,
+  } = require('electron-devtools-installer') as typeof import('electron-devtools-installer');
+  installExtensions = async (): Promise<void> => {
     log.info('DEVELOPER MODE: Installing developer extensions.');
-    const {
-      default: installer,
-      REACT_DEVELOPER_TOOLS,
-      REDUX_DEVTOOLS,
-    } = require('electron-devtools-installer') as typeof import('electron-devtools-installer');
-    installExtensions = async (): Promise<void> => {
-      await installer([REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS], {
-        loadExtensionOptions: { allowFileAccess: true },
-      });
-    };
-  }
+    await installer([REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS], {
+      loadExtensionOptions: { allowFileAccess: true },
+    });
+  };
 } catch (e: unknown) {
-  /* do nothing, default is already set */
+  // eslint-disable-next-line @typescript-eslint/require-await
+  installExtensions = async (): Promise<never> => {
+    throw e;
+  };
 }
 
 export const attemptInstallDevTools = installExtensions;
