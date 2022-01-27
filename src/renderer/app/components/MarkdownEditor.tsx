@@ -21,6 +21,8 @@ export const MarkdownEditor: React.FC<MarkdownEditorProps> = ({ onChange, childr
 
     const mde = new EasyMDE({
       element: editorArea.current,
+      minHeight: '500px',
+      maxHeight: '100%',
       // Including it locally is faster and more reliable, but this will never work with CSP enabled.
       autoDownloadFontAwesome: false,
       // Just UX things...

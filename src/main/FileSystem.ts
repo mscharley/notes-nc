@@ -140,7 +140,7 @@ export class FileSystem implements CustomProtocolProvider, OnReadyHandler {
       .map((f) => Object.entries(f))
       .flat();
 
-    return Object.fromEntries([[category, files], ...subfolders]);
+    return Object.fromEntries([[category === '' ? 'Uncategorised' : category, files], ...subfolders]);
   };
 
   private serveLocalFile(basepath: string, filepath: string, url: string): string | ProtocolResponse {
@@ -154,7 +154,13 @@ export class FileSystem implements CustomProtocolProvider, OnReadyHandler {
       };
     } else {
       log.verbose(`${url} => ${file}`);
-      return file;
+      return {
+        statusCode: 200,
+        headers: {
+          'cache-control': 'no-cache, no-store',
+        },
+        path: file,
+      };
     }
   }
 }

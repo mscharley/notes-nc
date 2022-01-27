@@ -1,13 +1,13 @@
-/* eslint-disable @typescript-eslint/consistent-type-imports */
-/* eslint-disable @typescript-eslint/no-var-requires */
-/* eslint-disable @typescript-eslint/no-require-imports */
-
 /**
  * @file
  *
  * This has a lot of optional loads for development tools and exports out a set of tools whether the underlying methods
  * exist or not.
  */
+
+/* eslint-disable @typescript-eslint/consistent-type-imports */
+/* eslint-disable @typescript-eslint/no-require-imports */
+/* eslint-disable @typescript-eslint/no-var-requires */
 
 import log from 'electron-log';
 

@@ -1,6 +1,7 @@
 import { attemptInstallDevTools } from './dev/attemptInstallDevTools';
 import { BrowserWindow } from 'electron/main';
 import { injectable } from 'inversify';
+import log from 'electron-log';
 import path from 'path';
 import { shell } from 'electron/common';
 

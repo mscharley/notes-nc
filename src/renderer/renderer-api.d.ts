@@ -1,12 +1,14 @@
 /* eslint-disable @typescript-eslint/consistent-type-imports */
 
+import { FileListing } from '../shared/model';
+
 declare global {
   export interface EditorApi {
     readonly getCspNonce: () => Promise<string>;
     readonly isDev: Promise<boolean>;
-    readonly listNoteFiles: () => Promise<Record<string, string[]>>;
+    readonly listNoteFiles: () => Promise<FileListing>;
 
-    readonly on: (event: 'files-updated', handler: (files: Record<string, string[]>) => void) => void;
+    readonly on: (event: 'files-updated', handler: (files: FileListing) => void) => void;
   }
 
   export interface EditorGlobalApi {

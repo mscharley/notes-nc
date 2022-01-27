@@ -23,7 +23,10 @@ export class Main {
 
   public readonly start = (): void => {
     const privSchemes = this.customProtocols.map((p) => p.privilegedSchemes).flat();
-    log.verbose('Registering schemes as privileged:', privSchemes);
+    log.verbose(
+      'Registering schemes as privileged:',
+      privSchemes.map((s) => s.scheme),
+    );
     protocol.registerSchemesAsPrivileged(privSchemes);
 
     this.application.on('window-all-closed', this.onWindowAllClosed);

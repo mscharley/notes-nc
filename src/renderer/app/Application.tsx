@@ -1,14 +1,11 @@
 // Actual application wrapper component.
 import { useEffect, useState } from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import IconButton from '@mui/material/IconButton';
+import Grid from '@mui/material/Grid';
 import { MarkdownEditor } from './components/MarkdownEditor';
-import MenuIcon from '@mui/icons-material/Menu';
+import Paper from '@mui/material/Paper';
 import type { TitleState } from './features/title/title-slice';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
 import { useAppSelector } from './hooks';
+import { FileListing } from './components/FileListing';
 
 const renderTitle = (title: TitleState): string => {
   if (title.currentFile == null) {
@@ -30,18 +27,11 @@ export const Application: React.FC = () => {
   }, [title]);
 
   return (
-    <>
-      <Box sx={{ flexGrow: 1 }}>
-        <AppBar position='static'>
-          <Toolbar>
-            <IconButton edge='start' size='large' color='inherit' aria-label='menu' sx={{ mr: 2 }}>
-              <MenuIcon />
-            </IconButton>
-            <Typography variant='h6' component='div' sx={{ flexGrow: 1 }}>
-              Hello world!
-            </Typography>
-          </Toolbar>
-        </AppBar>
+    <Grid container spacing={0} style={{ flexGrow: 1 }}>
+      <Grid item xs={4}>
+        <FileListing />
+      </Grid>
+      <Grid item xs={8}>
         <MarkdownEditor
           // eslint-disable-next-line @typescript-eslint/require-await
           onChange={async (newContents): Promise<void> => {
@@ -50,7 +40,7 @@ export const Application: React.FC = () => {
         >
           {contents}
         </MarkdownEditor>
-      </Box>
-    </>
+      </Grid>
+    </Grid>
   );
 };
