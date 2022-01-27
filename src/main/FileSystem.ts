@@ -32,6 +32,7 @@ export class FileSystem implements CustomProtocolProvider, OnReadyHandler {
     // TODO: Load this from a configuration file somewhere.
     this.directories = {
       [createUuid()]: { name: 'Nextcloud', localPath: path.join(application.getPath('home'), 'Nextcloud/Notes') },
+      [createUuid()]: { name: 'Family', localPath: path.join(application.getPath('home'), 'Nextcloud/Family/Notes') },
     };
   }
 
