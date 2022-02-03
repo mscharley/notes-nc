@@ -1,6 +1,6 @@
-import type { CustomScheme, Session } from 'electron/main';
+import type { CustomScheme } from 'electron/main';
 
 export interface CustomProtocolProvider {
   readonly privilegedSchemes: CustomScheme[];
-  readonly registerProtocols: (session: Session) => void;
+  readonly registerProtocols: () => void;
 }

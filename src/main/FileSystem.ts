@@ -1,12 +1,12 @@
 /* eng-disable PROTOCOL_HANDLER_JS_CHECK */
 
 import type { CategoryListing, FileDescription, FileListing } from '../shared/model';
+import { ipcMain, protocol } from 'electron/main';
 import { v4 as createUuid } from 'uuid';
 import type { CustomProtocolProvider } from './interfaces/CustomProtocolProvider';
 import { ElectronApp } from '../inversify/tokens';
 import { injectable } from 'inversify';
 import { injectToken } from 'inversify-token';
-import { ipcMain } from 'electron/main';
 import log from 'electron-log';
 import type { OnReadyHandler } from './interfaces/OnReadyHandler';
 import path from 'path';
@@ -40,6 +40,7 @@ export class FileSystem implements CustomProtocolProvider, OnReadyHandler {
     {
       scheme: 'app',
       privileges: {
+        bypassCSP: true,
         standard: true,
         secure: true,
       },
@@ -47,6 +48,7 @@ export class FileSystem implements CustomProtocolProvider, OnReadyHandler {
     {
       scheme: 'editor',
       privileges: {
+        bypassCSP: true,
         standard: true,
         secure: true,
         supportFetchAPI: true,
@@ -54,9 +56,9 @@ export class FileSystem implements CustomProtocolProvider, OnReadyHandler {
     },
   ];
 
-  public registerProtocols = (session: Electron.Session): void => {
+  public registerProtocols = (): void => {
     log.debug('Registering the app:// scheme.');
-    session.protocol.registerFileProtocol('app', (request, cb) => {
+    protocol.registerFileProtocol('app', (request, cb) => {
       const url = new URL(request.url);
       if (!['renderer'].includes(url.hostname)) {
         return cb({
@@ -76,7 +78,7 @@ export class FileSystem implements CustomProtocolProvider, OnReadyHandler {
       }
     });
     log.debug('Registering the editor:// scheme.');
-    session.protocol.registerFileProtocol('editor', (request, cb): void => {
+    protocol.registerFileProtocol('editor', (request, cb): void => {
       const url = new URL(request.url);
       const dir = this.directories[url.hostname];
 
@@ -154,7 +156,7 @@ export class FileSystem implements CustomProtocolProvider, OnReadyHandler {
         path: path.join(this.errorBasePath, '400.txt'),
       };
     } else {
-      log.verbose(`${url} => ${file}`);
+      log.verbose(`GET ${url} => ${file}`);
       return {
         statusCode: 200,
         headers: {
