@@ -1,5 +1,7 @@
 {
   "extends": ["config:js-app", "schedule:weekends", ":automergeMinor", ":semanticCommits", ":rebaseStalePrs"],
+  "automergeStrategy": "fast-forward",
+  "automergeType": "branch",
   "packageRules": [
     {
       "packageNames": ["@types/node"],
