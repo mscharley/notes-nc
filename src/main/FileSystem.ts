@@ -3,6 +3,7 @@
 import * as http from '../shared/http';
 import type { CategoryListing, FileDescription, FileListing } from '../shared/model';
 import { ipcMain, protocol } from 'electron/main';
+import { readdir, writeFile } from 'fs/promises';
 import { v4 as createUuid } from 'uuid';
 import type { CustomProtocolProvider } from './interfaces/CustomProtocolProvider';
 import { ElectronApp } from '../inversify/tokens';
@@ -12,7 +13,6 @@ import log from 'electron-log';
 import type { OnReadyHandler } from './interfaces/OnReadyHandler';
 import path from 'path';
 import type { ProtocolResponse } from 'electron/main';
-import { readdir } from 'fs/promises';
 
 @injectable()
 export class FileSystem implements CustomProtocolProvider, OnReadyHandler {
@@ -30,6 +30,7 @@ export class FileSystem implements CustomProtocolProvider, OnReadyHandler {
   public constructor(@injectToken(ElectronApp) application: ElectronApp) {
     this.appBasePath = path.join(application.getAppPath(), 'ts-build');
     this.errorBasePath = path.join(application.getAppPath(), 'static');
+
     // TODO: Load this from a configuration file somewhere.
     this.directories = {
       [createUuid()]: { name: 'Nextcloud', localPath: path.join(application.getPath('home'), 'Nextcloud/Notes') },
@@ -80,26 +81,39 @@ export class FileSystem implements CustomProtocolProvider, OnReadyHandler {
     });
     log.debug('Registering the editor:// scheme.');
     protocol.registerFileProtocol('editor', (request, cb): void => {
-      const url = new URL(request.url);
-      const dir = this.directories[url.hostname];
+      (async (): Promise<void> => {
+        const url = new URL(request.url);
+        const dir = this.directories[url.hostname];
 
-      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-      if (dir == null) {
-        return cb({
-          statusCode: http.BAD_REQUEST,
-          path: path.join(this.errorBasePath, '400.txt'),
-        });
-      }
-
-      switch (request.method) {
-        case 'GET':
-          return cb(this.serveLocalFile(dir.localPath, decodeURIComponent(url.pathname), request.url));
-        default:
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+        if (dir == null) {
           return cb({
-            statusCode: http.INTERNAL_SERVER_ERROR,
-            path: path.join(this.errorBasePath, '500.txt'),
+            statusCode: http.BAD_REQUEST,
+            path: path.join(this.errorBasePath, '400.txt'),
           });
-      }
+        }
+
+        switch (request.method) {
+          case 'GET':
+            return cb(this.serveLocalFile(dir.localPath, decodeURIComponent(url.pathname), request.url));
+          default:
+            if (request.uploadData == null) {
+              return cb({
+                statusCode: http.BAD_REQUEST,
+                path: path.join(this.errorBasePath, '400.txt'),
+              });
+            }
+
+            return cb(
+              await this.saveLocalFile(
+                dir.localPath,
+                decodeURI(url.pathname),
+                request.url,
+                request.uploadData[0].bytes.toString('utf-8'),
+              ),
+            );
+        }
+      })().catch((e) => log.error(e));
     });
   };
 
@@ -151,7 +165,7 @@ export class FileSystem implements CustomProtocolProvider, OnReadyHandler {
     const file = path.join(basepath, filepath);
     if (!file.startsWith(basepath)) {
       // Don't allow malicious URL's that try to span the file system.
-      log.warn(`Invalid request for ${url}`);
+      log.warn(`Invalid GET request for ${url}`);
       return {
         statusCode: http.BAD_REQUEST,
         path: path.join(this.errorBasePath, '400.txt'),
@@ -164,6 +178,30 @@ export class FileSystem implements CustomProtocolProvider, OnReadyHandler {
           'cache-control': 'no-cache, no-store',
         },
         path: file,
+      };
+    }
+  }
+
+  private async saveLocalFile(
+    basepath: string,
+    filepath: string,
+    url: string,
+    content: string,
+  ): Promise<string | ProtocolResponse> {
+    const file = path.join(basepath, filepath);
+    if (!file.startsWith(basepath)) {
+      // Don't allow malicious URL's that try to span the file system.
+      log.warn(`Invalid PUT request for ${url}`);
+      return {
+        statusCode: http.BAD_REQUEST,
+        path: path.join(this.errorBasePath, '400.txt'),
+      };
+    } else {
+      log.verbose(`PUT ${url} => ${file}`);
+      await writeFile(file, content);
+      return {
+        statusCode: http.INTERNAL_SERVER_ERROR,
+        path: path.join(this.errorBasePath, '500.txt'),
       };
     }
   }
