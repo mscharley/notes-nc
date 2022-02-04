@@ -1,7 +1,7 @@
 {
   "name": "@mscharley/notes-nc",
   "productName": "notes-nc",
-  "version": "1.0.0",
+  "version": "0.0.0-development",
   "description": "Note taking app for markdown folders",
   "author": "Matthew Scharley <matt@scharley.me>",
   "license": "MIT",
@@ -27,7 +27,7 @@
     "start:tsc": "tsc --watch",
     "start:watch": "npm-watch",
     "start:webpack": "webpack --watch",
-    "clean": "rimraf -rf build ts-build dist",
+    "clean": "git clean -fxd -e '.*' -e node_modules",
     "build": "node ./bin/build.mjs",
     "copy-files": "copyfiles -u 1 'src/**/*.css' 'src/**/*.scss' ts-build/",
     "test": "npm run test:lint",
@@ -35,7 +35,7 @@
     "test:lint": "eslint --ext .js,.jsx,.ts,.tsx .",
     "prepare": "husky install",
     "pack": "electron-builder --dir",
-    "dist": "electron-builder"
+    "release": "electron-builder"
   },
   "watch": {
     "copy-files": {
