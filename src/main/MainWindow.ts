@@ -1,4 +1,4 @@
-import { attemptInstallDevTools } from './dev/attemptInstallDevTools';
+import { attemptInstallDevTools, isDev } from './dev/attemptInstallDevTools';
 import { BrowserWindow } from 'electron/main';
 import { injectable } from 'inversify';
 import log from 'electron-log';
@@ -13,7 +13,9 @@ export class MainWindow {
   }
 
   public readonly initialise = async (): Promise<void> => {
-    await attemptInstallDevTools();
+    if (isDev) {
+      await attemptInstallDevTools();
+    }
 
     this._window = new BrowserWindow({
       width: 1024,

@@ -29,7 +29,7 @@ export class FileSystem implements CustomProtocolProvider, OnReadyHandler {
 
   public constructor(@injectToken(ElectronApp) application: ElectronApp) {
     this.appBasePath = path.join(application.getAppPath(), 'ts-build');
-    this.errorBasePath = path.join(application.getAppPath(), 'static');
+    this.errorBasePath = path.join(application.getAppPath(), 'share/static');
 
     // TODO: Load this from a configuration file somewhere.
     this.directories = {
