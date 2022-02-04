@@ -13,13 +13,17 @@ const ONE_SECOND = 1_000;
  *
  * @see https://nodeployfriday.com/posts/react-debounce/
  */
-export const useDebouncedState = <T>(initialState: T, wait = ONE_SECOND): [T, (value: T) => void, () => void] => {
+export const useDebouncedState = <T>(
+  initialState: T,
+  wait = ONE_SECOND,
+): [T, (value: T) => void, () => T | undefined] => {
   const [state, setState] = useState(initialState);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const throttleCb = useCallback(
-    debounce((prop: T): void => {
+    debounce((prop: T): T => {
       setState(prop);
+      return prop;
     }, wait),
     [wait],
   );
