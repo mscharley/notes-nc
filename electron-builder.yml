@@ -16,7 +16,12 @@ files:
 linux:
   target: AppImage
   category: Utility
-  desktop: share/linux/notes-nc.desktop
+  desktop:
+    Name: Notes
+    Comment: Notes for Nextcloud
+    Terminal: 'false'
+    Type: Application
+    Categories: 'Utility;'
 
 publish:
   - github
