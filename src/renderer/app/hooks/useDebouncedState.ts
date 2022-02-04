@@ -1,6 +1,8 @@
 import { useCallback, useState } from 'react';
 import debounce from 'lodash.debounce';
 
+const ONE_SECOND = 1_000;
+
 /**
  * Debounced state updates.
  *
@@ -11,7 +13,7 @@ import debounce from 'lodash.debounce';
  *
  * @see https://nodeployfriday.com/posts/react-debounce/
  */
-export const useDebouncedState = <T>(initialState: T, wait = 1_000): [T, (value: T) => void, () => void] => {
+export const useDebouncedState = <T>(initialState: T, wait = ONE_SECOND): [T, (value: T) => void, () => void] => {
   const [state, setState] = useState(initialState);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
