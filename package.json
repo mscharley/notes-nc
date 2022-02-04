@@ -1,7 +1,7 @@
 {
   "name": "@mscharley/notes-nc",
   "productName": "notes-nc",
-  "version": "0.0.0-development",
+  "version": "0.1.0",
   "description": "Note taking app for markdown folders",
   "author": "Matthew Scharley <matt@scharley.me>",
   "license": "MIT",

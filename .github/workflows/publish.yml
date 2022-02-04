@@ -5,7 +5,7 @@ name: Electron Release
 
 on:
   push:
-    branches: [ releases ]
+    branches: [ main ]
   release:
     types: [ created ]
 
