@@ -200,8 +200,8 @@ export class FileSystem implements CustomProtocolProvider, OnReadyHandler {
       log.verbose(`PUT ${url} => ${file}`);
       await writeFile(file, content);
       return {
-        statusCode: http.INTERNAL_SERVER_ERROR,
-        path: path.join(this.errorBasePath, '500.txt'),
+        statusCode: 200,
+        path: path.join(this.errorBasePath, '200.txt'),
       };
     }
   }
