@@ -14,7 +14,7 @@ export class SecurityProvider implements OnReadyHandler {
 
   public onAppReady = (): void => {
     if (!this.isCspEnabled) {
-      log.warn('DEVELOPER MODE: CSP is disabled to prevent interactions with dev tools.');
+      log.warn('DEVELOPER MODE: CSP is disabled, results are potentially not representative of reality');
     } else {
       const csp = {
         'default-src': [`'nonce-${this.cspNonce}'`, 'https://cdn.jsdelivr.net/codemirror.spell-checker/'],

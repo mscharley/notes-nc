@@ -1,5 +1,6 @@
 /* eng-disable PROTOCOL_HANDLER_JS_CHECK */
 
+import * as http from '../shared/http';
 import type { CategoryListing, FileDescription, FileListing } from '../shared/model';
 import { ipcMain, protocol } from 'electron/main';
 import { v4 as createUuid } from 'uuid';
@@ -62,7 +63,7 @@ export class FileSystem implements CustomProtocolProvider, OnReadyHandler {
       const url = new URL(request.url);
       if (!['renderer'].includes(url.hostname)) {
         return cb({
-          statusCode: 404,
+          statusCode: http.NOT_FOUND,
           path: path.join(this.errorBasePath, '404.txt'),
         });
       }
@@ -72,7 +73,7 @@ export class FileSystem implements CustomProtocolProvider, OnReadyHandler {
         );
       } else {
         return cb({
-          statusCode: 400,
+          statusCode: http.BAD_REQUEST,
           path: path.join(this.errorBasePath, '400.txt'),
         });
       }
@@ -85,7 +86,7 @@ export class FileSystem implements CustomProtocolProvider, OnReadyHandler {
       // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
       if (dir == null) {
         return cb({
-          statusCode: 400,
+          statusCode: http.BAD_REQUEST,
           path: path.join(this.errorBasePath, '400.txt'),
         });
       }
@@ -95,7 +96,7 @@ export class FileSystem implements CustomProtocolProvider, OnReadyHandler {
           return cb(this.serveLocalFile(dir.localPath, decodeURIComponent(url.pathname), request.url));
         default:
           return cb({
-            statusCode: 500,
+            statusCode: http.INTERNAL_SERVER_ERROR,
             path: path.join(this.errorBasePath, '500.txt'),
           });
       }
@@ -152,13 +153,13 @@ export class FileSystem implements CustomProtocolProvider, OnReadyHandler {
       // Don't allow malicious URL's that try to span the file system.
       log.warn(`Invalid request for ${url}`);
       return {
-        statusCode: 400,
+        statusCode: http.BAD_REQUEST,
         path: path.join(this.errorBasePath, '400.txt'),
       };
     } else {
       log.verbose(`GET ${url} => ${file}`);
       return {
-        statusCode: 200,
+        statusCode: http.OK,
         headers: {
           'cache-control': 'no-cache, no-store',
         },

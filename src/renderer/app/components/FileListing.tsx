@@ -1,3 +1,4 @@
+import { useAppDispatch, useAppSelector } from '../hooks';
 import AddIcon from '@mui/icons-material/Add';
 import ArticleIcon from '@mui/icons-material/Article';
 import Divider from '@mui/material/Divider';
@@ -9,18 +10,18 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Paper from '@mui/material/Paper';
 import type { PaperProps } from '@mui/material/Paper';
+import { setCurrentFile } from '../features/markdown-files/files-slice';
 import { styled } from '@mui/material';
 import Tooltip from '@mui/material/Tooltip';
-import { useAppSelector } from '../hooks';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 const ScrollablePaper = styled(Paper)<PaperProps>(() => ({
   height: '100%',
-  overflowY: 'scroll',
 }));
 
 export const FileListing: React.FC = () => {
+  const dispatch = useAppDispatch();
   const files = useAppSelector((s) => s.files);
 
   return (
@@ -78,7 +79,12 @@ export const FileListing: React.FC = () => {
                   </ListItem>
                   {categoryFiles.map((f) => (
                     <ListItem key={f.url} disablePadding>
-                      <ListItemButton alignItems='flex-start'>
+                      <ListItemButton
+                        alignItems='flex-start'
+                        onClick={(): void => {
+                          dispatch(setCurrentFile(f));
+                        }}
+                      >
                         <ListItemIcon sx={{ marginTop: '3px' }}>
                           <ArticleIcon />
                         </ListItemIcon>
