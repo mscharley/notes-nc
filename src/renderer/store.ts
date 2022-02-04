@@ -1,12 +1,10 @@
 /* eslint-disable @typescript-eslint/no-type-alias */
 
 import { configureStore } from '@reduxjs/toolkit';
-import titleReducer from '../features/title/title-slice';
+import { reducer } from './app/features';
 
 export const store = configureStore({
-  reducer: {
-    title: titleReducer,
-  },
+  reducer,
 });
 
 export type AppDispatch = typeof store['dispatch'];

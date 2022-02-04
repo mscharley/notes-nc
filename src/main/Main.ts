@@ -1,11 +1,11 @@
 /* eng-disable REMOTE_MODULE_JS_CHECK */
 
-import { CustomProtocol, ElectronApp, ReadyHandler } from './tokens';
+import { CustomProtocol, ElectronApp, ReadyHandler } from '../inversify/tokens';
 import { injectToken, multiInjectToken } from 'inversify-token';
-import { protocol, session } from 'electron/main';
 import { injectable } from 'inversify';
 import log from 'electron-log';
 import { MainWindow } from './MainWindow';
+import { protocol } from 'electron/main';
 
 @injectable()
 export class Main {
@@ -23,7 +23,10 @@ export class Main {
 
   public readonly start = (): void => {
     const privSchemes = this.customProtocols.map((p) => p.privilegedSchemes).flat();
-    log.verbose('Registering schemes as privileged:', privSchemes);
+    log.verbose(
+      'Registering schemes as privileged:',
+      privSchemes.map((s) => s.scheme),
+    );
     protocol.registerSchemesAsPrivileged(privSchemes);
 
     this.application.on('window-all-closed', this.onWindowAllClosed);
@@ -39,7 +42,7 @@ export class Main {
   };
 
   private readonly onReady = (): void => {
-    this.customProtocols.forEach((p) => p.registerProtocols(session.defaultSession));
+    this.customProtocols.forEach((p) => p.registerProtocols());
     this.onReadyHandlers
       .reduce<Promise<void>>(async (acc, handler) => acc.then(handler.onAppReady), Promise.resolve())
       .then(async () => this.mainWindow.initialise())

@@ -1,61 +1,98 @@
-// Global CSS setup...
-import '@fortawesome/fontawesome-free/css/all.min.css';
-import 'easymde/dist/easymde.min.css';
-import './index.css';
-
-// Actual application wrapper component.
-import React, { useEffect, useState } from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import IconButton from '@mui/material/IconButton';
+import * as http from '../../shared/http';
+import { useAppSelector, useDebouncedState } from './hooks';
+import { useCallback, useEffect } from 'react';
+import type { FileDescription } from '../../shared/model';
+import { FileListing } from './components/FileListing';
+import Grid from '@mui/material/Grid';
+import type { GridProps } from '@mui/material/Grid';
 import { MarkdownEditor } from './components/MarkdownEditor';
-import MenuIcon from '@mui/icons-material/Menu';
-import type { TitleState } from '../features/title/title-slice';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import { useAppSelector } from './hooks';
+import { styled } from '@mui/material';
 
-const renderTitle = (title: TitleState): string => {
-  if (title.currentFile == null) {
-    return title.prefix;
+const TITLE_PREFIX = 'Notes';
+// TODO: Make this configurable.
+const SAVE_DELAY = 10_000;
+
+const renderTitle = (openFile?: string): string => {
+  if (openFile == null) {
+    return TITLE_PREFIX;
   } else {
-    return `${title.prefix} - ${title.currentFile}`;
+    return `${TITLE_PREFIX} - ${openFile}`;
   }
 };
+
+const GrowingGrid = styled(Grid)<GridProps>(() => ({
+  flexGrow: 1,
+}));
+
+const FullSizeGrid = styled(Grid)<GridProps>(() => ({
+  height: '100%',
+  overflowY: 'auto',
+}));
 
 /**
  * Main application entrypoint component.
  */
 export const Application: React.FC = () => {
-  const title = useAppSelector((state) => state.title);
-  const [contents, setContents] = useState('# Read me\n\nHello world!');
+  const openFile = useAppSelector((state) => state.files);
+  const [contents, setContents, flushContents] = useDebouncedState<{
+    file?: FileDescription;
+    loading?: boolean;
+    content?: string;
+  }>({}, SAVE_DELAY);
 
   useEffect(() => {
-    document.title = renderTitle(title);
-  }, [title]);
+    (async (): Promise<void> => {
+      if (contents.loading !== true && contents.file != null && contents.content != null) {
+        const resp = await fetch(contents.file.url, {
+          method: 'PUT',
+          headers: {
+            'content-type': 'text/plain',
+          },
+          body: contents.content,
+        });
+
+        if (resp.status !== http.OK) {
+          throw new Error(await resp.text());
+        }
+      }
+    })().catch((e) => {
+      log.error(e);
+    });
+  }, [contents.loading, contents.file, contents.content]);
+
+  useEffect(() => {
+    document.title = renderTitle(openFile.currentFile?.name);
+
+    flushContents();
+    if (openFile.currentFile?.url != null) {
+      fetch(openFile.currentFile.url)
+        .then(async (v) => v.text())
+        .then((content) => {
+          setContents({ file: openFile.currentFile, loading: true, content });
+          flushContents();
+        })
+        .catch((e) => {
+          log.error(e);
+        });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [openFile.currentFile?.url]);
+
+  const onChange = useCallback(
+    (content: string): void => {
+      setContents({ file: openFile.currentFile, content });
+    },
+    [setContents, openFile.currentFile],
+  );
 
   return (
-    <React.Fragment>
-      <Box sx={{ flexGrow: 1 }}>
-        <AppBar position='static'>
-          <Toolbar>
-            <IconButton edge='start' size='large' color='inherit' aria-label='menu' sx={{ mr: 2 }}>
-              <MenuIcon />
-            </IconButton>
-            <Typography variant='h6' component='div' sx={{ flexGrow: 1 }}>
-              Hello world!
-            </Typography>
-          </Toolbar>
-        </AppBar>
-        <MarkdownEditor
-          // eslint-disable-next-line @typescript-eslint/require-await
-          onChange={async (newContents): Promise<void> => {
-            setContents(newContents);
-          }}
-        >
-          {contents}
-        </MarkdownEditor>
-      </Box>
-    </React.Fragment>
+    <GrowingGrid container spacing={0}>
+      <FullSizeGrid item xs={4}>
+        <FileListing />
+      </FullSizeGrid>
+      <FullSizeGrid item xs={8}>
+        <MarkdownEditor value={contents.content ?? ''} onChange={onChange} />
+      </FullSizeGrid>
+    </GrowingGrid>
   );
 };

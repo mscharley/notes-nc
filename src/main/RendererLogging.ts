@@ -1,7 +1,7 @@
 import { injectable } from 'inversify';
 import { ipcMain } from 'electron';
 import log from 'electron-log';
-import type { OnReadyHandler } from './OnReadyHandler';
+import type { OnReadyHandler } from './interfaces/OnReadyHandler';
 
 @injectable()
 export class RendererLogging implements OnReadyHandler {

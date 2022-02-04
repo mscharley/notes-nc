@@ -1,3 +1,6 @@
+// Global CSS setup...
+import './index.scss';
+
 import { Application } from './app/Application';
 import createCache from '@emotion/cache';
 import { ProviderWrapper } from './ProviderWrapper';
@@ -9,12 +12,11 @@ if (root == null) {
   log.error('Unable to find a root element.');
 } else {
   log.debug('Injecting React into page.');
-  editorApi.on('files-updated', (fs) => log.info(fs));
 
   (async (): Promise<void> => {
     if (await editorApi.isDev) {
       log.info('DEVELOPER MODE: Delaying to allow time for Chromium to connect to a remote debugger');
-      root.innerHTML = '<p>Waiting for remote debugger...</p>';
+      root.innerHTML = '<p class="simple-message">Waiting for remote debugger...</p>';
       // eslint-disable-next-line @typescript-eslint/no-magic-numbers
       await sleep(1_000);
     }
@@ -32,6 +34,6 @@ if (root == null) {
       root,
     );
   })().catch((e) => {
-    root.innerHTML = `<p>Unable to load application.</p><br/><pre>${e}</pre>`;
+    root.innerHTML = `<div class="simple-message"><p>Unable to load application.</p><pre>${e}</pre></div>`;
   });
 }

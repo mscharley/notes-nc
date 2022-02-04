@@ -1,4 +1,5 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const path = require('path');
 
 /* global __dirname */
@@ -12,8 +13,8 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.css$/iu,
-        use: ['style-loader', 'css-loader'],
+        test: /\.s[ac]ss$/iu,
+        use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
       },
     ],
   },
@@ -29,6 +30,9 @@ module.exports = {
     runtimeChunk: 'single',
   },
   plugins: [
+    new MiniCssExtractPlugin({
+      filename: '[name].wp.css',
+    }),
     new HtmlWebpackPlugin({
       template: 'src/renderer/index.html',
       filename: 'index.html',
