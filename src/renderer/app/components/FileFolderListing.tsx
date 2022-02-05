@@ -23,17 +23,12 @@ export const FileFolderListing: React.FC<FileFolderListingProps> = ({ categories
       <ListItem
         secondaryAction={
           <>
-            {!showEmpty ? (
-              <></>
-            ) : (
+            {showEmpty ? (
               <Tooltip title='Hide empty categories' placement='bottom'>
                 <IconButton onClick={(): void => setShowEmpty(false)}>
                   <VisibilityIcon />
                 </IconButton>
               </Tooltip>
-            )}
-            {showEmpty ? (
-              <></>
             ) : (
               <Tooltip title='Show empty categories' placement='bottom'>
                 <IconButton onClick={(): void => setShowEmpty(true)}>

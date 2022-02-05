@@ -29,36 +29,46 @@ const FullSizeGrid = styled(Grid)<GridProps>(() => ({
   overflowY: 'auto',
 }));
 
+interface FileState {
+  file: FileDescription;
+  loading?: boolean;
+  content: string;
+}
+
+const saveFile = async (state: Partial<FileState>): Promise<void> => {
+  if (state.loading !== true && state.file != null && state.content != null) {
+    const resp = await fetch(state.file.url, {
+      method: 'PUT',
+      headers: {
+        'content-type': 'text/plain',
+      },
+      body: state.content,
+    });
+
+    if (resp.status !== http.OK) {
+      throw new Error(await resp.text());
+    }
+  }
+};
+
 /**
  * Main application entrypoint component.
  */
 export const Application: React.FC = () => {
   const openFile = useAppSelector((state) => state.files);
-  const [contents, setContents, flushContents] = useDebouncedState<{
-    file?: FileDescription;
-    loading?: boolean;
-    content?: string;
-  }>({}, SAVE_DELAY);
+  const [contents, setContents, flushContents] = useDebouncedState<Partial<FileState>>({}, SAVE_DELAY);
 
   useEffect(() => {
-    (async (): Promise<void> => {
-      if (contents.loading !== true && contents.file != null && contents.content != null) {
-        const resp = await fetch(contents.file.url, {
-          method: 'PUT',
-          headers: {
-            'content-type': 'text/plain',
-          },
-          body: contents.content,
-        });
-
-        if (resp.status !== http.OK) {
-          throw new Error(await resp.text());
-        }
-      }
-    })().catch((e) => {
+    saveFile(contents as FileState).catch((e) => {
       log.error(e);
     });
-  }, [contents.loading, contents.file, contents.content]);
+  }, [contents]);
+
+  useEffect(() => {
+    window.addEventListener('beforeunload', () => {
+      flushContents();
+    });
+  }, [flushContents]);
 
   useEffect(() => {
     document.title = renderTitle(openFile.currentFile?.name);
