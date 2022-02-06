@@ -82,7 +82,7 @@
     "copyfiles": "2.4.1",
     "css-loader": "6.5.1",
     "electron": "17.0.0",
-    "electron-builder": "23.0.0-alpha.2",
+    "electron-builder": "23.0.0-alpha.3",
     "electron-devtools-installer": "3.2.0",
     "electron-is-dev": "2.0.0",
     "eslint-plugin-react": "7.28.0",
