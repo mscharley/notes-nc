@@ -22,8 +22,7 @@ const system = (cmd) => {
 (async () => {
   await system('npm run clean');
   await system('tsc');
-  await system('npm run copy-files');
-  await system('webpack');
+  await system('vite build');
 })().catch((e) => {
   console.error(e);
   // eslint-disable-next-line no-process-exit
