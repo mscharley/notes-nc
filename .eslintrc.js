@@ -16,4 +16,13 @@ module.exports = {
     'react/prefer-stateless-function': 'error',
     'react/prop-types': 'off',
   },
+  overrides: [
+    {
+      files: ['**/*.screenshot.{jsx,tsx}'],
+      rules: {
+        '@typescript-eslint/explicit-function-return-type': 'off',
+        '@typescript-eslint/explicit-module-boundary-types': 'off',
+      },
+    },
+  ],
 };

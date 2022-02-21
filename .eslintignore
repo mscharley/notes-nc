@@ -2,4 +2,3 @@ build/
 ts-build/
 dist/
 node_modules/
-vite.config.ts
