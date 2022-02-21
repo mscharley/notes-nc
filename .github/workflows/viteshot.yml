@@ -13,7 +13,8 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
+  screenshot:
+    name: "screenshot-${{ matrix.os }}"
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
