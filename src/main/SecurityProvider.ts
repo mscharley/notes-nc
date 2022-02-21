@@ -1,8 +1,8 @@
 /* eng-disable CSP_GLOBAL_CHECK */
 
 import { ipcMain, session } from 'electron/main';
+import { DevTools } from './DevTools';
 import { injectable } from 'inversify';
-import { isDev } from './dev/attemptInstallDevTools';
 import log from 'electron-log';
 import type { OnReadyHandler } from './interfaces/OnReadyHandler';
 import { v4 as uuid } from 'uuid';
@@ -11,6 +11,8 @@ import { v4 as uuid } from 'uuid';
 export class SecurityProvider implements OnReadyHandler {
   public readonly cspNonce = uuid();
   public readonly isCspEnabled: boolean = true;
+
+  public constructor(private readonly devtools: DevTools) {}
 
   public onAppReady = (): void => {
     if (!this.isCspEnabled) {
@@ -22,7 +24,7 @@ export class SecurityProvider implements OnReadyHandler {
         'font-src': ['https://fonts.gstatic.com'],
       };
 
-      if (isDev) {
+      if (this.devtools.isDev) {
         for (const key of Object.keys(csp) as Array<keyof typeof csp>) {
           csp[key].push(`http://localhost:${process.env.VITE_PORT ?? 5000}`);
           csp[key].push(`ws://localhost:${process.env.VITE_PORT ?? 5000}`);
@@ -47,7 +49,7 @@ export class SecurityProvider implements OnReadyHandler {
       });
     }
 
-    ipcMain.handle('is-dev', () => isDev);
+    ipcMain.handle('is-dev', () => this.devtools.isDev);
     ipcMain.handle('is-csp-enabled', () => this.isCspEnabled);
     ipcMain.handle('csp-nonce', () => {
       return this.cspNonce;

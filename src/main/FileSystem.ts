@@ -2,17 +2,16 @@
 
 import * as http from '../shared/http';
 import type { CategoryListing, FileDescription, FileListing } from '../shared/model';
-import { ipcMain, protocol } from 'electron/main';
+import { ElectronApp, ElectronIpcMain } from './inversify/tokens';
+import type { Protocol, ProtocolResponse } from 'electron/main';
 import { readdir, writeFile } from 'fs/promises';
-import { v4 as createUuid } from 'uuid';
+import { Configuration } from './Configuration';
 import type { CustomProtocolProvider } from './interfaces/CustomProtocolProvider';
-import { ElectronApp } from './inversify/tokens';
 import { injectable } from 'inversify';
 import { injectToken } from 'inversify-token';
 import log from 'electron-log';
 import type { OnReadyHandler } from './interfaces/OnReadyHandler';
 import path from 'path';
-import type { ProtocolResponse } from 'electron/main';
 
 @injectable()
 export class FileSystem implements CustomProtocolProvider, OnReadyHandler {
@@ -27,15 +26,15 @@ export class FileSystem implements CustomProtocolProvider, OnReadyHandler {
     }
   >;
 
-  public constructor(@injectToken(ElectronApp) application: ElectronApp) {
+  public constructor(
+    @injectToken(ElectronApp) application: ElectronApp,
+    @injectToken(ElectronIpcMain) private readonly ipcMain: ElectronIpcMain,
+    configuration: Configuration,
+  ) {
     this.appBasePath = path.join(application.getAppPath(), 'ts-build');
     this.errorBasePath = path.join(application.getAppPath(), 'share/static');
 
-    // TODO: Load this from a configuration file somewhere.
-    this.directories = {
-      [createUuid()]: { name: 'Nextcloud', localPath: path.join(application.getPath('home'), 'Nextcloud/Notes') },
-      [createUuid()]: { name: 'Family', localPath: path.join(application.getPath('home'), 'Nextcloud/Family/Notes') },
-    };
+    this.directories = configuration.Directories;
   }
 
   public readonly privilegedSchemes: Electron.CustomScheme[] = [
@@ -58,7 +57,7 @@ export class FileSystem implements CustomProtocolProvider, OnReadyHandler {
     },
   ];
 
-  public registerProtocols = (): void => {
+  public registerProtocols = (protocol: Protocol): void => {
     log.debug('Registering the app:// scheme.');
     protocol.registerFileProtocol('app', (request, cb) => {
       const url = new URL(request.url);
@@ -118,7 +117,7 @@ export class FileSystem implements CustomProtocolProvider, OnReadyHandler {
   };
 
   public onAppReady = (): void | Promise<void> => {
-    ipcMain.handle('files-updated', async (): Promise<FileListing> => {
+    this.ipcMain.handle('files-updated', async (): Promise<FileListing> => {
       return Object.fromEntries(
         await Promise.all(
           Object.entries(this.directories).map(async ([uuid, { name, localPath }]) => [

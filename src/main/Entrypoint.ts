@@ -42,7 +42,7 @@ export class Entrypoint {
   };
 
   private readonly onReady = (): void => {
-    this.customProtocols.forEach((p) => p.registerProtocols());
+    this.customProtocols.forEach((p) => p.registerProtocols(protocol));
     this.onReadyHandlers
       .reduce<Promise<void>>(async (acc, handler) => acc.then(handler.onAppReady), Promise.resolve())
       .then(async () => this.mainWindow.initialise())

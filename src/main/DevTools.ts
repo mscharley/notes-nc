@@ -18,7 +18,6 @@ try {
 } catch (e: unknown) {
   /* do nothing, default is already set */
 }
-export const isDev = isDevTmp;
 
 let installExtensions: () => Promise<void>;
 try {
@@ -40,4 +39,10 @@ try {
   };
 }
 
-export const attemptInstallDevTools = installExtensions;
+import { injectable } from 'inversify';
+
+@injectable()
+export class DevTools {
+  public readonly isDev: boolean = isDevTmp;
+  public readonly installDevExtensions: () => Promise<void> = installExtensions;
+}

@@ -24,5 +24,11 @@ module.exports = {
         '@typescript-eslint/explicit-module-boundary-types': 'off',
       },
     },
+    {
+      files: ['**/__tests__/**/*.{ts,js,tsx,jsx}'],
+      rules: {
+        '@typescript-eslint/consistent-type-assertions': 'off',
+      },
+    },
   ],
 };
