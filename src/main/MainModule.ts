@@ -1,7 +1,7 @@
 import { CustomProtocol, ElectronApp, ReadyHandler } from './inversify/tokens';
 import { ContainerModule } from 'inversify';
+import { Entrypoint } from './Entrypoint';
 import { FileSystem } from './FileSystem';
-import { Main } from './Main';
 import { MainWindow } from './MainWindow';
 import { RendererLogging } from './RendererLogging';
 import { SecurityProvider } from './SecurityProvider';
@@ -11,7 +11,7 @@ export const MainModule = (app: Electron.App): ContainerModule =>
   new ContainerModule((bind) => {
     const bindToken = tokenBinder(bind);
 
-    bind(Main).toSelf();
+    bind(Entrypoint).toSelf();
     bind(MainWindow).toSelf();
     bindToken(ElectronApp).toConstantValue(app);
     bind(FileSystem).toSelf();

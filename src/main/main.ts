@@ -4,12 +4,12 @@ import 'reflect-metadata';
 import log from 'electron-log';
 log.debug('Notes booting');
 
-import { app } from 'electron';
+import { app } from 'electron/main';
+import { Entrypoint } from './Entrypoint';
 import { getContainer } from './inversify';
-import { Main } from './Main';
 
 try {
-  getContainer(app).get(Main).start();
+  getContainer(app).get(Entrypoint).start();
 } catch (e: unknown) {
   log.error(e);
   // eslint-disable-next-line no-process-exit

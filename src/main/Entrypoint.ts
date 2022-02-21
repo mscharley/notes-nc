@@ -8,7 +8,7 @@ import { MainWindow } from './MainWindow';
 import { protocol } from 'electron/main';
 
 @injectable()
-export class Main {
+export class Entrypoint {
   public constructor(
     @injectToken(ElectronApp) private readonly application: ElectronApp,
     private readonly mainWindow: MainWindow,

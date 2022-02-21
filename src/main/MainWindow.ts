@@ -17,6 +17,7 @@ export class MainWindow {
       await attemptInstallDevTools();
     }
 
+    log.debug('Preload script', __dirname, './preload.js');
     this._window = new BrowserWindow({
       width: 1024,
       height: 768,

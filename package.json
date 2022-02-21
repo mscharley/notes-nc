@@ -23,17 +23,33 @@
     "postinstall": "electron-builder install-app-deps",
     "electron": "ELECTRON_IS_DEV=0 electron ./",
     "electron:dev": "ELECTRON_IS_DEV=1 electron ./",
-    "start": "concurrently -n tsc,npm,webpack -c 'green,yellow,blueBright' npm:start:tsc npm:start:vite",
+    "start": "concurrently -n tsc,npm,webpack -c 'green,yellow,blueBright' npm:start:tsc npm:start:watch npm:start:vite",
     "start:tsc": "tsc --watch",
+    "start:watch": "npm-watch",
     "start:vite": "vite --port ${VITE_PORT:-5000}",
     "clean": "git clean -fxd -e '.*' -e node_modules",
     "build": "node ./bin/build.mjs",
+    "build:esbuild": "esbuild ./ts-build/main/main.js --bundle --outfile=ts-build/main/index.js --platform=node --external:electron --external:electron-is-dev --external:electron-devtools-installer",
+    "build:vite": "vite build",
     "test": "npm run test:lint",
     "test:electronegativity": "electronegativity -i ./src -e $(electron --version)",
     "test:lint": "eslint --ext .js,.jsx,.ts,.tsx .",
     "prepare": "husky install",
     "pack": "electron-builder --publish never",
     "release": "electron-builder"
+  },
+  "watch": {
+    "build:esbuild": {
+      "patterns": [
+        "package.json",
+        "ts-build/main",
+        "ts-build/shared"
+      ],
+      "ignore": [
+        "ts-build/main/index.js"
+      ],
+      "extensions": "js"
+    }
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": "eslint --fix",
@@ -75,12 +91,14 @@
     "electron-builder": "23.0.0",
     "electron-devtools-installer": "3.2.0",
     "electron-is-dev": "2.0.0",
+    "esbuild": "^0.14.23",
     "eslint-plugin-react": "7.28.0",
     "eslint-plugin-react-hooks": "4.3.0",
     "html-webpack-plugin": "5.5.0",
     "husky": "7.0.4",
     "install": "0.13.0",
     "lint-staged": "12.3.4",
+    "npm-watch": "^0.11.0",
     "rimraf": "3.0.2",
     "typescript": "4.5.5",
     "vite": "2.8.4"

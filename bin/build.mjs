@@ -22,7 +22,8 @@ const system = (cmd) => {
 (async () => {
   await system('npm run clean');
   await system('tsc');
-  await system('vite build');
+  await system('npm run build:vite');
+  await system('npm run build:esbuild');
 })().catch((e) => {
   console.error(e);
   // eslint-disable-next-line no-process-exit
