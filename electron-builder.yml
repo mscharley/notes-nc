@@ -23,5 +23,7 @@ linux:
     Type: Application
     Categories: 'Utility;'
 
+compression: maximum
+
 publish:
   - github
