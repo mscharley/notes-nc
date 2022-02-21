@@ -17,10 +17,22 @@ export class SecurityProvider implements OnReadyHandler {
       log.warn('DEVELOPER MODE: CSP is disabled, results are potentially not representative of reality');
     } else {
       const csp = {
-        'default-src': [`'nonce-${this.cspNonce}'`, 'https://cdn.jsdelivr.net/codemirror.spell-checker/'],
-        'style-src': ["'unsafe-inline'", 'https://fonts.googleapis.com'],
+        'default-src': ['https://cdn.jsdelivr.net/codemirror.spell-checker/'],
+        'style-src': ['https://fonts.googleapis.com'],
         'font-src': ['https://fonts.gstatic.com'],
       };
+
+      if (isDev) {
+        for (const key of Object.keys(csp) as Array<keyof typeof csp>) {
+          csp[key].push(`http://localhost:${process.env.VITE_PORT ?? 5000}`);
+          csp[key].push(`ws://localhost:${process.env.VITE_PORT ?? 5000}`);
+          csp[key].push("'unsafe-inline'");
+        }
+      } else {
+        csp['default-src'].push(`'nonce-${this.cspNonce}'`);
+        csp['style-src'].push("'unsafe-inline'");
+      }
+
       const cspString = Object.entries(csp)
         .map(([type, sources]) => `${type} ${sources.join(' ')};`)
         .join(' ');

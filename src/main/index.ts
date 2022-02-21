@@ -6,7 +6,7 @@ log.debug('Notes booting');
 
 import { app } from 'electron';
 import { getContainer } from './inversify';
-import { Main } from './main/Main';
+import { Main } from './Main';
 
 try {
   getContainer(app).get(Main).start();

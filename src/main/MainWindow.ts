@@ -25,7 +25,7 @@ export class MainWindow {
         disableBlinkFeatures: 'Auxclick',
         nodeIntegration: false,
         nodeIntegrationInWorker: false,
-        /* eng-disable PRELOAD_JS_CHECK */ preload: path.join(__dirname, '../renderer/preload.js'),
+        /* eng-disable PRELOAD_JS_CHECK */ preload: path.join(__dirname, './preload.js'),
         sandbox: true,
       },
     });
@@ -45,7 +45,11 @@ export class MainWindow {
     });
     this._window.on('closed', this.onClose);
 
-    await this._window.loadURL('app://renderer/index.html');
+    if (isDev) {
+      await this._window.loadURL(`http://localhost:${process.env.VITE_PORT ?? 5000}`);
+    } else {
+      await this._window.loadURL('app://renderer/index.html');
+    }
   };
 
   private readonly isAllowedInternalNavigationUrl = (url: string): boolean => {

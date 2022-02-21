@@ -1,4 +1,4 @@
-import { CustomProtocol, ElectronApp, ReadyHandler } from '../inversify/tokens';
+import { CustomProtocol, ElectronApp, ReadyHandler } from './inversify/tokens';
 import { ContainerModule } from 'inversify';
 import { FileSystem } from './FileSystem';
 import { Main } from './Main';

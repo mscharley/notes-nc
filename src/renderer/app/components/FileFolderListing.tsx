@@ -47,9 +47,7 @@ export const FileFolderListing: React.FC<FileFolderListingProps> = ({ categories
         <ListItemText primary={name} />
       </ListItem>
       {Object.entries(categories).map(([categoryName, categoryFiles]) =>
-        !showEmpty && categoryFiles.length === 0 ? (
-          <></>
-        ) : (
+        !showEmpty && categoryFiles.length === 0 ? null : (
           <FileCategoryListing key={`${name}-${categoryName}`} name={categoryName} files={categoryFiles} />
         ),
       )}

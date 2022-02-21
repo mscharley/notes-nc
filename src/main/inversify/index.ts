@@ -1,6 +1,6 @@
 import { Container } from 'inversify';
 import type { interfaces } from 'inversify';
-import { MainModule } from '../main/MainModule';
+import { MainModule } from '../MainModule';
 
 export const getContainer = (app: Electron.App): interfaces.Container => {
   const container = new Container({

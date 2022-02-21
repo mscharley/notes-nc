@@ -6,7 +6,7 @@ import { ipcMain, protocol } from 'electron/main';
 import { readdir, writeFile } from 'fs/promises';
 import { v4 as createUuid } from 'uuid';
 import type { CustomProtocolProvider } from './interfaces/CustomProtocolProvider';
-import { ElectronApp } from '../inversify/tokens';
+import { ElectronApp } from './inversify/tokens';
 import { injectable } from 'inversify';
 import { injectToken } from 'inversify-token';
 import log from 'electron-log';
