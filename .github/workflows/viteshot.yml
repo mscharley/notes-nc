@@ -44,6 +44,10 @@ jobs:
             ${{ runner.OS }}-v1-npm-
       - run: npm ci
       - run: npm run build
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
+        with:
+          limit-access-to-actor: true
       - run: npx --no-install playwright install
       - run: npx --no-install viteshot -p
       - name: Erase Vite caches

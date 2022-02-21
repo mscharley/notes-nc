@@ -19,10 +19,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Setup tmate session
-      uses: mxschmitt/action-tmate@v3
-      with:
-        limit-access-to-actor: true
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v2
       with:
