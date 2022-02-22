@@ -50,7 +50,8 @@
         "ts-build/shared"
       ],
       "ignore": [
-        "ts-build/main/index.js"
+        "ts-build/main/index.js",
+        "ts-build/**/__tests__/**"
       ],
       "extensions": "js"
     }
@@ -70,6 +71,7 @@
     "@reduxjs/toolkit": "1.7.2",
     "@uiw/react-codemirror": "4.3.3",
     "electron-log": "4.4.6",
+    "electron-store": "^8.0.1",
     "inversify": "6.0.1",
     "inversify-token": "6.0.2",
     "lodash.debounce": "4.0.8",
