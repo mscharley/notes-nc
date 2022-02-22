@@ -1,5 +1,5 @@
-import { attemptInstallDevTools, isDev } from './dev/attemptInstallDevTools';
 import { BrowserWindow } from 'electron/main';
+import { DevTools } from './DevTools';
 import { injectable } from 'inversify';
 import log from 'electron-log';
 import path from 'path';
@@ -7,14 +7,16 @@ import { shell } from 'electron/common';
 
 @injectable()
 export class MainWindow {
+  public constructor(private readonly devtools: DevTools) {}
+
   private _window?: Electron.BrowserWindow;
   public get window(): Electron.BrowserWindow | unknown {
     return this._window;
   }
 
   public readonly initialise = async (): Promise<void> => {
-    if (isDev) {
-      await attemptInstallDevTools();
+    if (this.devtools.isDev) {
+      await this.devtools.installDevExtensions();
     }
 
     this._window = new BrowserWindow({
@@ -45,8 +47,8 @@ export class MainWindow {
     });
     this._window.on('closed', this.onClose);
 
-    if (isDev) {
-      await this._window.loadURL(`http://localhost:${process.env.VITE_PORT ?? 5000}`);
+    if (this.devtools.isDev) {
+      await this._window.loadURL(`http://localhost:${process.env.VITE_PORT ?? 5000}/index.html`);
     } else {
       await this._window.loadURL('app://renderer/index.html');
     }

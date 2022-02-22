@@ -8,7 +8,7 @@ import { MainWindow } from './MainWindow';
 import { protocol } from 'electron/main';
 
 @injectable()
-export class Main {
+export class Entrypoint {
   public constructor(
     @injectToken(ElectronApp) private readonly application: ElectronApp,
     private readonly mainWindow: MainWindow,
@@ -42,7 +42,7 @@ export class Main {
   };
 
   private readonly onReady = (): void => {
-    this.customProtocols.forEach((p) => p.registerProtocols());
+    this.customProtocols.forEach((p) => p.registerProtocols(protocol));
     this.onReadyHandlers
       .reduce<Promise<void>>(async (acc, handler) => acc.then(handler.onAppReady), Promise.resolve())
       .then(async () => this.mainWindow.initialise())

@@ -13,10 +13,15 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 export interface FileFolderListingProps {
   name: string;
   categories: CategoryListing;
+  showEmpty?: boolean;
 }
 
-export const FileFolderListing: React.FC<FileFolderListingProps> = ({ categories, name }) => {
-  const [showEmpty, setShowEmpty] = useState<boolean>(false);
+export const FileFolderListing: React.FC<FileFolderListingProps> = ({
+  categories,
+  showEmpty: defaultShowEmpty,
+  name,
+}) => {
+  const [showEmpty, setShowEmpty] = useState<boolean>(defaultShowEmpty ?? false);
 
   return (
     <>

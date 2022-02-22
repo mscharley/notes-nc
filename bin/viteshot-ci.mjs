@@ -5,10 +5,9 @@
 import { system } from './lib/system.mjs';
 
 (async () => {
-  await system('npm run clean');
-  await system('tsc');
-  await system('npm run build:vite');
-  await system('npm run build:esbuild');
+  await system('git fetch');
+  await system(`git checkout ${process.env.GITHUB_HEAD_REF}`);
+  await system('npx --no-install viteshot -p');
 })().catch((e) => {
   console.error(e);
   // eslint-disable-next-line no-process-exit

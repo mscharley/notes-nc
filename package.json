@@ -20,20 +20,40 @@
   },
   "engineStrict": true,
   "scripts": {
+    "prepare": "husky install",
     "postinstall": "electron-builder install-app-deps",
     "electron": "ELECTRON_IS_DEV=0 electron ./",
     "electron:dev": "ELECTRON_IS_DEV=1 electron ./",
-    "start": "concurrently -n tsc,npm,webpack -c 'green,yellow,blueBright' npm:start:tsc npm:start:vite",
+    "start": "concurrently -n tsc,npm,webpack,jest -c 'green,yellow,blueBright,red' npm:start:tsc npm:start:watch npm:start:vite npm:start:jest",
+    "start:jest": "jest --watch",
     "start:tsc": "tsc --watch",
+    "start:watch": "npm-watch",
     "start:vite": "vite --port ${VITE_PORT:-5000}",
-    "clean": "git clean -fxd -e '.*' -e node_modules",
+    "clean": "rimraf -rf ts-build coverage dist",
     "build": "node ./bin/build.mjs",
-    "test": "npm run test:lint",
+    "build:esbuild": "esbuild ./ts-build/main/main.js --bundle --outfile=ts-build/main/index.js --platform=node --external:electron --external:electron-is-dev --external:electron-devtools-installer",
+    "build:vite": "vite build",
+    "test": "npm run test:lint && npm run test:jest",
     "test:electronegativity": "electronegativity -i ./src -e $(electron --version)",
     "test:lint": "eslint --ext .js,.jsx,.ts,.tsx .",
-    "prepare": "husky install",
+    "test:jest": "jest",
+    "viteshot": "viteshot",
+    "viteshot:ci": "node ./bin/viteshot-ci.mjs",
     "pack": "electron-builder --publish never",
     "release": "electron-builder"
+  },
+  "watch": {
+    "build:esbuild": {
+      "patterns": [
+        "package.json",
+        "ts-build/main",
+        "ts-build/shared"
+      ],
+      "ignore": [
+        "ts-build/main/index.js"
+      ],
+      "extensions": "js"
+    }
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": "eslint --fix",
@@ -63,6 +83,7 @@
   "devDependencies": {
     "@mscharley/eslint-config": "1.7.1",
     "@mscharley/prettier-config": "1.2.1",
+    "@types/jest": "^27.4.0",
     "@types/lodash.debounce": "4.0.6",
     "@types/node": "16.11.12",
     "@types/react": "17.0.39",
@@ -75,14 +96,21 @@
     "electron-builder": "23.0.0",
     "electron-devtools-installer": "3.2.0",
     "electron-is-dev": "2.0.0",
+    "esbuild": "^0.14.23",
     "eslint-plugin-react": "7.28.0",
     "eslint-plugin-react-hooks": "4.3.0",
     "html-webpack-plugin": "5.5.0",
     "husky": "7.0.4",
     "install": "0.13.0",
+    "jest": "^27.5.1",
     "lint-staged": "12.3.4",
+    "npm-watch": "^0.11.0",
+    "playwright": "^1.19.1",
     "rimraf": "3.0.2",
+    "testdouble": "^3.16.4",
+    "ts-jest": "~27.1.3",
     "typescript": "4.5.5",
-    "vite": "2.8.4"
+    "vite": "2.8.4",
+    "viteshot": "^0.3.1"
   }
 }
