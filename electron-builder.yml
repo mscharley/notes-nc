@@ -4,6 +4,7 @@ files:
   - "!node_modules/**/*"
   - "!**/__screenshots__/**/*"
   - "!**/__tests__/**/*"
+  - "!**/__viteshot__/**/*"
   - "!**/*.screenshot.*"
   # Recommendations from upstream. Many of these will not be relevant since we dump the whole node_modules folder.
   - "!**/node_modules/*/{CHANGELOG.md,README.md,README,readme.md,readme}"

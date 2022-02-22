@@ -9,7 +9,14 @@ declare global {
     readonly isDev: Promise<boolean>;
     readonly listNoteFiles: () => Promise<FileListing>;
 
-    readonly on: (event: 'files-updated', handler: (files: FileListing) => void) => void;
+    readonly on: {
+      // eslint-disable-next-line @typescript-eslint/prefer-function-type
+      (event: 'files-updated', handler: (files: FileListing) => void): void;
+    };
+    readonly off: {
+      // eslint-disable-next-line @typescript-eslint/prefer-function-type
+      (event: 'files-updated', handler: (files: FileListing) => void): void;
+    };
   }
 
   export interface EditorGlobalApi {

@@ -8,15 +8,15 @@ import type { GridProps } from '@mui/material/Grid';
 import { MarkdownEditor } from './components/MarkdownEditor';
 import { styled } from '@mui/material';
 
-const TITLE_PREFIX = 'Notes';
+const TITLE_SUFFIX = 'Notes';
 // TODO: Make this configurable.
 const SAVE_DELAY = 10_000;
 
 const renderTitle = (openFile?: string): string => {
   if (openFile == null) {
-    return TITLE_PREFIX;
+    return TITLE_SUFFIX;
   } else {
-    return `${TITLE_PREFIX} - ${openFile}`;
+    return `${openFile} - ${TITLE_SUFFIX}`;
   }
 };
 

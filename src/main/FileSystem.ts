@@ -10,6 +10,7 @@ import type { CustomProtocolProvider } from './interfaces/CustomProtocolProvider
 import { injectable } from 'inversify';
 import { injectToken } from 'inversify-token';
 import log from 'electron-log';
+import { MainWindow } from './MainWindow';
 import type { OnReadyHandler } from './interfaces/OnReadyHandler';
 import path from 'path';
 
@@ -18,23 +19,27 @@ export class FileSystem implements CustomProtocolProvider, OnReadyHandler {
   private readonly appBasePath: string;
   private readonly errorBasePath: string;
 
-  private readonly folders: Record<
-    string,
-    {
-      name: string;
-      localPath: string;
-    }
-  >;
+  private folders: Record<string, { name: string; localPath: string }>;
 
   public constructor(
     @injectToken(ElectronApp) application: ElectronApp,
     @injectToken(ElectronIpcMain) private readonly ipcMain: ElectronIpcMain,
+    private readonly mainWindow: MainWindow,
     configuration: Configuration,
   ) {
     this.appBasePath = path.join(application.getAppPath(), 'ts-build');
     this.errorBasePath = path.join(application.getAppPath(), 'share/static');
 
     this.folders = configuration.foldersByUuid;
+    configuration.onChange(() => {
+      (async (): Promise<void> => {
+        this.folders = configuration.foldersByUuid;
+        const files = await this.listFiles();
+        this.mainWindow.window?.webContents.send('files-updated', files);
+      })().catch((e) => {
+        log.error(e);
+      });
+    });
   }
 
   public readonly privilegedSchemes: Electron.CustomScheme[] = [
@@ -117,17 +122,20 @@ export class FileSystem implements CustomProtocolProvider, OnReadyHandler {
   };
 
   public onAppReady = (): void | Promise<void> => {
-    this.ipcMain.handle('files-updated', async (): Promise<FileListing> => {
-      return Object.fromEntries(
-        await Promise.all(
-          Object.entries(this.folders).map(async ([uuid, { name, localPath }]) => [
+    this.ipcMain.handle('list-files', this.listFiles);
+  };
+
+  private readonly listFiles = async (): Promise<FileListing> =>
+    Object.fromEntries(
+      await Promise.all(
+        Object.entries(this.folders).map(
+          async ([uuid, { name, localPath }]): Promise<[string, CategoryListing]> => [
             name,
             await this.generateFolder(uuid, localPath, ''),
-          ]),
+          ],
         ),
-      );
-    });
-  };
+      ),
+    );
 
   private readonly generateFolder = async (
     folder: string,

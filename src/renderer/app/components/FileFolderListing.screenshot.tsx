@@ -1,6 +1,4 @@
 import { FileFolderListing } from './FileFolderListing';
-import { Provider as ReduxProvider } from 'react-redux';
-import { store } from '../../store';
 
 const categories = {
   'Test category': [
@@ -13,13 +11,9 @@ const categories = {
 };
 
 export const BasicFileFolderListing = () => (
-  <ReduxProvider store={store}>
-    <FileFolderListing name='Hello world' categories={categories} showEmpty={true} />
-  </ReduxProvider>
+  <FileFolderListing name='Hello world' categories={categories} showEmpty={true} />
 );
 
 export const HideEmptyFileFolderListing = () => (
-  <ReduxProvider store={store}>
-    <FileFolderListing name='Hello world' categories={categories} showEmpty={false} />
-  </ReduxProvider>
+  <FileFolderListing name='Hello world' categories={categories} showEmpty={false} />
 );

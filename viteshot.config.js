@@ -6,5 +6,9 @@ module.exports = {
     type: 'react',
   },
   shooter: playwrightShooter(playwright.chromium),
-  filePathPattern: 'src/**/*.screenshot.@(js|jsx|tsx|vue|svelte)',
+  filePathPattern: 'src/renderer/**/*.screenshot.@(js|jsx|tsx|vue|svelte)',
+  wrapper: {
+    path: 'src/renderer/__viteshot__/ScreenshotWrapper.tsx',
+    componentName: 'ScreenshotWrapper',
+  },
 };

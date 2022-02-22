@@ -1,18 +1,20 @@
 import * as td from 'testdouble';
 import type { Configuration } from '../Configuration';
 import { FileSystem } from '../FileSystem';
+import type { MainWindow } from '../MainWindow';
+import type { Mutable } from '../../shared/util';
 
 describe('FileSystem', () => {
   const app: Electron.App = td.object('app');
   const ipcMain: Electron.IpcMain = td.object('ipcMain');
-  const config: Configuration = {
-    foldersByUuid: {},
-  } as Partial<Configuration> as Configuration;
+  const window: MainWindow = td.object('window');
+  const config: Configuration = td.object('config');
 
   let fs: FileSystem;
   beforeEach(() => {
     td.when(app.getAppPath()).thenReturn('./app');
-    fs = new FileSystem(app, ipcMain, config);
+    (config as Mutable<Configuration>).foldersByUuid = {};
+    fs = new FileSystem(app, ipcMain, window, config);
   });
 
   afterEach(() => {

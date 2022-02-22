@@ -10,7 +10,7 @@ export class MainWindow {
   public constructor(private readonly devtools: DevTools) {}
 
   private _window?: Electron.BrowserWindow;
-  public get window(): Electron.BrowserWindow | unknown {
+  public get window(): Electron.BrowserWindow | undefined {
     return this._window;
   }
 

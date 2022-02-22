@@ -39,7 +39,12 @@ export class Configuration {
   public constructor(@injectToken(ElectronApp) private readonly application: ElectronApp) {
     this.events = new EventEmitter();
     this.store = new Store({
+      clearInvalidConfig: true,
       schema,
+      watch: true,
+    });
+    this.store.onDidAnyChange(() => {
+      this.events.emit(CONFIG_CHANGE);
     });
   }
 
@@ -53,6 +58,5 @@ export class Configuration {
 
   public readonly setFolders = (folders: Array<{ uuid: string; name: string; localPath: string }>): void => {
     this.store.set<'folders'>('folders', folders);
-    this.events.emit(CONFIG_CHANGE);
   };
 }
