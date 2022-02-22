@@ -50,6 +50,11 @@ jobs:
           git fetch
           git checkout ${{ env.GITHUB_HEAD_REF }}
           npx --no-install viteshot -p
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
+        if: failure()
+        with:
+          limit-access-to-actor: true
       - name: Erase Vite caches
         run: npx --no-install rimraf "**/node_modules/.vite"
       - uses: actions/upload-artifact@v2
