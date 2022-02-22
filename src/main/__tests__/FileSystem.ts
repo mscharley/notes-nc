@@ -6,7 +6,7 @@ describe('FileSystem', () => {
   const app: Electron.App = td.object('app');
   const ipcMain: Electron.IpcMain = td.object('ipcMain');
   const config: Configuration = {
-    Directories: {},
+    foldersByUuid: {},
   } as Partial<Configuration> as Configuration;
 
   let fs: FileSystem;

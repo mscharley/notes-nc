@@ -18,7 +18,7 @@ export class FileSystem implements CustomProtocolProvider, OnReadyHandler {
   private readonly appBasePath: string;
   private readonly errorBasePath: string;
 
-  private readonly directories: Record<
+  private readonly folders: Record<
     string,
     {
       name: string;
@@ -34,7 +34,7 @@ export class FileSystem implements CustomProtocolProvider, OnReadyHandler {
     this.appBasePath = path.join(application.getAppPath(), 'ts-build');
     this.errorBasePath = path.join(application.getAppPath(), 'share/static');
 
-    this.directories = configuration.Directories;
+    this.folders = configuration.foldersByUuid;
   }
 
   public readonly privilegedSchemes: Electron.CustomScheme[] = [
@@ -82,7 +82,7 @@ export class FileSystem implements CustomProtocolProvider, OnReadyHandler {
     protocol.registerFileProtocol('editor', (request, cb): void => {
       (async (): Promise<void> => {
         const url = new URL(request.url);
-        const dir = this.directories[url.hostname];
+        const dir = this.folders[url.hostname];
 
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         if (dir == null) {
@@ -120,7 +120,7 @@ export class FileSystem implements CustomProtocolProvider, OnReadyHandler {
     this.ipcMain.handle('files-updated', async (): Promise<FileListing> => {
       return Object.fromEntries(
         await Promise.all(
-          Object.entries(this.directories).map(async ([uuid, { name, localPath }]) => [
+          Object.entries(this.folders).map(async ([uuid, { name, localPath }]) => [
             name,
             await this.generateFolder(uuid, localPath, ''),
           ]),
