@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/consistent-type-imports */
 
-import { FileListing } from '../shared/model';
+import { FileListing } from './model';
 
 declare global {
   export interface EditorApi {
