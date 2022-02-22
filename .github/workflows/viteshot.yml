@@ -46,10 +46,7 @@ jobs:
       - run: npm run build
       - run: npx --no-install playwright install
       - name: Run viteshot
-        run: |
-          git fetch
-          git checkout ${{ env.GITHUB_HEAD_REF }}
-          npx --no-install viteshot -p
+        run: npm run viteshot:ci
       - name: Setup tmate session
         uses: mxschmitt/action-tmate@v3
         if: failure()

@@ -38,6 +38,7 @@
     "test:lint": "eslint --ext .js,.jsx,.ts,.tsx .",
     "test:jest": "jest",
     "viteshot": "viteshot",
+    "viteshot:ci": "node ./bin/viteshot-ci.mjs",
     "pack": "electron-builder --publish never",
     "release": "electron-builder"
   },
