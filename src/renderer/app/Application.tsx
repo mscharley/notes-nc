@@ -1,6 +1,7 @@
 import * as http from '../../shared/http';
 import { useAppSelector, useDebouncedState } from './hooks';
 import { useCallback, useEffect } from 'react';
+import CircularProgress from '@mui/material/CircularProgress';
 import type { FileDescription } from '../../shared/model';
 import { FileListing } from './components/FileListing';
 import Grid from '@mui/material/Grid';
@@ -105,7 +106,11 @@ export const Application: React.FC = () => {
         <SidebarFooter />
       </FullSizeGrid>
       <FullSizeGrid item xs={8}>
-        <MarkdownEditor value={contents.content ?? ''} onChange={onChange} />
+        {openFile.currentFile == null ? (
+          <CircularProgress />
+        ) : (
+          <MarkdownEditor value={contents.content ?? ''} onChange={onChange} />
+        )}
       </FullSizeGrid>
     </GrowingGrid>
   );

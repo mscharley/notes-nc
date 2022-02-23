@@ -1,5 +1,5 @@
 import AddIcon from '@mui/icons-material/Add';
-import type { CategoryListing } from '../../../shared/model';
+import type { CategoryDescription } from '../../../shared/model';
 import Divider from '@mui/material/Divider';
 import { FileCategoryListing } from './FileCategoryListing';
 import IconButton from '@mui/material/IconButton';
@@ -12,7 +12,7 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 export interface FileFolderListingProps {
   name: string;
-  categories: CategoryListing;
+  categories: CategoryDescription[];
   showEmpty?: boolean;
 }
 
@@ -51,9 +51,9 @@ export const FileFolderListing: React.FC<FileFolderListingProps> = ({
       >
         <ListItemText primary={name} />
       </ListItem>
-      {Object.entries(categories).map(([categoryName, categoryFiles]) =>
-        !showEmpty && categoryFiles.length === 0 ? null : (
-          <FileCategoryListing key={`${name}-${categoryName}`} name={categoryName} files={categoryFiles} />
+      {categories.map(({ name: categoryName, files }) =>
+        !showEmpty && files.length === 0 ? null : (
+          <FileCategoryListing key={`${name}-${categoryName}`} name={categoryName} files={files} />
         ),
       )}
       <Divider />

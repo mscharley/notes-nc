@@ -14,7 +14,7 @@ describe('FileSystem', () => {
   beforeEach(() => {
     td.when(app.getAppPath()).thenReturn('./app');
     (config as Mutable<Configuration>).foldersByUuid = {};
-    fs = new FileSystem(app, ipcMain, window, config);
+    (config as Mutable<Configuration>).folderPrefixes = [];
   });
 
   afterEach(() => {
@@ -23,7 +23,31 @@ describe('FileSystem', () => {
 
   describe('#privilegedSchemas', () => {
     it('should specify both app and editor', () => {
+      fs = new FileSystem(app, ipcMain, window, config);
       expect(fs.privilegedSchemes).toMatchObject([{ scheme: 'app' }, { scheme: 'editor' }]);
+    });
+  });
+
+  describe('#generateDisplayPath', () => {
+    it('should truncate the given path as a prefix', () => {
+      (config as Mutable<Configuration>).folderPrefixes = [['/home/foo', '~']];
+      fs = new FileSystem(app, ipcMain, window, config);
+      expect(fs.generateDisplayPath('/home/foo/test.md')).toBe('~/test.md');
+    });
+
+    it('should not truncate the given path as a contains', () => {
+      (config as Mutable<Configuration>).folderPrefixes = [['/home/foo', '~']];
+      fs = new FileSystem(app, ipcMain, window, config);
+      expect(fs.generateDisplayPath('/home/bar/home/foo/test.md')).toBe('/home/bar/home/foo/test.md');
+    });
+
+    it('should use the longest path prefix for truncation', () => {
+      (config as Mutable<Configuration>).folderPrefixes = [
+        ['/home/foo', '~'],
+        ['/home/foo/Nextcloud', 'Nextcloud'],
+      ];
+      fs = new FileSystem(app, ipcMain, window, config);
+      expect(fs.generateDisplayPath('/home/foo/Nextcloud/Notes/test.md')).toBe('Nextcloud/Notes/test.md');
     });
   });
 });

@@ -1,2 +1,1 @@
-export * from './FileDescription';
-export * from './FileListing';
+export * from './FolderConfiguration';

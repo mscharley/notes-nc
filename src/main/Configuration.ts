@@ -4,6 +4,7 @@ import { injectable } from 'inversify';
 import { injectToken } from 'inversify-token';
 import type { Schema } from 'electron-store';
 import Store from 'electron-store';
+import { v4 as generateUuid } from 'uuid';
 
 interface ConfigurationFile {
   folders: Array<{
@@ -56,7 +57,27 @@ export class Configuration {
     return Object.fromEntries(this.store.get('folders').map((f) => [f.uuid, f]));
   }
 
+  public get folderPrefixes(): Array<[string, string]> {
+    return [[this.application.getPath('home'), '~']];
+  }
+
   public readonly setFolders = (folders: Array<{ uuid: string; name: string; localPath: string }>): void => {
     this.store.set<'folders'>('folders', folders);
+  };
+
+  public readonly addFolder = (name: string, localPath: string): void => {
+    this.setFolders(
+      this.store.get('folders').concat([
+        {
+          uuid: generateUuid(),
+          name,
+          localPath,
+        },
+      ]),
+    );
+  };
+
+  public readonly deleteFolder = (uuid: string): void => {
+    this.setFolders(this.store.get('folders').filter((f) => f.uuid !== uuid));
   };
 }

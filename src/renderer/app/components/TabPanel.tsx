@@ -1,16 +1,12 @@
-import Box from '@mui/material/Box';
-
 export interface TabPanelProps {
-  index: number;
-  value: number;
+  name: string;
+  hidden: boolean;
 }
 
-export const TabPanel: React.FC<TabPanelProps> = ({ index, value, children }) => {
-  const hidden = index !== value;
-
+export const TabPanel: React.FC<TabPanelProps> = ({ name, hidden, children }) => {
   return (
-    <div role='tabpanel' hidden={hidden} id={`simple-tabpanel-${index}`} aria-labelledby={`simple-tab-${index}`}>
-      {hidden ? <></> : <Box sx={{ p: 3 }}>{children}</Box>}
+    <div role='tabpanel' hidden={hidden} id={`simple-tabpanel-${name}`} aria-labelledby={`simple-tab-${name}`}>
+      {hidden ? <></> : <>{children}</>}
     </div>
   );
 };

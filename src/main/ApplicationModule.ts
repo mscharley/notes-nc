@@ -15,13 +15,15 @@ export const ApplicationModule = (): ContainerModule =>
 
     bind(Configuration).toSelf();
     bind(Entrypoint).toSelf();
-    bind(MainWindow).toSelf();
 
     bind(DevTools).toSelf();
 
     bind(FileSystem).toSelf();
     bindToken(CustomProtocol).toDynamicValue(({ container }) => container.get(FileSystem));
     bindToken(ReadyHandler).toDynamicValue(({ container }) => container.get(FileSystem));
+
+    bind(MainWindow).toSelf();
+    bindToken(ReadyHandler).toDynamicValue(({ container }) => container.get(MainWindow));
 
     bind(RendererLogging).toSelf();
     bindToken(ReadyHandler).toDynamicValue(({ container }) => container.get(RendererLogging));

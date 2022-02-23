@@ -12,7 +12,14 @@ export interface ConfigurationDialogProps {
 
 export const ConfigurationDialog: React.FC<ConfigurationDialogProps> = ({ open, onClose = noop }) => {
   return (
-    <Dialog fullWidth={true} maxWidth='lg' open={open} scroll='paper' onClose={onClose}>
+    <Dialog
+      fullWidth={true}
+      maxWidth='md'
+      open={open}
+      scroll='paper'
+      onClose={onClose}
+      sx={{ '> .MuiDialog-container': { alignItems: 'flex-start' } }}
+    >
       <DialogContent>
         <ConfigurationForm />
       </DialogContent>

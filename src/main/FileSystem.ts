@@ -1,7 +1,7 @@
 /* eng-disable PROTOCOL_HANDLER_JS_CHECK */
 
 import * as http from '../shared/http';
-import type { CategoryListing, FileDescription, FileListing } from '../shared/model';
+import type { CategoryDescription, FileDescription, FolderConfiguration, FolderDescription } from '../shared/model';
 import { ElectronApp, ElectronIpcMain } from './inversify/tokens';
 import type { Protocol, ProtocolResponse } from 'electron/main';
 import { readdir, writeFile } from 'fs/promises';
@@ -18,17 +18,19 @@ import path from 'path';
 export class FileSystem implements CustomProtocolProvider, OnReadyHandler {
   private readonly appBasePath: string;
   private readonly errorBasePath: string;
-
+  private readonly folderPrefixes: Array<[string, string]>;
   private folders: Record<string, { name: string; localPath: string }>;
 
   public constructor(
     @injectToken(ElectronApp) application: ElectronApp,
     @injectToken(ElectronIpcMain) private readonly ipcMain: ElectronIpcMain,
     private readonly mainWindow: MainWindow,
-    configuration: Configuration,
+    private readonly configuration: Configuration,
   ) {
     this.appBasePath = path.join(application.getAppPath(), 'ts-build');
     this.errorBasePath = path.join(application.getAppPath(), 'share/static');
+    this.folderPrefixes = [...configuration.folderPrefixes];
+    this.folderPrefixes.sort(([a], [b]) => b.length - a.length);
 
     this.folders = configuration.foldersByUuid;
     configuration.onChange(() => {
@@ -62,7 +64,7 @@ export class FileSystem implements CustomProtocolProvider, OnReadyHandler {
     },
   ];
 
-  public registerProtocols = (protocol: Protocol): void => {
+  public readonly registerProtocols = (protocol: Protocol): void => {
     log.debug('Registering the app:// scheme.');
     protocol.registerFileProtocol('app', (request, cb) => {
       const url = new URL(request.url);
@@ -121,54 +123,69 @@ export class FileSystem implements CustomProtocolProvider, OnReadyHandler {
     });
   };
 
-  public onAppReady = (): void | Promise<void> => {
+  public readonly onAppReady = (): void | Promise<void> => {
     this.ipcMain.handle('list-files', this.listFiles);
+    // eslint-disable-next-line @typescript-eslint/require-await
+    this.ipcMain.handle('add-folder', async (_ev, name: string, localPath: string): Promise<void> => {
+      this.configuration.addFolder(name, localPath);
+    });
+    // eslint-disable-next-line @typescript-eslint/require-await
+    this.ipcMain.handle('delete-folder', async (_ev, uuid: string): Promise<void> => {
+      this.configuration.deleteFolder(uuid);
+    });
   };
 
-  private readonly listFiles = async (): Promise<FileListing> =>
+  private readonly listFiles = async (): Promise<FolderConfiguration> =>
     Object.fromEntries(
       await Promise.all(
         Object.entries(this.folders).map(
-          async ([uuid, { name, localPath }]): Promise<[string, CategoryListing]> => [
+          async ([uuid, { name, localPath }]): Promise<[string, FolderDescription]> => [
             name,
-            await this.generateFolder(uuid, localPath, ''),
+            {
+              uuid,
+              name,
+              localPath: localPath,
+              displayPath: this.generateDisplayPath(localPath),
+              baseUrl: `editor://${uuid}`,
+              categories: await this.generateFolder(uuid, localPath, ''),
+            },
           ],
         ),
       ),
     );
 
-  private readonly generateFolder = async (
-    folder: string,
+  public readonly generateFolder = async (
+    uuid: string,
     basePath: string,
     category: string,
-  ): Promise<CategoryListing> => {
+  ): Promise<CategoryDescription[]> => {
     const dir = await readdir(path.join(basePath, category), {
       withFileTypes: true,
     });
 
-    const files = dir
+    const files: FileDescription[] = dir
       .filter((f) => f.isFile() && f.name.match(/\.(?:md|markdown)$/u) != null)
-      .map(
-        (f): FileDescription => ({
-          name: f.name,
-          url: `editor://${folder}/${category}/${f.name}`,
-        }),
-      );
+      .map((f) => ({
+        name: f.name,
+        url: `editor://${uuid}/${category}/${f.name}`,
+      }));
 
-    const subfolders = (
+    const subfolders: CategoryDescription[] = (
       await Promise.all(
         dir
           .filter((f) => f.isDirectory())
-          .map(async (f) => this.generateFolder(folder, basePath, path.join(category, f.name))),
+          .map(async (f) => this.generateFolder(uuid, basePath, path.join(category, f.name))),
       )
-    )
-      .map((f) => Object.entries(f))
-      .flat();
+    ).flat();
 
-    return Object.fromEntries([[category === '' ? 'Uncategorised' : category, files], ...subfolders]);
+    const description: CategoryDescription =
+      category === ''
+        ? { files, name: 'Uncategorised', path: `/${category}` }
+        : { files, name: category, path: `/${category}` };
+    return [description, ...subfolders];
   };
 
-  private serveLocalFile(basepath: string, filepath: string, url: string): string | ProtocolResponse {
+  private readonly serveLocalFile = (basepath: string, filepath: string, url: string): string | ProtocolResponse => {
     const file = path.join(basepath, filepath);
     if (!file.startsWith(basepath)) {
       // Don't allow malicious URL's that try to span the file system.
@@ -187,14 +204,14 @@ export class FileSystem implements CustomProtocolProvider, OnReadyHandler {
         path: file,
       };
     }
-  }
+  };
 
-  private async saveLocalFile(
+  private readonly saveLocalFile = async (
     basepath: string,
     filepath: string,
     url: string,
     content: string,
-  ): Promise<string | ProtocolResponse> {
+  ): Promise<string | ProtocolResponse> => {
     const file = path.join(basepath, filepath);
     if (!file.startsWith(basepath)) {
       // Don't allow malicious URL's that try to span the file system.
@@ -211,5 +228,15 @@ export class FileSystem implements CustomProtocolProvider, OnReadyHandler {
         path: path.join(this.errorBasePath, '200.txt'),
       };
     }
-  }
+  };
+
+  public readonly generateDisplayPath = (localPath: string): string => {
+    for (const [prefix, replacement] of this.folderPrefixes) {
+      if (localPath.startsWith(prefix)) {
+        return `${replacement}${localPath.substring(prefix.length)}`;
+      }
+    }
+
+    return localPath;
+  };
 }

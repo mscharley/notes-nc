@@ -1,14 +1,19 @@
+import type { CategoryDescription } from '../../../shared/model';
 import { FileFolderListing } from './FileFolderListing';
 
-const categories = {
-  'Test category': [
-    {
-      name: 'File 1',
-      url: 'editor://deadbeef/',
-    },
-  ],
-  'Empty category': [],
-};
+const categories: CategoryDescription[] = [
+  {
+    name: 'Test category',
+    path: '/Test category',
+    files: [
+      {
+        name: 'File 1',
+        url: 'editor://deadbeef/',
+      },
+    ],
+  },
+  { name: 'Empty category', path: '/Empty category', files: [] },
+];
 
 export const BasicFileFolderListing = () => (
   <FileFolderListing name='Hello world' categories={categories} showEmpty={true} />

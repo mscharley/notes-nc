@@ -19,7 +19,7 @@ export const FileListing: React.FC = () => {
         {files.loading ? (
           <ListItem>Loading...</ListItem>
         ) : (
-          Object.entries(files.folders).map(([folderName, categories]) => (
+          Object.entries(files.folders).map(([folderName, { categories }]) => (
             <FileFolderListing key={folderName} name={folderName} categories={categories} />
           ))
         )}

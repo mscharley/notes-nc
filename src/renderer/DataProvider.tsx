@@ -1,4 +1,4 @@
-import type { FileListing } from '../shared/model';
+import type { FolderConfiguration } from '../shared/model';
 import { setFatalError } from './app/features/fatal-errors/errors-slice';
 import { setFileListing } from './app/features/markdown-files/files-slice';
 import { useAppDispatch } from './app/hooks';
@@ -8,7 +8,7 @@ export const DataProvider: React.FC = ({ children }) => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    const handleUpdates = (updated: FileListing): void => {
+    const handleUpdates = (updated: FolderConfiguration): void => {
       dispatch(setFileListing(updated));
     };
 

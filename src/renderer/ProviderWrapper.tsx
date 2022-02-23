@@ -3,7 +3,6 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { DataProvider } from './DataProvider';
 import type { EmotionCache } from '@emotion/cache';
 import { ErrorWrapper } from './app/components/error-handling/ErrorWrapper';
-import { FatalErrorDisplay } from './app/components/error-handling/FatalErrorDisplay';
 import { Provider as ReduxProvider } from 'react-redux';
 import { store } from './store';
 import { theme } from './theme';
@@ -18,18 +17,16 @@ export interface RootProps {
  */
 export const ProviderWrapper: React.FC<RootProps> = ({ cache, children }) => {
   return (
-    <ErrorWrapper>
-      <CacheProvider value={cache}>
-        <ThemeProvider theme={theme}>
-          <CssBaseline>
-            <ReduxProvider store={store}>
-              <FatalErrorDisplay>
-                <DataProvider>{children}</DataProvider>
-              </FatalErrorDisplay>
-            </ReduxProvider>
-          </CssBaseline>
-        </ThemeProvider>
-      </CacheProvider>
-    </ErrorWrapper>
+    <CacheProvider value={cache}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline>
+          <ReduxProvider store={store}>
+            <ErrorWrapper>
+              <DataProvider>{children}</DataProvider>
+            </ErrorWrapper>
+          </ReduxProvider>
+        </CssBaseline>
+      </ThemeProvider>
+    </CacheProvider>
   );
 };
