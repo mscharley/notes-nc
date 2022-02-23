@@ -1,11 +1,11 @@
 import { createAction, createSlice } from '@reduxjs/toolkit';
-import type { FileDescription, FileListing } from '../../../../shared/model';
+import type { FileDescription, FolderConfiguration } from '../../../../shared/model';
 
 export type FilesState =
   | { loading: true; folders?: undefined; currentFile?: undefined }
   | {
       loading: false;
-      folders: FileListing;
+      folders: FolderConfiguration;
       currentFile?: FileDescription;
     };
 
@@ -13,7 +13,7 @@ export type FilesState =
 // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
 const initialState = { loading: true } as FilesState;
 
-export const setFileListing = createAction<FileListing>('setFileListing');
+export const setFileListing = createAction<FolderConfiguration>('setFileListing');
 export const setCurrentFile = createAction<FileDescription>('setCurrentFile');
 export const closeCurrentFile = createAction('closeCurrentFile');
 

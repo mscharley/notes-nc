@@ -1,22 +1,24 @@
 import * as http from '../../shared/http';
 import { useAppSelector, useDebouncedState } from './hooks';
 import { useCallback, useEffect } from 'react';
+import CircularProgress from '@mui/material/CircularProgress';
 import type { FileDescription } from '../../shared/model';
 import { FileListing } from './components/FileListing';
 import Grid from '@mui/material/Grid';
 import type { GridProps } from '@mui/material/Grid';
 import { MarkdownEditor } from './components/MarkdownEditor';
+import { SidebarFooter } from './components/SidebarFooter';
 import { styled } from '@mui/material';
 
-const TITLE_PREFIX = 'Notes';
+const TITLE_SUFFIX = 'Notes';
 // TODO: Make this configurable.
 const SAVE_DELAY = 10_000;
 
 const renderTitle = (openFile?: string): string => {
   if (openFile == null) {
-    return TITLE_PREFIX;
+    return TITLE_SUFFIX;
   } else {
-    return `${TITLE_PREFIX} - ${openFile}`;
+    return `${openFile} - ${TITLE_SUFFIX}`;
   }
 };
 
@@ -27,6 +29,8 @@ const GrowingGrid = styled(Grid)<GridProps>(() => ({
 const FullSizeGrid = styled(Grid)<GridProps>(() => ({
   height: '100%',
   overflowY: 'auto',
+  display: 'flex',
+  flexDirection: 'column',
 }));
 
 interface FileState {
@@ -99,9 +103,14 @@ export const Application: React.FC = () => {
     <GrowingGrid container spacing={0}>
       <FullSizeGrid item xs={4}>
         <FileListing />
+        <SidebarFooter />
       </FullSizeGrid>
       <FullSizeGrid item xs={8}>
-        <MarkdownEditor value={contents.content ?? ''} onChange={onChange} />
+        {openFile.currentFile == null ? (
+          <CircularProgress />
+        ) : (
+          <MarkdownEditor value={contents.content ?? ''} onChange={onChange} />
+        )}
       </FullSizeGrid>
     </GrowingGrid>
   );

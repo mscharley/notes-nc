@@ -1,25 +1,24 @@
+import type { CategoryDescription } from '../../../shared/model';
 import { FileFolderListing } from './FileFolderListing';
-import { Provider as ReduxProvider } from 'react-redux';
-import { store } from '../../store';
 
-const categories = {
-  'Test category': [
-    {
-      name: 'File 1',
-      url: 'editor://deadbeef/',
-    },
-  ],
-  'Empty category': [],
-};
+const categories: CategoryDescription[] = [
+  {
+    name: 'Test category',
+    path: '/Test category',
+    files: [
+      {
+        name: 'File 1',
+        url: 'editor://deadbeef/',
+      },
+    ],
+  },
+  { name: 'Empty category', path: '/Empty category', files: [] },
+];
 
 export const BasicFileFolderListing = () => (
-  <ReduxProvider store={store}>
-    <FileFolderListing name='Hello world' categories={categories} showEmpty={true} />
-  </ReduxProvider>
+  <FileFolderListing name='Hello world' categories={categories} showEmpty={true} />
 );
 
 export const HideEmptyFileFolderListing = () => (
-  <ReduxProvider store={store}>
-    <FileFolderListing name='Hello world' categories={categories} showEmpty={false} />
-  </ReduxProvider>
+  <FileFolderListing name='Hello world' categories={categories} showEmpty={false} />
 );

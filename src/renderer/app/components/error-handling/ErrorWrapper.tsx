@@ -1,11 +1,14 @@
+import { FatalErrorDisplay } from './FatalErrorDisplay';
 import React from 'react';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface ErrorWrapperProps {}
-export interface ErrorWrapperState {
-  hasError: boolean;
-  error?: Error;
-}
+export type ErrorWrapperState =
+  | { hasError: false; error?: undefined }
+  | {
+      hasError: true;
+      error: Error;
+    };
 
 export class ErrorWrapper extends React.Component<ErrorWrapperProps, ErrorWrapperState> {
   public constructor(props: ErrorWrapperProps) {
@@ -23,10 +26,6 @@ export class ErrorWrapper extends React.Component<ErrorWrapperProps, ErrorWrappe
   }
 
   public override render(): React.ReactNode {
-    if (this.state.hasError) {
-      // You can render any custom fallback UI
-      return <h1>Something went wrong.</h1>;
-    }
-    return this.props.children;
+    return <FatalErrorDisplay overrideError={this.state.error}>{this.props.children}</FatalErrorDisplay>;
   }
 }

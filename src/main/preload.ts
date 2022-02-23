@@ -19,13 +19,20 @@ const log: ElectronLog.LogFunctions = {
 
 exposeBridge({
   editorApi: {
-    listNoteFiles: async () => ipcRenderer.invoke('files-updated') as ReturnType<EditorApi['listNoteFiles']>,
-    getCspNonce: async () => ipcRenderer.invoke('csp-nonce') as Promise<string>,
+    listNoteFiles: async () => ipcRenderer.invoke('list-files'),
+    getCspNonce: async () => ipcRenderer.invoke('csp-nonce'),
     isCspEnabled: ipcRenderer.invoke('is-csp-enabled') as Promise<boolean>,
     isDev: ipcRenderer.invoke('is-dev') as Promise<boolean>,
+    addFolder: async (name, localPath) => ipcRenderer.invoke('add-folder', name, localPath),
+    deleteFolder: async (uuid) => ipcRenderer.invoke('delete-folder', uuid),
+    openSelectFolderDialog: async () => ipcRenderer.invoke('open-select-folder'),
+
     on: (event, handler) => {
       ipcRenderer.on(event, (_ev, value) => handler(value));
-      ipcRenderer.invoke(event).then(handler).catch(log.error.bind(log));
+    },
+    off: (event, handler) => {
+      // TODO: This is broken currently because of anonymous functions, but also shouldn't be used much if at all.
+      ipcRenderer.off(event, (_ev, value) => handler(value));
     },
   },
   log,

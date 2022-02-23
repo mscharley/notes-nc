@@ -1,16 +1,23 @@
+import { ElectronDialog, ElectronIpcMain } from './inversify/tokens';
 import { BrowserWindow } from 'electron/main';
 import { DevTools } from './DevTools';
 import { injectable } from 'inversify';
+import { injectToken } from 'inversify-token';
 import log from 'electron-log';
+import type { OnReadyHandler } from './interfaces/OnReadyHandler';
 import path from 'path';
 import { shell } from 'electron/common';
 
 @injectable()
-export class MainWindow {
-  public constructor(private readonly devtools: DevTools) {}
+export class MainWindow implements OnReadyHandler {
+  public constructor(
+    private readonly devtools: DevTools,
+    @injectToken(ElectronIpcMain) private readonly ipcMain: ElectronIpcMain,
+    @injectToken(ElectronDialog) private readonly dialog: ElectronDialog,
+  ) {}
 
   private _window?: Electron.BrowserWindow;
-  public get window(): Electron.BrowserWindow | unknown {
+  public get window(): Electron.BrowserWindow | undefined {
     return this._window;
   }
 
@@ -20,7 +27,7 @@ export class MainWindow {
     }
 
     this._window = new BrowserWindow({
-      width: 1024,
+      width: this.devtools.isDev ? 1524 : 1024,
       height: 768,
       webPreferences: {
         contextIsolation: true,
@@ -34,6 +41,7 @@ export class MainWindow {
     this._window.webContents.on('will-navigate', (event, url) => {
       if (!this.isAllowedInternalNavigationUrl(url)) {
         event.preventDefault();
+        log.warn('Loading external URL:', url);
         this.tryExternalNavigation(url);
       }
     });
@@ -49,13 +57,27 @@ export class MainWindow {
 
     if (this.devtools.isDev) {
       await this._window.loadURL(`http://localhost:${process.env.VITE_PORT ?? 5000}/index.html`);
+      this._window.webContents.openDevTools();
     } else {
       await this._window.loadURL('app://renderer/index.html');
     }
   };
 
+  public readonly onAppReady = (): void => {
+    this.ipcMain.handle('open-select-folder', async () =>
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      this.dialog.showOpenDialog(this.window!, {
+        properties: ['openDirectory', 'createDirectory'],
+      }),
+    );
+  };
+
   private readonly isAllowedInternalNavigationUrl = (url: string): boolean => {
     const parsed = new URL(url);
+
+    if (this.devtools.isDev) {
+      return parsed.hostname === 'localhost';
+    }
 
     return parsed.protocol === 'app:';
   };

@@ -12,3 +12,12 @@ export const sleep = (milliseconds: number): Promise<void> => new Promise((r) =>
 export const noop = (): void => {
   /* noop */
 };
+
+/**
+ * Helper to remove any readonly tags in a type.
+ *
+ * This should only be used for tests - it is dangerous in application code.
+ */
+export type Mutable<T> = {
+  -readonly [P in keyof T]: T[P];
+};

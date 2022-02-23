@@ -2,7 +2,7 @@
 
 **Author:** Matthew Scharley  
 **Bugs/Support:** [Github Issues][gh-issues] [Bug bounty][bug-bounty]  
-**Copyright:** 2021  
+**Copyright:** 2022  
 **License:** [MIT license][license]  
 **Status:** Active
 
