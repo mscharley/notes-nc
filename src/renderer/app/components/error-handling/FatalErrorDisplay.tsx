@@ -1,6 +1,6 @@
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
-import { useAppSelector } from '../hooks';
+import { useAppSelector } from '../../hooks';
 
 export const FatalErrorDisplay: React.FC = ({ children }) => {
   const error = useAppSelector((state) => state.fatalError);

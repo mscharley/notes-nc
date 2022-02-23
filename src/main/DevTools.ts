@@ -20,6 +20,7 @@ try {
 }
 
 let installExtensions: () => Promise<void>;
+let extensionIds: string[] = [];
 try {
   const {
     default: installer,
@@ -32,6 +33,9 @@ try {
       loadExtensionOptions: { allowFileAccess: true },
     });
   };
+
+  // This should not be hardcoded like this, but one of the extension id's seems to not match what CSP needs.
+  extensionIds = ['lmhkpmbekcpmknklioeibfkpmmfibljd', 'dlgmmhhbobbiecagjcpmglnehdcmelof'];
 } catch (e: unknown) {
   // eslint-disable-next-line @typescript-eslint/require-await
   installExtensions = async (): Promise<never> => {
@@ -45,4 +49,5 @@ import { injectable } from 'inversify';
 export class DevTools {
   public readonly isDev: boolean = isDevTmp;
   public readonly installDevExtensions: () => Promise<void> = installExtensions;
+  public readonly devExtensionIds: () => string[] = () => extensionIds;
 }

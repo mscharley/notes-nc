@@ -20,7 +20,7 @@ export class MainWindow {
     }
 
     this._window = new BrowserWindow({
-      width: 1024,
+      width: this.devtools.isDev ? 1524 : 1024,
       height: 768,
       webPreferences: {
         contextIsolation: true,
@@ -49,6 +49,7 @@ export class MainWindow {
 
     if (this.devtools.isDev) {
       await this._window.loadURL(`http://localhost:${process.env.VITE_PORT ?? 5000}/index.html`);
+      this._window.webContents.openDevTools();
     } else {
       await this._window.loadURL('app://renderer/index.html');
     }

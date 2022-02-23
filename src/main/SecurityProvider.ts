@@ -20,19 +20,20 @@ export class SecurityProvider implements OnReadyHandler {
     } else {
       const csp = {
         'default-src': ['https://cdn.jsdelivr.net/codemirror.spell-checker/'],
-        'style-src': ['https://fonts.googleapis.com'],
+        'style-src': ['https://fonts.googleapis.com', "'unsafe-inline'"],
         'font-src': ['https://fonts.gstatic.com'],
       };
 
       if (this.devtools.isDev) {
+        const extensionIds = this.devtools.devExtensionIds();
         for (const key of Object.keys(csp) as Array<keyof typeof csp>) {
           csp[key].push(`http://localhost:${process.env.VITE_PORT ?? 5000}`);
           csp[key].push(`ws://localhost:${process.env.VITE_PORT ?? 5000}`);
+          extensionIds.forEach((id) => csp[key].push(`chrome-extension://${id}`));
           csp[key].push("'unsafe-inline'");
         }
       } else {
         csp['default-src'].push(`'nonce-${this.cspNonce}'`);
-        csp['style-src'].push("'unsafe-inline'");
       }
 
       const cspString = Object.entries(csp)

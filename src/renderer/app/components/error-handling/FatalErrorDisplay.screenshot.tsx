@@ -1,7 +1,7 @@
 import { FatalErrorDisplay } from './FatalErrorDisplay';
 import Paper from '@mui/material/Paper';
-import { setFatalError } from '../features/fatal-errors/errors-slice';
-import { useAppDispatch } from '../hooks';
+import { setFatalError } from '../../features/fatal-errors/errors-slice';
+import { useAppDispatch } from '../../hooks';
 
 export const NoError = () => (
   <FatalErrorDisplay>

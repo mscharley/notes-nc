@@ -6,6 +6,7 @@ import { FileListing } from './components/FileListing';
 import Grid from '@mui/material/Grid';
 import type { GridProps } from '@mui/material/Grid';
 import { MarkdownEditor } from './components/MarkdownEditor';
+import { SidebarFooter } from './components/SidebarFooter';
 import { styled } from '@mui/material';
 
 const TITLE_SUFFIX = 'Notes';
@@ -27,6 +28,8 @@ const GrowingGrid = styled(Grid)<GridProps>(() => ({
 const FullSizeGrid = styled(Grid)<GridProps>(() => ({
   height: '100%',
   overflowY: 'auto',
+  display: 'flex',
+  flexDirection: 'column',
 }));
 
 interface FileState {
@@ -99,6 +102,7 @@ export const Application: React.FC = () => {
     <GrowingGrid container spacing={0}>
       <FullSizeGrid item xs={4}>
         <FileListing />
+        <SidebarFooter />
       </FullSizeGrid>
       <FullSizeGrid item xs={8}>
         <MarkdownEditor value={contents.content ?? ''} onChange={onChange} />
