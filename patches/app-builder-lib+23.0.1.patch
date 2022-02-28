@@ -1,0 +1,20 @@
+diff --git a/node_modules/app-builder-lib/out/targets/AppImageTarget.js b/node_modules/app-builder-lib/out/targets/AppImageTarget.js
+index 31344b3..0be0fe4 100644
+--- a/node_modules/app-builder-lib/out/targets/AppImageTarget.js
++++ b/node_modules/app-builder-lib/out/targets/AppImageTarget.js
+@@ -75,13 +75,12 @@ class AppImageTarget extends core_1.Target {
+                 fileAssociations: this.packager.fileAssociations,
+                 ...options,
+             }),
++            "--compression",
++            packager.compression === "maximum" ? "xz" : "zlib",
+         ];
+         appBuilder_1.objectToArgs(args, {
+             license,
+         });
+-        if (packager.compression === "maximum") {
+-            args.push("--compression", "xz");
+-        }
+         await packager.info.callArtifactBuildCompleted({
+             file: artifactPath,
+             safeArtifactName: packager.computeSafeArtifactName(artifactName, "AppImage", arch, false),

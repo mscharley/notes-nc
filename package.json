@@ -25,7 +25,7 @@
   "engineStrict": true,
   "scripts": {
     "prepare": "husky install",
-    "postinstall": "electron-builder install-app-deps",
+    "postinstall": "node ./bin/postinstall.mjs",
     "electron": "node ./bin/electron.mjs",
     "electron:dev": "node ./bin/electron.mjs --dev",
     "start": "concurrently -n tsc,npm,vite -c 'green,yellow,blueBright' npm:start:tsc npm:start:watch npm:start:vite",
@@ -108,6 +108,7 @@
     "jest": "27.5.1",
     "lint-staged": "12.3.4",
     "npm-watch": "0.11.0",
+    "patch-package": "^6.4.7",
     "playwright": "1.19.2",
     "react-test-renderer": "17.0.2",
     "rimraf": "3.0.2",
