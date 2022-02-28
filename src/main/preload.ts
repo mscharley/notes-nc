@@ -1,5 +1,6 @@
 import { contextBridge, ipcRenderer } from 'electron/renderer';
 import type ElectronLog from 'electron-log';
+import { AboutDetails } from '../shared/model/AboutDetails';
 
 const exposeBridge = (exports: EditorGlobalApi): void => {
   Object.entries(exports).forEach(([name, value]) => {
@@ -24,13 +25,14 @@ class EditorApiImpl implements EditorApi {
   public readonly isDev: EditorApi['isDev'];
 
   // eslint-disable-next-line @typescript-eslint/ban-types
-  private readonly cache: Array<[Function, Function]> = [];
+  private readonly cache: Record<number, undefined | Function> = [];
 
   public constructor() {
     this.isCspEnabled = ipcRenderer.invoke('is-csp-enabled');
     this.isDev = ipcRenderer.invoke('is-dev');
   }
 
+  public readonly aboutDetails: EditorApi['aboutDetails'] = ipcRenderer.invoke('about-details');
   public readonly listNoteFiles: EditorApi['listNoteFiles'] = async () => ipcRenderer.invoke('list-files');
   public readonly getCspNonce: EditorApi['getCspNonce'] = async () => ipcRenderer.invoke('csp-nonce');
   public readonly addFolder: EditorApi['addFolder'] = async (name: string, localPath: string) =>
@@ -43,16 +45,20 @@ class EditorApiImpl implements EditorApi {
   /* eslint-disable @typescript-eslint/no-explicit-any */
   public readonly on: globalThis.EditorApi['on'] = (event, handler: (...args: any[]) => void) => {
     const wrapped = (_ev: unknown, ...args: any[]): void => handler(...args);
-    this.cache.push([handler, wrapped]);
+    const index = Math.floor(Math.random() * Number.MAX_SAFE_INTEGER);
+    this.cache[index] = wrapped;
+
     ipcRenderer.on(event, wrapped);
+
+    return index;
   };
   public readonly off: globalThis.EditorApi['off'] = (event, handler) => {
-    const wrapped = this.cache.find(([old, _wrapped]) => old === handler);
+    const wrapped = this.cache[handler];
     if (wrapped == null) {
       log.warn(`Invalid call to .off() for function which was never registered. event: ${event}`);
       return;
     }
-    ipcRenderer.off(event, wrapped[1] as any);
+    ipcRenderer.off(event, wrapped as any);
   };
   /* eslint-enable @typescript-eslint/no-explicit-any */
 }

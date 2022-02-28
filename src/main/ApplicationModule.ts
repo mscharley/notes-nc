@@ -1,4 +1,5 @@
 import { CustomProtocol, ReadyHandler } from './inversify/tokens';
+import { AboutElectron } from './AboutElectron';
 import { Configuration } from './Configuration';
 import { ContainerModule } from 'inversify';
 import { DevTools } from './DevTools';
@@ -17,6 +18,9 @@ export const ApplicationModule = (): ContainerModule =>
     bind(Entrypoint).toSelf();
 
     bind(DevTools).toSelf();
+
+    bind(AboutElectron).toSelf();
+    bindToken(ReadyHandler).toDynamicValue(({ container }) => container.get(AboutElectron));
 
     bind(FileSystem).toSelf();
     bindToken(CustomProtocol).toDynamicValue(({ container }) => container.get(FileSystem));

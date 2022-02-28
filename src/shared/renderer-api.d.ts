@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/consistent-type-imports */
 
+import { AboutDetails } from './model/AboutDetails';
 import { FolderConfiguration } from './model';
 import { OpenDialogReturnValue } from 'electron';
 
@@ -12,14 +13,15 @@ declare global {
     readonly openSelectFolderDialog: () => Promise<OpenDialogReturnValue>;
     readonly addFolder: (name: string, localPath: string) => Promise<void>;
     readonly deleteFolder: (uuid: string) => Promise<void>;
+    readonly aboutDetails: Promise<AboutDetails>;
 
     readonly on: {
       // eslint-disable-next-line @typescript-eslint/prefer-function-type
-      (event: 'files-updated', handler: (files: FolderConfiguration) => void): void;
+      (event: 'files-updated', handler: (files: FolderConfiguration) => void): number;
     };
     readonly off: {
       // eslint-disable-next-line @typescript-eslint/prefer-function-type
-      (event: 'files-updated', handler: (files: FolderConfiguration) => void): void;
+      (event: 'files-updated', handler: number): void;
     };
   }
 
