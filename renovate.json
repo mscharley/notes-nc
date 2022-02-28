@@ -1,4 +1,5 @@
 {
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "config:js-app",
     "schedule:weekends",
@@ -7,16 +8,17 @@
     ":rebaseStalePrs",
     ":labels(dependencies)"
   ],
+  "timezone": "Australia/Melbourne",
   "automergeStrategy": "fast-forward",
   "automergeType": "branch",
   "packageRules": [
     {
-      "packageNames": ["@types/node"],
+      "matchPackageNames": ["@types/node"],
       "allowedVersions": "^16.13.0",
       "major": { "enabled": true }
     },
     {
-      "packageNames": ["node"],
+      "matchPackageNames": ["node"],
       "rangeStrategy": "replace"
     }
   ]
