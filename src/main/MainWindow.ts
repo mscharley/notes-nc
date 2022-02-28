@@ -1,5 +1,6 @@
 import { ElectronDialog, ElectronIpcMain } from './inversify/tokens';
 import { BrowserWindow } from 'electron/main';
+import { DEFAULT_VITE_PORT } from '../shared/defaults';
 import { DevTools } from './DevTools';
 import { injectable } from 'inversify';
 import { injectToken } from 'inversify-token';
@@ -27,6 +28,7 @@ export class MainWindow implements OnReadyHandler {
     }
 
     this._window = new BrowserWindow({
+      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
       width: this.devtools.isDev ? 1524 : 1024,
       height: 768,
       webPreferences: {
@@ -56,7 +58,7 @@ export class MainWindow implements OnReadyHandler {
     this._window.on('closed', this.onClose);
 
     if (this.devtools.isDev) {
-      await this._window.loadURL(`http://localhost:${process.env.VITE_PORT ?? 5000}/index.html`);
+      await this._window.loadURL(`http://localhost:${process.env.VITE_PORT ?? DEFAULT_VITE_PORT}/index.html`);
       this._window.webContents.openDevTools();
     } else {
       await this._window.loadURL('app://renderer/index.html');

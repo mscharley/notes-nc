@@ -1,10 +1,10 @@
 import { ElectronApp } from './inversify/tokens';
 import EventEmitter from 'events';
+import { v4 as generateUuid } from 'uuid';
 import { injectable } from 'inversify';
 import { injectToken } from 'inversify-token';
 import type { Schema } from 'electron-store';
 import Store from 'electron-store';
-import { v4 as generateUuid } from 'uuid';
 
 interface ConfigurationFile {
   folders: Array<{

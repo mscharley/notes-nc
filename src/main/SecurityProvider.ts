@@ -1,6 +1,7 @@
 /* eng-disable CSP_GLOBAL_CHECK */
 
 import { ipcMain, session } from 'electron/main';
+import { DEFAULT_VITE_PORT } from '../shared/defaults';
 import { DevTools } from './DevTools';
 import { injectable } from 'inversify';
 import log from 'electron-log';
@@ -27,8 +28,8 @@ export class SecurityProvider implements OnReadyHandler {
       if (this.devtools.isDev) {
         const extensionIds = this.devtools.devExtensionIds();
         for (const key of Object.keys(csp) as Array<keyof typeof csp>) {
-          csp[key].push(`http://localhost:${process.env.VITE_PORT ?? 5000}`);
-          csp[key].push(`ws://localhost:${process.env.VITE_PORT ?? 5000}`);
+          csp[key].push(`http://localhost:${process.env.VITE_PORT ?? DEFAULT_VITE_PORT}`);
+          csp[key].push(`ws://localhost:${process.env.VITE_PORT ?? DEFAULT_VITE_PORT}`);
           extensionIds.forEach((id) => csp[key].push(`chrome-extension://${id}`));
           csp[key].push("'unsafe-inline'");
         }
