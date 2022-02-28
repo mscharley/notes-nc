@@ -10,13 +10,12 @@ export const NoError = () => (
 );
 
 export const ErrorDisplayed = () => {
-  const err = new Error('Uh oh, something failed.');
+  const err = new RangeError('Uh oh, something failed.');
   useAppDispatch()(
     setFatalError({
+      name: err.name,
       message: err.message,
-      stack: err.stack
-        ?.replace(/localhost:[0-9]+/gu, 'localhost')
-        .replace(/chunk-.*?\.js\?v=[0-9a-f]*?:/gu, 'chunk.js'),
+      stack: `${err.name}: ${err.message}\n    at ErrorDisplayed (FatalErrorDisplay.screenshot.tsx)\n    at RandomBacktrace (vite.js)`,
     }),
   );
 
