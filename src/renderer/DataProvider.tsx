@@ -1,30 +1,42 @@
+import { useCallback, useEffect } from 'react';
 import type { FolderConfiguration } from '../shared/model';
+import { setAboutDetails } from './app/features/about/details-slice';
 import { setFatalError } from './app/features/fatal-errors/errors-slice';
 import { setFileListing } from './app/features/markdown-files/files-slice';
 import { useAppDispatch } from './app/hooks';
-import { useEffect } from 'react';
 
 export const DataProvider: React.FC = ({ children }) => {
   const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    const handleUpdates = (updated: FolderConfiguration): void => {
+  const handleFileUpdates = useCallback(
+    (updated: FolderConfiguration): void => {
       dispatch(setFileListing(updated));
-    };
+    },
+    [dispatch],
+  );
 
-    editorApi
+  useEffect(() => {
+    const result = editorApi
       .listNoteFiles()
       .then((fs) => {
         dispatch(setFileListing(fs));
-        editorApi.on('files-updated', handleUpdates);
+        return editorApi.on('files-updated', handleFileUpdates);
       })
       .catch((e: unknown) => {
         dispatch(setFatalError(e));
       });
 
     return (): void => {
-      editorApi.off('files-updated', handleUpdates);
+      result
+        .then((v) => (typeof v === 'number' ? editorApi.off('files-updated', v) : undefined))
+        .catch((e) => dispatch(setFatalError(e)));
     };
+  }, [dispatch, handleFileUpdates]);
+
+  useEffect(() => {
+    editorApi.aboutDetails
+      .then((details) => dispatch(setAboutDetails(details)))
+      .catch((e) => dispatch(setFatalError(e)));
   });
 
   return <>{children}</>;

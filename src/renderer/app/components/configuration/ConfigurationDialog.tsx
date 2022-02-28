@@ -24,7 +24,9 @@ export const ConfigurationDialog: React.FC<ConfigurationDialogProps> = ({ open, 
         <ConfigurationForm />
       </DialogContent>
       <DialogActions>
-        <Button onClick={(): void => onClose(null, 'okButtonClick')}>OK</Button>
+        <Button variant='contained' onClick={(): void => onClose(null, 'okButtonClick')}>
+          Close
+        </Button>
       </DialogActions>
     </Dialog>
   );

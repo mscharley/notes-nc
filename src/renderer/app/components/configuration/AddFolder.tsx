@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 import { useState } from 'react';
 
 export const AddFolder: React.FC = () => {
-  const [name, setName] = useState<string | null>(null);
+  const [name, setName] = useState<string>('');
   const [folder, setFolder] = useState<string | null>(null);
 
   const handleOpenFolder = async (): Promise<void> => {
@@ -17,10 +17,12 @@ export const AddFolder: React.FC = () => {
   };
 
   const handleAddFolder = async (): Promise<void> => {
-    if (name == null || folder == null) {
+    if (name === '' || folder == null) {
       return;
     }
     await editorApi.addFolder(name, folder);
+    setName('');
+    setFolder(null);
   };
 
   return (
@@ -32,6 +34,7 @@ export const AddFolder: React.FC = () => {
         label='Name'
         variant='outlined'
         style={{ width: '100%' }}
+        value={name}
         onChange={(ev): void => setName(ev.target.value)}
       />
       <div>
