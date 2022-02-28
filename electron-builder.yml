@@ -19,6 +19,8 @@ files:
   - "!**/{appveyor.yml,.travis.yml,circle.yml}"
   - "!**/{npm-debug.log,yarn.lock,.yarn-integrity,.yarn-metadata.json}"
 
+electronUpdaterCompatibility: '>=2.16'
+
 linux:
   target: AppImage
   category: Utility
@@ -32,4 +34,7 @@ linux:
 compression: maximum
 
 publish:
-  - github
+  - provider: github
+    private: true
+    owner: mscharley
+    repo: notes-nc
