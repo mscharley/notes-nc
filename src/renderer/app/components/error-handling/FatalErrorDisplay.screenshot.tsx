@@ -10,7 +10,15 @@ export const NoError = () => (
 );
 
 export const ErrorDisplayed = () => {
-  useAppDispatch()(setFatalError(new Error('Uh oh, something failed.')));
+  const err = new Error('Uh oh, something failed.');
+  useAppDispatch()(
+    setFatalError({
+      message: err.message,
+      stack: err.stack
+        ?.replace(/localhost:[0-9]+/gu, 'localhost')
+        .replace(/chunk-.*?\.js\?v=[0-9a-f]*?:/gu, 'chunk.js'),
+    }),
+  );
 
   return (
     <FatalErrorDisplay>

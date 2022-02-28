@@ -1,6 +1,12 @@
+import * as tg from 'generic-type-guard';
 import { createAction, createSlice } from '@reduxjs/toolkit';
 
-export type ErrorsState = null | Error;
+const isError = new tg.IsInterface()
+  .withProperty('message', tg.isString)
+  .withOptionalProperty('stack', tg.isMissing(tg.isString))
+  .get();
+// eslint-disable-next-line @typescript-eslint/no-type-alias
+export type ErrorsState = null | tg.GuardedType<typeof isError>;
 
 const initialState = null as ErrorsState;
 
@@ -11,7 +17,7 @@ const slice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) =>
-    builder.addCase(setFatalError, (_state, { payload: error }) => {
+    builder.addCase(setFatalError, (_state, { payload: error }): tg.GuardedType<typeof isError> => {
       if (error instanceof Error) {
         return error;
       } else {
