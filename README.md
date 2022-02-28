@@ -1,10 +1,14 @@
 # Notes for NextCloud
 
 **Author:** Matthew Scharley  
-**Bugs/Support:** [Github Issues][gh-issues] [Bug bounty][bug-bounty]  
+**Bugs/Support:** [Github Issues][gh-issues] - [Bug bounty][bug-bounty]  
 **Copyright:** 2022  
 **License:** [MIT license][license]  
 **Status:** Active
+
+[gh-issues]: https://github.com/mscharley/notes-nc/issues
+[bug-bounty]: https://github.com/sponsors/mscharley/sponsorships?sponsor=mscharley&tier_id=93378
+[license]: https://github.com/mscharley/notes-nc/blob/main/LICENSE
 
 ## What is this application?
 
@@ -14,7 +18,9 @@ This is a simple [Markdown][markdown] editor for taking notes quickly and easily
 
 ## Installation
 
-Download the latest release for your operating system and run it.
+[Download the latest release][releases] for your operating system and run it.
+
+[releases]: https://github.com/mscharley/notes-nc/releases/latest
 
 ## Project goals
 
@@ -26,6 +32,7 @@ Download the latest release for your operating system and run it.
    - You may want to keep some notes private and sync other notes with your team.
 4. Subfolders are categorisation.
    - A subfolder of `Games` would show up as a category of `Games`.
+   - A subfolder of `Games/Myst` would show some form of subcategorisation of `Games` then `Myst`.
 
 ## Explicit non-goals
 
@@ -33,8 +40,5 @@ Download the latest release for your operating system and run it.
    - This is a lose/lose battle. We will never be able to support every provider, and most providers can already sync files. NextCloud treats the `/Notes` folder specially, but most providers can sync folders of files without any issues even if they have no specific special handling for markdown notes.
    - If there is a way we can increase compatibility with your favourite provider without writing code specific to that provider, then please do let us know.
 2. Metadata that can't be represented as part of the filesystem.
-   - Markdown front matter may be an exception to this non-goal, if good uses for it are found.
-
-[gh-issues]: https://github.com/mscharley/notes-nc/issues
-[bug-bounty]: https://github.com/sponsors/mscharley/sponsorships?sponsor=mscharley&tier_id=93378
-[license]: https://github.com/mscharley/notes-nc/blob/main/LICENSE
+   - No hidden files for storing metadata.
+   - Markdown front matter may be an exception to this non-goal, if some good uses for it are found. While this app doesn't use it, front matter is still fine in your markdown notes today.
