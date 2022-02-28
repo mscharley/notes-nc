@@ -101,6 +101,7 @@
     "esbuild": "^0.14.23",
     "eslint-plugin-react": "7.28.0",
     "eslint-plugin-react-hooks": "4.3.0",
+    "generic-type-guard": "^3.6.0",
     "html-webpack-plugin": "5.5.0",
     "husky": "7.0.4",
     "install": "0.13.0",

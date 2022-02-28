@@ -9,14 +9,14 @@ export interface FatalErrorDisplayProps {
 }
 
 export const FatalErrorDisplay: React.FC<FatalErrorDisplayProps> = ({ overrideError, children }) => {
-  const stateError = useAppSelector((state) => state.fatalError);
+  const stateError = useAppSelector((state) => state.fatalError.err);
   const error = overrideError ?? stateError;
 
   if (error != null) {
     return (
       <Alert severity='error'>
         <AlertTitle>{error.message}</AlertTitle>
-        <pre style={{ whiteSpace: 'pre-wrap' }}>{error.stack}</pre>
+        <pre style={{ whiteSpace: 'pre-wrap' }}>{`${error.stack}`}</pre>
         <Fab
           variant='extended'
           sx={{ position: 'absolute', bottom: 16, right: 16 }}

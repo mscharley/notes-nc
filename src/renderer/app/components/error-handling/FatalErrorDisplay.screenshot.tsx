@@ -10,7 +10,14 @@ export const NoError = () => (
 );
 
 export const ErrorDisplayed = () => {
-  useAppDispatch()(setFatalError(new Error('Uh oh, something failed.')));
+  const err = new RangeError('Uh oh, something failed.');
+  useAppDispatch()(
+    setFatalError({
+      name: err.name,
+      message: err.message,
+      stack: `${err.name}: ${err.message}\n    at ErrorDisplayed (FatalErrorDisplay.screenshot.tsx)\n    at RandomBacktrace (vite.js)`,
+    }),
+  );
 
   return (
     <FatalErrorDisplay>
