@@ -17,23 +17,49 @@ const log: ElectronLog.LogFunctions = {
   log: (...params) => ipcRenderer.send('log', 'log', ...params),
 };
 
-exposeBridge({
-  editorApi: {
-    listNoteFiles: async () => ipcRenderer.invoke('list-files'),
-    getCspNonce: async () => ipcRenderer.invoke('csp-nonce'),
-    isCspEnabled: ipcRenderer.invoke('is-csp-enabled') as Promise<boolean>,
-    isDev: ipcRenderer.invoke('is-dev') as Promise<boolean>,
-    addFolder: async (name, localPath) => ipcRenderer.invoke('add-folder', name, localPath),
-    deleteFolder: async (uuid) => ipcRenderer.invoke('delete-folder', uuid),
-    openSelectFolderDialog: async () => ipcRenderer.invoke('open-select-folder'),
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+class EditorApiImpl implements EditorApi {
+  public readonly isCspEnabled: EditorApi['isCspEnabled'];
+  public readonly isDev: EditorApi['isDev'];
 
-    on: (event, handler) => {
-      ipcRenderer.on(event, (_ev, value) => handler(value));
-    },
-    off: (event, handler) => {
-      // TODO: This is broken currently because of anonymous functions, but also shouldn't be used much if at all.
-      ipcRenderer.off(event, (_ev, value) => handler(value));
-    },
-  },
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  private readonly cache: Array<[Function, Function]> = [];
+
+  public constructor() {
+    this.isCspEnabled = ipcRenderer.invoke('is-csp-enabled');
+    this.isDev = ipcRenderer.invoke('is-dev');
+  }
+
+  public readonly listNoteFiles: EditorApi['listNoteFiles'] = async () => ipcRenderer.invoke('list-files');
+  public readonly getCspNonce: EditorApi['getCspNonce'] = async () => ipcRenderer.invoke('csp-nonce');
+  public readonly addFolder: EditorApi['addFolder'] = async (name: string, localPath: string) =>
+    ipcRenderer.invoke('add-folder', name, localPath);
+  public readonly deleteFolder: EditorApi['deleteFolder'] = async (uuid: string) =>
+    ipcRenderer.invoke('delete-folder', uuid);
+  public readonly openSelectFolderDialog: EditorApi['openSelectFolderDialog'] = async () =>
+    ipcRenderer.invoke('open-select-folder');
+
+  /* eslint-disable @typescript-eslint/no-explicit-any */
+  public readonly on: globalThis.EditorApi['on'] = (event, handler: (...args: any[]) => void) => {
+    const wrapped = (_ev: unknown, ...args: any[]): void => handler(...args);
+    this.cache.push([handler, wrapped]);
+    ipcRenderer.on(event, wrapped);
+  };
+  public readonly off: globalThis.EditorApi['off'] = (event, handler) => {
+    const wrapped = this.cache.find(([old, _wrapped]) => old === handler);
+    if (wrapped == null) {
+      log.warn(`Invalid call to .off() for function which was never registered. event: ${event}`);
+      return;
+    }
+    ipcRenderer.off(event, wrapped[1] as any);
+  };
+  /* eslint-enable @typescript-eslint/no-explicit-any */
+}
+/* eslint-enable @typescript-eslint/no-unsafe-return */
+/* eslint-enable @typescript-eslint/no-unsafe-assignment */
+
+exposeBridge({
+  editorApi: new EditorApiImpl(),
   log,
 });
