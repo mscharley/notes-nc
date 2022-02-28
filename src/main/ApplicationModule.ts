@@ -9,6 +9,7 @@ import { MainWindow } from './MainWindow';
 import { RendererLogging } from './RendererLogging';
 import { SecurityProvider } from './SecurityProvider';
 import { tokenBinder } from 'inversify-token';
+import { UpdatesProvider } from './UpdatesProvider';
 
 export const ApplicationModule = (): ContainerModule =>
   new ContainerModule((bind) => {
@@ -33,5 +34,8 @@ export const ApplicationModule = (): ContainerModule =>
     bindToken(ReadyHandler).toDynamicValue(({ container }) => container.get(RendererLogging));
 
     bind(SecurityProvider).toSelf();
-    bindToken(ReadyHandler).toDynamicValue((ctx) => ctx.container.get(SecurityProvider));
+    bindToken(ReadyHandler).toDynamicValue(({ container }) => container.get(SecurityProvider));
+
+    bind(UpdatesProvider).toSelf();
+    bindToken(ReadyHandler).toDynamicValue(({ container }) => container.get(UpdatesProvider));
   });

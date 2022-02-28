@@ -4,3 +4,5 @@ ts-build/
 dist/
 node_modules/
 coverage/
+dev-app-update.yml
+.env
