@@ -8,13 +8,13 @@ on:
   # Run viteshot on all Renovate branches and all PR's. If viteshot detects changes it will push to the branch, which
   # should cause Renovate to create a PR.
   push:
-    branches: [ 'renovate/**' ]
+    branches: ['renovate/**']
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   screenshot:
-    name: "screenshot-${{ matrix.os }}"
+    name: 'screenshot-${{ matrix.os }}'
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -22,8 +22,7 @@ jobs:
         os:
           - ubuntu-latest
           - windows-latest
-          # Disabled until we can justify the super expensive osx builds on github actions
-          #- macos-latest
+          - macos-latest
     steps:
       - uses: actions/checkout@v2
         with:
@@ -53,4 +52,4 @@ jobs:
         if: failure()
         with:
           name: screenshots
-          path: "**/__screenshots__/"
+          path: '**/__screenshots__/'
