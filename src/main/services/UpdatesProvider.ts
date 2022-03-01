@@ -2,7 +2,7 @@ import { AppUpdater, autoUpdater } from 'electron-updater';
 import { injectable, unmanaged } from 'inversify';
 import { DevTools } from './DevTools';
 import log from 'electron-log';
-import type { OnReadyHandler } from './interfaces/OnReadyHandler';
+import type { OnReadyHandler } from '../interfaces/OnReadyHandler';
 import type { UpdateCheckResult } from 'electron-updater';
 
 @injectable()

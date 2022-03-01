@@ -1,11 +1,11 @@
 /* eng-disable CSP_GLOBAL_CHECK */
 
 import { ipcMain, session } from 'electron/main';
-import { DEFAULT_VITE_PORT } from '../shared/defaults';
+import { DEFAULT_VITE_PORT } from '../../shared/defaults';
 import { DevTools } from './DevTools';
 import { injectable } from 'inversify';
 import log from 'electron-log';
-import type { OnReadyHandler } from './interfaces/OnReadyHandler';
+import type { OnReadyHandler } from '../interfaces/OnReadyHandler';
 import { v4 as uuid } from 'uuid';
 
 @injectable()

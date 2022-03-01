@@ -1,15 +1,15 @@
 import { CustomProtocol, ReadyHandler } from './inversify/tokens';
-import { AboutElectron } from './AboutElectron';
-import { Configuration } from './Configuration';
+import { AboutElectron } from './services/AboutElectron';
+import { Configuration } from './services/Configuration';
 import { ContainerModule } from 'inversify';
-import { DevTools } from './DevTools';
+import { DevTools } from './services/DevTools';
 import { Entrypoint } from './Entrypoint';
-import { FileSystem } from './FileSystem';
+import { FileSystem } from './services/FileSystem';
 import { MainWindow } from './MainWindow';
-import { RendererLogging } from './RendererLogging';
-import { SecurityProvider } from './SecurityProvider';
+import { RendererLogging } from './services/RendererLogging';
+import { SecurityProvider } from './services/SecurityProvider';
 import { tokenBinder } from 'inversify-token';
-import { UpdatesProvider } from './UpdatesProvider';
+import { UpdatesProvider } from './services/UpdatesProvider';
 
 export const ApplicationModule = (): ContainerModule =>
   new ContainerModule((bind) => {

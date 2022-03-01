@@ -2,6 +2,7 @@ import * as http from '../../shared/http';
 import { useAppSelector, useDebouncedState } from './hooks';
 import { useCallback, useEffect } from 'react';
 import CircularProgress from '@mui/material/CircularProgress';
+import { DialogOverlays } from './components/DialogOverlays';
 import type { FileDescription } from '../../shared/model';
 import { FileListing } from './components/FileListing';
 import Grid from '@mui/material/Grid';
@@ -100,18 +101,21 @@ export const Application: React.FC = () => {
   );
 
   return (
-    <GrowingGrid container spacing={0}>
-      <FullSizeGrid item xs={4}>
-        <FileListing />
-        <SidebarFooter />
-      </FullSizeGrid>
-      <FullSizeGrid item xs={8}>
-        {openFile.currentFile == null ? (
-          <CircularProgress />
-        ) : (
-          <MarkdownEditor value={contents.content ?? ''} onChange={onChange} />
-        )}
-      </FullSizeGrid>
-    </GrowingGrid>
+    <>
+      <GrowingGrid container spacing={0}>
+        <FullSizeGrid item xs={4}>
+          <FileListing />
+          <SidebarFooter />
+        </FullSizeGrid>
+        <FullSizeGrid item xs={8}>
+          {openFile.currentFile == null ? (
+            <CircularProgress />
+          ) : (
+            <MarkdownEditor value={contents.content ?? ''} onChange={onChange} />
+          )}
+        </FullSizeGrid>
+      </GrowingGrid>
+      <DialogOverlays />
+    </>
   );
 };

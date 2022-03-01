@@ -1,8 +1,8 @@
+import { BrowserWindow, Menu } from 'electron/main';
 import { ElectronDialog, ElectronIpcMain } from './inversify/tokens';
-import { BrowserWindow } from 'electron/main';
+import { injectable, unmanaged } from 'inversify';
 import { DEFAULT_VITE_PORT } from '../shared/defaults';
-import { DevTools } from './DevTools';
-import { injectable } from 'inversify';
+import { DevTools } from './services/DevTools';
 import { injectToken } from 'inversify-token';
 import log from 'electron-log';
 import type { OnReadyHandler } from './interfaces/OnReadyHandler';
@@ -15,6 +15,7 @@ export class MainWindow implements OnReadyHandler {
     private readonly devtools: DevTools,
     @injectToken(ElectronIpcMain) private readonly ipcMain: ElectronIpcMain,
     @injectToken(ElectronDialog) private readonly dialog: ElectronDialog,
+    @unmanaged() private readonly menu: typeof Menu = Menu,
   ) {}
 
   private _window?: Electron.BrowserWindow;
@@ -27,6 +28,7 @@ export class MainWindow implements OnReadyHandler {
       await this.devtools.installDevExtensions();
     }
 
+    this.menu.setApplicationMenu(null);
     this._window = new BrowserWindow({
       // eslint-disable-next-line @typescript-eslint/no-magic-numbers
       width: this.devtools.isDev ? 1524 : 1024,
