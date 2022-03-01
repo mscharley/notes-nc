@@ -38,7 +38,7 @@ This is a simple [Markdown][markdown] editor for taking notes quickly and easily
 
 1. No cloud syncing.
    - This is a lose/lose battle. We will never be able to support every provider, and most providers can already sync files. NextCloud treats the `/Notes` folder specially, but most providers can sync folders of files without any issues even if they have no specific special handling for markdown notes.
-   - If there is a way we can increase compatibility with your favourite provider without writing code specific to that provider, then please do let us know.
+   - If there is a way we can increase compatibility with your favourite provider then please do let us know.
 2. Metadata that can't be represented as part of the filesystem.
    - No hidden files for storing metadata.
    - Markdown front matter may be an exception to this non-goal, if some good uses for it are found. While this app doesn't use it, front matter is still fine in your markdown notes today.
