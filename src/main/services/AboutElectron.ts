@@ -1,5 +1,6 @@
 import { ElectronApp, ElectronIpcMain } from '../inversify/tokens';
 import type { AboutDetails } from '@shared/model/AboutDetails';
+import { compare } from 'compare-versions';
 import { DevTools } from './DevTools';
 import { injectable } from 'inversify';
 import { injectToken } from 'inversify-token';
@@ -18,13 +19,14 @@ export class AboutElectron implements OnReadyHandler {
   public readonly onAppReady = (): void => {
     this.ipcMain.handle('about-details', async (): Promise<AboutDetails> => {
       const updateCheckResults = await this.updates.checkResults;
+      const version = this.app.getVersion();
 
       return {
         electronVersion: process.versions.electron,
-        version: this.app.getVersion(),
+        version,
         isDevBuild: this.devtools.isDev,
 
-        updateExists: updateCheckResults?.updateInfo.version != null,
+        updateExists: compare(updateCheckResults?.updateInfo.version ?? '0.0.0', version, '>'),
         updateVersion: updateCheckResults?.updateInfo.version,
 
         osName: process.platform,
