@@ -24,7 +24,6 @@ describe('AboutElectron', () => {
     about.onAppReady();
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     aboutDetails = aboutCaptor.value;
-    console.log(aboutCaptor);
   });
 
   afterEach(() => {
