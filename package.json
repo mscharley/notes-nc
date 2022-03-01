@@ -1,7 +1,7 @@
 {
   "name": "@mscharley/notes-nc",
   "productName": "notes-nc",
-  "version": "0.3.0",
+  "version": "0.2.1",
   "description": "Note taking app for markdown folders",
   "author": "Matthew Scharley <matt@scharley.me>",
   "license": "MIT",
@@ -70,6 +70,7 @@
     "@mui/material": "5.4.3",
     "@reduxjs/toolkit": "1.8.0",
     "@uiw/react-codemirror": "4.5.1",
+    "compare-versions": "^4.1.3",
     "electron-log": "4.4.6",
     "electron-store": "8.0.1",
     "electron-updater": "4.6.5",

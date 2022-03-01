@@ -35,6 +35,5 @@ compression: maximum
 
 publish:
   - provider: github
-    private: true
     owner: mscharley
     repo: notes-nc
