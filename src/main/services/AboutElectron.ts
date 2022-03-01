@@ -1,9 +1,9 @@
-import { ElectronApp, ElectronIpcMain } from './inversify/tokens';
-import type { AboutDetails } from '../shared/model/AboutDetails';
+import { ElectronApp, ElectronIpcMain } from '../inversify/tokens';
+import type { AboutDetails } from '../../shared/model/AboutDetails';
 import { DevTools } from './DevTools';
 import { injectable } from 'inversify';
 import { injectToken } from 'inversify-token';
-import type { OnReadyHandler } from './interfaces/OnReadyHandler';
+import type { OnReadyHandler } from '../interfaces/OnReadyHandler';
 import { UpdatesProvider } from './UpdatesProvider';
 
 @injectable()

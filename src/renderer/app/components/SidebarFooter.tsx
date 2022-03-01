@@ -1,25 +1,34 @@
-import { AboutDialog } from './AboutDialog';
-import { ConfigurationDialog } from './configuration/ConfigurationDialog';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import IconButton from '@mui/material/IconButton';
 import Paper from '@mui/material/Paper';
+import { setActiveOverlay } from '../features/overlay/overlay-slice';
 import Settings from '@mui/icons-material/SettingsSharp';
-import { useState } from 'react';
+import Tooltip from '@mui/material/Tooltip';
+import { useAppDispatch } from '../hooks';
 
 export const SidebarFooter: React.FC = () => {
-  const [configOpen, setConfigOpen] = useState(false);
-  const [aboutOpen, setAboutOpen] = useState(false);
+  const dispatch = useAppDispatch();
 
   return (
     <Paper sx={{ display: 'flex', flexDirection: 'row-reverse' }}>
-      <IconButton onClick={(): void => setConfigOpen(true)}>
-        <Settings />
-      </IconButton>
-      <IconButton onClick={(): void => setAboutOpen(true)}>
-        <HelpOutlineIcon />
-      </IconButton>
-      <ConfigurationDialog open={configOpen} onClose={(): void => setConfigOpen(false)} />
-      <AboutDialog open={aboutOpen} onClose={(): void => setAboutOpen(false)} />
+      <Tooltip title='Configuration (Ctrl-,)'>
+        <IconButton
+          onClick={(): void => {
+            dispatch(setActiveOverlay('configuration'));
+          }}
+        >
+          <Settings />
+        </IconButton>
+      </Tooltip>
+      <Tooltip title='About'>
+        <IconButton
+          onClick={(): void => {
+            dispatch(setActiveOverlay('about'));
+          }}
+        >
+          <HelpOutlineIcon />
+        </IconButton>
+      </Tooltip>
     </Paper>
   );
 };

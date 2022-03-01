@@ -1,6 +1,5 @@
 import { contextBridge, ipcRenderer } from 'electron/renderer';
 import type ElectronLog from 'electron-log';
-import { AboutDetails } from '../shared/model/AboutDetails';
 
 const exposeBridge = (exports: EditorGlobalApi): void => {
   Object.entries(exports).forEach(([name, value]) => {

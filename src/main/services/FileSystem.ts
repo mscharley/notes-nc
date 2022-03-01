@@ -1,17 +1,17 @@
 /* eng-disable PROTOCOL_HANDLER_JS_CHECK */
 
-import * as http from '../shared/http';
-import type { CategoryDescription, FileDescription, FolderConfiguration, FolderDescription } from '../shared/model';
-import { ElectronApp, ElectronIpcMain } from './inversify/tokens';
+import * as http from '../../shared/http';
+import type { CategoryDescription, FileDescription, FolderConfiguration, FolderDescription } from '../../shared/model';
+import { ElectronApp, ElectronIpcMain } from '../inversify/tokens';
 import type { Protocol, ProtocolResponse } from 'electron/main';
 import { readdir, writeFile } from 'fs/promises';
 import { Configuration } from './Configuration';
-import type { CustomProtocolProvider } from './interfaces/CustomProtocolProvider';
+import type { CustomProtocolProvider } from '../interfaces/CustomProtocolProvider';
 import { injectable } from 'inversify';
 import { injectToken } from 'inversify-token';
 import log from 'electron-log';
-import { MainWindow } from './MainWindow';
-import type { OnReadyHandler } from './interfaces/OnReadyHandler';
+import { MainWindow } from '../MainWindow';
+import type { OnReadyHandler } from '../interfaces/OnReadyHandler';
 import path from 'path';
 
 @injectable()

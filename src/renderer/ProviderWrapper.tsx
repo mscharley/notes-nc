@@ -3,6 +3,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { DataProvider } from './DataProvider';
 import type { EmotionCache } from '@emotion/cache';
 import { ErrorWrapper } from './app/components/error-handling/ErrorWrapper';
+import { KeyboardShortcuts } from './KeyboardShortcuts';
 import { Provider as ReduxProvider } from 'react-redux';
 import { store } from './store';
 import { theme } from './theme';
@@ -22,7 +23,9 @@ export const ProviderWrapper: React.FC<RootProps> = ({ cache, children }) => {
         <CssBaseline>
           <ReduxProvider store={store}>
             <ErrorWrapper>
-              <DataProvider>{children}</DataProvider>
+              <DataProvider>
+                <KeyboardShortcuts>{children}</KeyboardShortcuts>
+              </DataProvider>
             </ErrorWrapper>
           </ReduxProvider>
         </CssBaseline>

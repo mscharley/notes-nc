@@ -1,4 +1,4 @@
-import { ElectronApp } from './inversify/tokens';
+import { ElectronApp } from '../inversify/tokens';
 import EventEmitter from 'events';
 import { v4 as generateUuid } from 'uuid';
 import { injectable } from 'inversify';
