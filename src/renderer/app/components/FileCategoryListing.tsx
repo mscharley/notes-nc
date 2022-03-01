@@ -1,7 +1,7 @@
 import AddIcon from '@mui/icons-material/Add';
 import ArticleIcon from '@mui/icons-material/Article';
 import Divider from '@mui/material/Divider';
-import type { FileDescription } from '../../../shared/model';
+import type { FileDescription } from '@shared/model';
 import IconButton from '@mui/material/IconButton';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';

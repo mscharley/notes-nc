@@ -5,7 +5,7 @@ import { Application } from './app/Application';
 import createCache from '@emotion/cache';
 import { ProviderWrapper } from './ProviderWrapper';
 import { render } from 'react-dom';
-import { sleep } from '../shared/util';
+import { sleep } from '@shared/util';
 
 const root = document.querySelector('#root');
 if (root == null) {

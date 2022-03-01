@@ -1,5 +1,5 @@
 import { useCallback, useEffect } from 'react';
-import type { FolderConfiguration } from '../shared/model';
+import type { FolderConfiguration } from '@shared/model';
 import { setAboutDetails } from './app/features/about/details-slice';
 import { setFatalError } from './app/features/fatal-errors/errors-slice';
 import { setFileListing } from './app/features/markdown-files/files-slice';
