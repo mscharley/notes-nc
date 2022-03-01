@@ -10,6 +10,13 @@ export default defineConfig({
   plugins: [react()],
   base: './',
   root: rendererPath,
+  resolve: {
+    alias: {
+      '@main': resolve('./src/main'),
+      '@renderer': resolve('./src/renderer'),
+      '@shared': resolve('./src/shared'),
+    },
+  },
   build: {
     outDir: outDirRenderer,
     emptyOutDir: true,

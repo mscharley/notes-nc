@@ -1,5 +1,5 @@
 import { ElectronApp, ElectronIpcMain } from '../inversify/tokens';
-import type { AboutDetails } from '../../shared/model/AboutDetails';
+import type { AboutDetails } from '@shared/model/AboutDetails';
 import { DevTools } from './DevTools';
 import { injectable } from 'inversify';
 import { injectToken } from 'inversify-token';

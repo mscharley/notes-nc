@@ -24,8 +24,13 @@
     "noImplicitReturns": true,
     "noImplicitThis": true,
     "forceConsistentCasingInFileNames": true,
-    "preserveWatchOutput": true
+    "preserveWatchOutput": true,
+    "paths": {
+      "@main/*": ["./src/main/*"],
+      "@renderer/*": ["./src/renderer/*"],
+      "@shared/*": ["./src/shared/*"]
+    }
   },
-  "include": ["src", "__tests__"],
+  "include": ["src"],
   "exclude": ["node_modules"]
 }

@@ -1,7 +1,7 @@
 /* eng-disable PROTOCOL_HANDLER_JS_CHECK */
 
-import * as http from '../../shared/http';
-import type { CategoryDescription, FileDescription, FolderConfiguration, FolderDescription } from '../../shared/model';
+import * as http from '@shared/http';
+import type { CategoryDescription, FileDescription, FolderConfiguration, FolderDescription } from '@shared/model';
 import { ElectronApp, ElectronIpcMain } from '../inversify/tokens';
 import type { Protocol, ProtocolResponse } from 'electron/main';
 import { readdir, writeFile } from 'fs/promises';

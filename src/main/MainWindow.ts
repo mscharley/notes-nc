@@ -1,7 +1,7 @@
 import { BrowserWindow, Menu } from 'electron/main';
 import { ElectronDialog, ElectronIpcMain } from './inversify/tokens';
 import { injectable, unmanaged } from 'inversify';
-import { DEFAULT_VITE_PORT } from '../shared/defaults';
+import { DEFAULT_VITE_PORT } from '@shared/defaults';
 import { DevTools } from './services/DevTools';
 import { injectToken } from 'inversify-token';
 import log from 'electron-log';

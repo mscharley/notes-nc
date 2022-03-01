@@ -3,7 +3,7 @@ import { ConfigurationForm } from './ConfigurationForm';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import { noop } from '../../../../shared/util';
+import { noop } from '@shared/util';
 
 export interface ConfigurationDialogProps {
   open: boolean;
