@@ -12,8 +12,6 @@ on:
 jobs:
   publish-github:
     runs-on: ubuntu-latest
-    container:
-      image: electronuserland/builder:14-wine-mono
     steps:
       - run: npm i -g npm@8
       - uses: actions/checkout@v2
@@ -23,5 +21,9 @@ jobs:
           npm ci
       - run: npm run build
       - run: npm run release
+        uses: docker://electronuserland/builder:14-wine-mono
+        with:
+          entrypoint: bash
+          args: -c "npm run release"
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
