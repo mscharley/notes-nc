@@ -22,3 +22,9 @@ jobs:
       - run: npm run release
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+      - name: Setup tmate session
+        if: ${{ failure() }}
+        timeout-minutes: 10
+        uses: mxschmitt/action-tmate@v3
+        with:
+          limit-access-to-actor: true
