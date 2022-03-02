@@ -1,9 +1,14 @@
 {
   "name": "@mscharley/notes-nc",
   "productName": "notes-nc",
+  "private": true,
   "version": "0.3.0",
   "description": "Note taking app for markdown folders",
   "author": "Matthew Scharley <matt@scharley.me>",
+  "funding": {
+    "type": "individual",
+    "url": "https://github.com/sponsors/mscharley"
+  },
   "license": "MIT",
   "main": "ts-build/main",
   "repository": {
@@ -85,8 +90,8 @@
     "uuid": "8.3.2"
   },
   "devDependencies": {
-    "@mscharley/eslint-config": "1.7.1",
-    "@mscharley/prettier-config": "1.2.1",
+    "@mscharley/eslint-config": "1.8.3",
+    "@mscharley/prettier-config": "1.2.2",
     "@types/jest": "27.4.1",
     "@types/lodash.debounce": "4.0.6",
     "@types/node": "16.11.12",
@@ -101,8 +106,6 @@
     "electron-devtools-installer": "3.2.0",
     "electron-is-dev": "2.0.0",
     "esbuild": "0.14.23",
-    "eslint-plugin-react": "7.29.2",
-    "eslint-plugin-react-hooks": "4.3.0",
     "generic-type-guard": "3.6.0",
     "html-webpack-plugin": "5.5.0",
     "husky": "7.0.4",
