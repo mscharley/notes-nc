@@ -43,8 +43,8 @@
     "test:jest": "jest",
     "viteshot": "viteshot",
     "viteshot:ci": "node ./bin/viteshot-ci.mjs",
-    "pack": "electron-builder --publish never",
-    "release": "electron-builder"
+    "pack": "electron-builder --win --linux --publish never",
+    "release": "electron-builder --win --linux"
   },
   "watch": {
     "build:esbuild": {
