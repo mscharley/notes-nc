@@ -16,9 +16,9 @@ module.exports = {
   vite: defineConfig({
     resolve: {
       alias: {
-        '@main': resolve('./src/main'),
-        '@renderer': resolve('./src/renderer'),
-        '@shared': resolve('./src/shared'),
+        '~main': resolve('./src/main'),
+        '~renderer': resolve('./src/renderer'),
+        '~shared': resolve('./src/shared'),
       },
     },
   }),

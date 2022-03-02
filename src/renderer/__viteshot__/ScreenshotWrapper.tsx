@@ -1,7 +1,7 @@
 import CssBaseline from '@mui/material/CssBaseline';
-import { generateStore } from '../store';
+import { generateStore } from '~renderer/redux';
 import { Provider as ReduxProvider } from 'react-redux';
-import { theme } from '../theme';
+import { theme } from '~renderer/theme';
 import { ThemeProvider } from '@mui/material/styles';
 
 export const ScreenshotWrapper: React.FC = ({ children }) => (

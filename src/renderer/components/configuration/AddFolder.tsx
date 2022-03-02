@@ -1,7 +1,7 @@
 import Button from '@mui/material/Button';
 import CreateNewFolderIcon from '@mui/icons-material/CreateNewFolder';
 import IconButton from '@mui/material/IconButton';
-import { setFatalError } from '@renderer/app/features/fatal-errors/errors-slice';
+import { setFatalError } from '~renderer/redux';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { useDispatch } from 'react-redux';

@@ -1,14 +1,14 @@
-import * as http from '@shared/http';
-import { useAppSelector, useDebouncedState } from './hooks';
+import * as http from '~shared/http';
+import { useAppSelector, useDebouncedState } from '~renderer/hooks';
 import { useCallback, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
-import { DialogOverlays } from './components/DialogOverlays';
+import { DialogOverlays } from '~renderer/components/DialogOverlays';
 import Drawer from '@mui/material/Drawer';
-import type { FileDescription } from '@shared/model';
-import { FileListing } from './components/FileListing';
-import { MarkdownEditor } from './components/MarkdownEditor';
-import { SidebarFooter } from './components/SidebarFooter';
+import type { FileDescription } from '~shared/model';
+import { FileListing } from '~renderer/components/FileListing';
+import { MarkdownEditor } from '~renderer/components/MarkdownEditor';
+import { SidebarFooter } from '~renderer/components/SidebarFooter';
 
 const TITLE_SUFFIX = 'Notes';
 // TODO: Make this configurable.
@@ -49,7 +49,7 @@ const drawerWidth = 300;
 /**
  * Main application entrypoint component.
  */
-export const Application: React.FC = () => {
+export const TwoColumnLayout: React.FC = () => {
   const openFile = useAppSelector((state) => state.files);
   const [contents, setContents, flushContents] = useDebouncedState<Partial<FileState>>({}, SAVE_DELAY);
 

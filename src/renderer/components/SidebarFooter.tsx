@@ -1,10 +1,10 @@
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import IconButton from '@mui/material/IconButton';
 import Paper from '@mui/material/Paper';
-import { setActiveOverlay } from '../features/overlay/overlay-slice';
+import { setActiveOverlay } from '~renderer/redux';
 import Settings from '@mui/icons-material/SettingsSharp';
 import Tooltip from '@mui/material/Tooltip';
-import { useAppDispatch } from '../hooks';
+import { useAppDispatch } from '~renderer/hooks';
 
 export interface SidebarFooterProps {
   width: string;

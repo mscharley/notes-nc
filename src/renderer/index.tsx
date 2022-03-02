@@ -1,11 +1,11 @@
 // Global CSS setup...
 import './index.scss';
 
-import { Application } from './app/Application';
 import createCache from '@emotion/cache';
 import { ProviderWrapper } from './ProviderWrapper';
 import { render } from 'react-dom';
-import { sleep } from '@shared/util';
+import { sleep } from '~shared/util';
+import { TwoColumnLayout } from '~renderer/layouts/TwoColumnLayout';
 
 const root = document.querySelector('#root');
 if (root == null) {
@@ -29,7 +29,7 @@ if (root == null) {
 
     render(
       <ProviderWrapper cache={cache}>
-        <Application />
+        <TwoColumnLayout />
       </ProviderWrapper>,
       root,
     );

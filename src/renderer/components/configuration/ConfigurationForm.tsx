@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useAppDispatch, useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '~renderer/hooks';
 import { AddFolder } from './AddFolder';
 import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -9,9 +9,9 @@ import IconButton from '@mui/material/IconButton';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
-import { setFatalError } from '../../features/fatal-errors/errors-slice';
+import { setFatalError } from '~renderer/redux';
 import Tab from '@mui/material/Tab';
-import { TabPanel } from '../TabPanel';
+import { TabPanel } from '~renderer/components/TabPanel';
 import Tabs from '@mui/material/Tabs';
 
 export enum TabOptions {

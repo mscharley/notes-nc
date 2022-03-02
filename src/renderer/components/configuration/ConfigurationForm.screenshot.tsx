@@ -1,6 +1,6 @@
 import { ConfigurationForm } from './ConfigurationForm';
-import { setFileListing } from '../../features/markdown-files/files-slice';
-import { useAppDispatch } from '../../hooks';
+import { setFileListing } from '~renderer/redux';
+import { useAppDispatch } from '~renderer/hooks';
 
 export const NoteFolders = () => {
   useAppDispatch()(

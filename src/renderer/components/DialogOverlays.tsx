@@ -1,7 +1,7 @@
-import { useAppDispatch, useAppSelector } from '../hooks';
-import { AboutDialog } from './AboutDialog';
-import { closeOverlay } from '../features/overlay/overlay-slice';
-import { ConfigurationDialog } from './configuration/ConfigurationDialog';
+import { useAppDispatch, useAppSelector } from '~renderer/hooks';
+import { AboutDialog } from '~renderer/components/AboutDialog';
+import { closeOverlay } from '~renderer/redux';
+import { ConfigurationDialog } from '~renderer/components/configuration/ConfigurationDialog';
 
 export const DialogOverlays: React.FC = () => {
   const dispatch = useAppDispatch();

@@ -1,5 +1,5 @@
 import { createAction, createSlice } from '@reduxjs/toolkit';
-import type { FileDescription, FolderConfiguration } from '@shared/model';
+import type { FileDescription, FolderConfiguration } from '~shared/model';
 
 export type FilesState =
   | { loading: true; folders?: undefined; currentFile?: undefined }

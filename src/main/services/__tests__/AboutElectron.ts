@@ -1,11 +1,11 @@
 import * as td from 'testdouble';
-import type { ElectronApp, ElectronIpcMain } from '@main/inversify/tokens';
-import type { AboutDetails } from '@shared/model/AboutDetails';
-import { AboutElectron } from '../AboutElectron';
-import type { DevTools } from '../DevTools';
-import type { Mutable } from '@shared/util';
+import type { ElectronApp, ElectronIpcMain } from '~main/inversify/tokens';
+import type { AboutDetails } from '~shared/model/AboutDetails';
+import { AboutElectron } from '~main/services/AboutElectron';
+import type { DevTools } from '~main/services/DevTools';
+import type { Mutable } from '~shared/util';
 import type { UpdateCheckResult } from 'electron-updater';
-import type { UpdatesProvider } from '../UpdatesProvider';
+import type { UpdatesProvider } from '~main/services/UpdatesProvider';
 
 describe('AboutElectron', () => {
   const app: ElectronApp = td.object('app');

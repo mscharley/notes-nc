@@ -1,5 +1,5 @@
-import { setActiveOverlay } from './app/features/overlay/overlay-slice';
-import { useAppDispatch } from './app/hooks';
+import { setActiveOverlay } from '~renderer/redux';
+import { useAppDispatch } from '~renderer/hooks';
 import { useEffect } from 'react';
 
 export const KeyboardShortcuts: React.FC = ({ children }) => {

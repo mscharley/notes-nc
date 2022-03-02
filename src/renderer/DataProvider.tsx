@@ -1,10 +1,7 @@
+import { setAboutDetails, setActiveOverlay, setFatalError, setFileListing } from '~renderer/redux';
 import { useCallback, useEffect } from 'react';
-import type { FolderConfiguration } from '@shared/model';
-import { setAboutDetails } from './app/features/about/details-slice';
-import { setActiveOverlay } from './app/features/overlay/overlay-slice';
-import { setFatalError } from './app/features/fatal-errors/errors-slice';
-import { setFileListing } from './app/features/markdown-files/files-slice';
-import { useAppDispatch } from './app/hooks';
+import type { FolderConfiguration } from '~shared/model';
+import { useAppDispatch } from '~renderer/hooks';
 
 export const DataProvider: React.FC = ({ children }) => {
   const dispatch = useAppDispatch();

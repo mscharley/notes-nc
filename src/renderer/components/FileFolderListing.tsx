@@ -1,5 +1,5 @@
 import AddIcon from '@mui/icons-material/Add';
-import type { CategoryDescription } from '@shared/model';
+import type { CategoryDescription } from '~shared/model';
 import Divider from '@mui/material/Divider';
 import { FileCategoryListing } from './FileCategoryListing';
 import IconButton from '@mui/material/IconButton';

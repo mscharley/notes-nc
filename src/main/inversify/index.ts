@@ -1,4 +1,4 @@
-import { ApplicationModule } from '../ApplicationModule';
+import { ApplicationModule } from '~main/ApplicationModule';
 import { Container } from 'inversify';
 import { ElectronModule } from './ElectronModule';
 import type { interfaces } from 'inversify';

@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-type-alias */
 
 import type { Dialog, IpcMain } from 'electron/main';
-import type { CustomProtocolProvider } from '../interfaces/CustomProtocolProvider';
-import type { OnReadyHandler } from '../interfaces/OnReadyHandler';
+import type { CustomProtocolProvider } from '~main/interfaces/CustomProtocolProvider';
+import type { OnReadyHandler } from '~main/interfaces/OnReadyHandler';
 import { Token } from 'inversify-token';
 import type { TokenType } from 'inversify-token';
 

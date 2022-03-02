@@ -4,7 +4,7 @@ import ListItem from '@mui/material/ListItem';
 import Paper from '@mui/material/Paper';
 import type { PaperProps } from '@mui/material/Paper';
 import { styled } from '@mui/material';
-import { useAppSelector } from '../hooks';
+import { useAppSelector } from '~renderer/hooks';
 
 const ScrollablePaper = styled(Paper)<PaperProps>(() => ({
   overflowY: 'auto',

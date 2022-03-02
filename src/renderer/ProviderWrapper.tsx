@@ -2,16 +2,18 @@ import { CacheProvider } from '@emotion/react';
 import CssBaseline from '@mui/material/CssBaseline';
 import { DataProvider } from './DataProvider';
 import type { EmotionCache } from '@emotion/cache';
-import { ErrorWrapper } from './app/components/error-handling/ErrorWrapper';
+import { ErrorWrapper } from './components/error-handling/ErrorWrapper';
+import { generateStore } from '~renderer/redux';
 import { KeyboardShortcuts } from './KeyboardShortcuts';
 import { Provider as ReduxProvider } from 'react-redux';
-import { store } from './store';
 import { theme } from './theme';
 import { ThemeProvider } from '@mui/material/styles';
 
 export interface RootProps {
   cache: EmotionCache;
 }
+
+const store = generateStore();
 
 /**
  * The root element that configures all global providers.

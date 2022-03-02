@@ -2,7 +2,7 @@ import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 import Fab from '@mui/material/Fab';
 import Refresh from '@mui/icons-material/Refresh';
-import { useAppSelector } from '../../hooks';
+import { useAppSelector } from '~renderer/hooks';
 import { useEffect } from 'react';
 
 export interface FatalErrorDisplayProps {
