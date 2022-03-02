@@ -46,6 +46,11 @@ export const FileListItem: React.FC<FileListItemProps> = ({ file, selected }) =>
               label={file.displayName}
               value={filename}
               onChange={(ev): void => setFilename(ev.target.value)}
+              onKeyUp={(ev): void => {
+                if (ev.key === 'Escape') {
+                  setEditing(false);
+                }
+              }}
               onKeyPress={(ev): void => {
                 if (ev.key === 'Enter') {
                   handleClickAway();
