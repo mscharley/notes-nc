@@ -15,6 +15,7 @@ jobs:
     container:
       image: electronuserland/builder:14-wine-mono
     steps:
+      - run: npm i -g npm@8
       - uses: actions/checkout@v2
       - run: npm ci
       - run: npm run build
