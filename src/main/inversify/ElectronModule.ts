@@ -1,5 +1,5 @@
 import { dialog, ipcMain } from 'electron/main';
-import { ElectronApp, ElectronDialog, ElectronIpcMain } from './tokens';
+import { ElectronApp, ElectronDialog, ElectronIpcMain } from '~main/inversify/tokens';
 import type { ContainerModule } from 'inversify';
 import { TokenContainerModule } from 'inversify-token';
 

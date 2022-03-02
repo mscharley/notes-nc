@@ -1,17 +1,17 @@
 /* eng-disable PROTOCOL_HANDLER_JS_CHECK */
 
-import * as http from '@shared/http';
-import type { CategoryDescription, FileDescription, FolderConfiguration, FolderDescription } from '@shared/model';
-import { ElectronApp, ElectronIpcMain } from '../inversify/tokens';
+import * as http from '~shared/http';
+import type { CategoryDescription, FileDescription, FolderConfiguration, FolderDescription } from '~shared/model';
+import { ElectronApp, ElectronIpcMain } from '~main/inversify/tokens';
+import { inject, injectable } from 'inversify';
 import type { Protocol, ProtocolResponse } from 'electron/main';
 import { readdir, writeFile } from 'fs/promises';
-import { Configuration } from './Configuration';
-import type { CustomProtocolProvider } from '../interfaces/CustomProtocolProvider';
-import { injectable } from 'inversify';
+import { Configuration } from '~main/services/Configuration';
+import type { CustomProtocolProvider } from '~main/interfaces/CustomProtocolProvider';
 import { injectToken } from 'inversify-token';
 import log from 'electron-log';
-import { MainWindow } from '../MainWindow';
-import type { OnReadyHandler } from '../interfaces/OnReadyHandler';
+import { MainWindow } from '~main/MainWindow';
+import type { OnReadyHandler } from '~main/interfaces/OnReadyHandler';
 import path from 'path';
 
 @injectable()
@@ -24,8 +24,8 @@ export class FileSystem implements CustomProtocolProvider, OnReadyHandler {
   public constructor(
     @injectToken(ElectronApp) application: ElectronApp,
     @injectToken(ElectronIpcMain) private readonly ipcMain: ElectronIpcMain,
-    private readonly mainWindow: MainWindow,
-    private readonly configuration: Configuration,
+    @inject(MainWindow) private readonly mainWindow: MainWindow,
+    @inject(Configuration) private readonly configuration: Configuration,
   ) {
     this.appBasePath = path.join(application.getAppPath(), 'ts-build');
     this.errorBasePath = path.join(application.getAppPath(), 'share/static');

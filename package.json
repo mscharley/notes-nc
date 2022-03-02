@@ -1,9 +1,14 @@
 {
   "name": "@mscharley/notes-nc",
   "productName": "notes-nc",
-  "version": "0.3.0",
   "description": "Note taking app for markdown folders",
   "author": "Matthew Scharley <matt@scharley.me>",
+  "private": true,
+  "version": "0.3.0",
+  "funding": {
+    "type": "individual",
+    "url": "https://github.com/sponsors/mscharley"
+  },
   "license": "MIT",
   "main": "ts-build/main",
   "repository": {
@@ -30,7 +35,7 @@
     "start:vite": "vite --port ${VITE_PORT:-5000}",
     "clean": "rimraf -rf ts-build coverage dist",
     "build": "node ./bin/build.mjs",
-    "build:esbuild": "esbuild ./ts-build/main/main.js --bundle --sourcemap=external --minify --outfile=ts-build/main/index.js --platform=node --external:electron --external:electron-is-dev --external:electron-devtools-installer",
+    "build:esbuild": "esbuild ./src/main/index.ts ./src/main/preload.ts --color=true --bundle --minify --sourcemap=external --outdir=ts-build/main --platform=node --external:electron --external:electron-is-dev --external:electron-devtools-installer",
     "build:vite": "vite build",
     "test": "npm run test:lint && npm run test:jest",
     "test:electronegativity": "electronegativity -i ./src -e $(electron --version)",
@@ -45,14 +50,10 @@
     "build:esbuild": {
       "patterns": [
         "package.json",
-        "ts-build/main",
-        "ts-build/shared"
+        "src/main",
+        "src/shared"
       ],
-      "ignore": [
-        "ts-build/main/index.js",
-        "ts-build/**/__tests__/**"
-      ],
-      "extensions": "js"
+      "extensions": "ts"
     }
   },
   "lint-staged": {
@@ -85,8 +86,8 @@
     "uuid": "8.3.2"
   },
   "devDependencies": {
-    "@mscharley/eslint-config": "1.7.1",
-    "@mscharley/prettier-config": "1.2.1",
+    "@mscharley/eslint-config": "1.8.3",
+    "@mscharley/prettier-config": "1.2.2",
     "@types/jest": "27.4.1",
     "@types/lodash.debounce": "4.0.6",
     "@types/node": "16.11.12",
@@ -101,8 +102,6 @@
     "electron-devtools-installer": "3.2.0",
     "electron-is-dev": "2.0.0",
     "esbuild": "0.14.23",
-    "eslint-plugin-react": "7.29.2",
-    "eslint-plugin-react-hooks": "4.3.0",
     "generic-type-guard": "3.6.0",
     "html-webpack-plugin": "5.5.0",
     "husky": "7.0.4",

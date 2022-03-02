@@ -1,9 +1,13 @@
+import {
+  setAboutDetails,
+  setActiveOverlay,
+  setFatalError,
+  setFileListing,
+  updateAppConfiguration,
+} from '~renderer/redux';
 import { useCallback, useEffect } from 'react';
-import type { FolderConfiguration } from '@shared/model';
-import { setAboutDetails } from './app/features/about/details-slice';
-import { setFatalError } from './app/features/fatal-errors/errors-slice';
-import { setFileListing } from './app/features/markdown-files/files-slice';
-import { useAppDispatch } from './app/hooks';
+import type { FolderConfiguration } from '~shared/model';
+import { useAppDispatch } from '~renderer/hooks';
 
 export const DataProvider: React.FC = ({ children }) => {
   const dispatch = useAppDispatch();
@@ -20,6 +24,9 @@ export const DataProvider: React.FC = ({ children }) => {
       .listNoteFiles()
       .then((fs) => {
         dispatch(setFileListing(fs));
+        if (Object.values(fs).length === 0) {
+          dispatch(setActiveOverlay('configuration'));
+        }
         return editorApi.on('files-updated', handleFileUpdates);
       })
       .catch((e: unknown) => {
@@ -37,6 +44,10 @@ export const DataProvider: React.FC = ({ children }) => {
     editorApi.aboutDetails
       .then((details) => dispatch(setAboutDetails(details)))
       .catch((e) => dispatch(setFatalError(e)));
+  });
+
+  useEffect(() => {
+    dispatch(updateAppConfiguration({ layout: 'two-column' }));
   });
 
   return <>{children}</>;
