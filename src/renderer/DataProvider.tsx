@@ -1,6 +1,7 @@
 import { setAboutDetails, setActiveOverlay, setFatalError, setFileListing } from '~renderer/redux';
 import { useCallback, useEffect } from 'react';
 import type { FolderConfiguration } from '~shared/model';
+import { updateAppConfiguration } from './redux/configuration/configuration-slice';
 import { useAppDispatch } from '~renderer/hooks';
 
 export const DataProvider: React.FC = ({ children }) => {
@@ -38,6 +39,10 @@ export const DataProvider: React.FC = ({ children }) => {
     editorApi.aboutDetails
       .then((details) => dispatch(setAboutDetails(details)))
       .catch((e) => dispatch(setFatalError(e)));
+  });
+
+  useEffect(() => {
+    dispatch(updateAppConfiguration({ layout: 'two-column' }));
   });
 
   return <>{children}</>;

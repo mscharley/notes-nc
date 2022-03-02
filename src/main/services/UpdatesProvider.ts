@@ -1,14 +1,14 @@
-import { AppUpdater, autoUpdater } from 'electron-updater';
-import { injectable, unmanaged } from 'inversify';
-import { DevTools } from './DevTools';
+import type { AppUpdater, UpdateCheckResult } from 'electron-updater';
+import { inject, injectable, unmanaged } from 'inversify';
+import { autoUpdater } from 'electron-updater';
+import { DevTools } from '~main/services/DevTools';
 import log from 'electron-log';
 import type { OnReadyHandler } from '~main/interfaces/OnReadyHandler';
-import type { UpdateCheckResult } from 'electron-updater';
 
 @injectable()
 export class UpdatesProvider implements OnReadyHandler {
   public constructor(
-    private readonly devtools: DevTools,
+    @inject(DevTools) private readonly devtools: DevTools,
     @unmanaged() private readonly updater: AppUpdater = autoUpdater,
   ) {
     this.updater.logger = log;

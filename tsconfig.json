@@ -4,7 +4,7 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "jsx": "react-jsx",
-    "outDir": "ts-build/",
+    "noEmit": true,
     "pretty": true,
     "sourceMap": true,
     "removeComments": false,
@@ -14,7 +14,8 @@
     "lib": ["ES2019", "DOM"],
     "typeRoots": ["./@types", "./node_modules/@types"],
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
+    // This isn't supported by esbuild, so explicitly disable it here.
+    "emitDecoratorMetadata": false,
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "strict": true,

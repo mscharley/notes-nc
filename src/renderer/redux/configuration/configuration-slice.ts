@@ -1,22 +1,17 @@
 import { createAction, createSlice } from '@reduxjs/toolkit';
-import type { AboutDetails } from '~shared/model/AboutDetails';
-
-export type AboutSlice = { loading: false; details?: undefined } | { loading: true; details: AboutDetails };
+import type { AppConfiguration } from '~shared/model/AppConfiguration';
 
 // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-const initialState = { loading: false } as AboutSlice;
+const initialState = {} as AppConfiguration;
 
-export const setAboutDetails = createAction<AboutDetails>('setAboutDetails');
+export const updateAppConfiguration = createAction<AppConfiguration>('updateAppConfigurate');
 
 const slice = createSlice({
-  name: 'about-details',
+  name: 'configuration',
   initialState,
   reducers: {},
   extraReducers: (builder) =>
-    builder.addCase(setAboutDetails, (state, { payload: details }): void => {
-      state.loading = false;
-      state.details = details;
-    }),
+    builder.addCase(updateAppConfiguration, (_state, { payload: details }): AppConfiguration => details),
 });
 
 export default slice.reducer;

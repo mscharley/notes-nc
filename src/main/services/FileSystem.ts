@@ -3,11 +3,11 @@
 import * as http from '~shared/http';
 import type { CategoryDescription, FileDescription, FolderConfiguration, FolderDescription } from '~shared/model';
 import { ElectronApp, ElectronIpcMain } from '~main/inversify/tokens';
+import { inject, injectable } from 'inversify';
 import type { Protocol, ProtocolResponse } from 'electron/main';
 import { readdir, writeFile } from 'fs/promises';
-import { Configuration } from './Configuration';
+import { Configuration } from '~main/services/Configuration';
 import type { CustomProtocolProvider } from '~main/interfaces/CustomProtocolProvider';
-import { injectable } from 'inversify';
 import { injectToken } from 'inversify-token';
 import log from 'electron-log';
 import { MainWindow } from '~main/MainWindow';
@@ -24,8 +24,8 @@ export class FileSystem implements CustomProtocolProvider, OnReadyHandler {
   public constructor(
     @injectToken(ElectronApp) application: ElectronApp,
     @injectToken(ElectronIpcMain) private readonly ipcMain: ElectronIpcMain,
-    private readonly mainWindow: MainWindow,
-    private readonly configuration: Configuration,
+    @inject(MainWindow) private readonly mainWindow: MainWindow,
+    @inject(Configuration) private readonly configuration: Configuration,
   ) {
     this.appBasePath = path.join(application.getAppPath(), 'ts-build');
     this.errorBasePath = path.join(application.getAppPath(), 'share/static');

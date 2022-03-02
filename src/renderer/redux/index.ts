@@ -1,5 +1,5 @@
 export { reducer } from './reducer';
-export type { AppDispatch, RootState } from './store';
+export type { AppDispatch, RootState, Store } from './store';
 export { generateStore } from './store';
 
 export { setAboutDetails } from './about/details-slice';

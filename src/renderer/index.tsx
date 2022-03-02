@@ -2,10 +2,11 @@
 import './index.scss';
 
 import createCache from '@emotion/cache';
+import { generateStore } from '~renderer/redux';
+import { LayoutRouter } from './layouts/LayoutRouter';
 import { ProviderWrapper } from './ProviderWrapper';
 import { render } from 'react-dom';
 import { sleep } from '~shared/util';
-import { TwoColumnLayout } from '~renderer/layouts/TwoColumnLayout';
 
 const root = document.querySelector('#root');
 if (root == null) {
@@ -27,9 +28,11 @@ if (root == null) {
       prepend: true,
     });
 
+    const store = generateStore();
+
     render(
-      <ProviderWrapper cache={cache}>
-        <TwoColumnLayout />
+      <ProviderWrapper cache={cache} store={store}>
+        <LayoutRouter />
       </ProviderWrapper>,
       root,
     );

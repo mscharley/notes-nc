@@ -22,10 +22,11 @@
       },
       "runtimeArgs": ["--trace-warnings", "--remote-debugging-port=9223"],
       "args": ["."],
-      "envFile": "${workspaceFolder}/.env",
       "env": {
-        "ELECTRON_IS_DEV": "1"
+        "ELECTRON_IS_DEV": "1",
+        "LOG_LEVEL": "debug"
       },
+      "envFile": "${workspaceFolder}/.env",
       "outputCapture": "std"
     },
     {

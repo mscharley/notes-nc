@@ -10,7 +10,6 @@ export const generateStore = () =>
     reducer,
   });
 
-export const store = generateStore();
-
-export type AppDispatch = typeof store['dispatch'];
-export type RootState = ReturnType<typeof store['getState']>;
+export type Store = ReturnType<typeof generateStore>;
+export type AppDispatch = Store['dispatch'];
+export type RootState = ReturnType<Store['getState']>;
