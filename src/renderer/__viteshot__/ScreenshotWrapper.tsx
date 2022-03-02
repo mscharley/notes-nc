@@ -1,3 +1,5 @@
+import './mocks';
+
 import CssBaseline from '@mui/material/CssBaseline';
 import { generateStore } from '~renderer/redux';
 import { Provider as ReduxProvider } from 'react-redux';
