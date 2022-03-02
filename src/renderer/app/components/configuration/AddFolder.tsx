@@ -1,28 +1,39 @@
 import Button from '@mui/material/Button';
 import CreateNewFolderIcon from '@mui/icons-material/CreateNewFolder';
 import IconButton from '@mui/material/IconButton';
+import { setFatalError } from '@renderer/app/features/fatal-errors/errors-slice';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
+import { useDispatch } from 'react-redux';
 import { useState } from 'react';
 
 export const AddFolder: React.FC = () => {
   const [name, setName] = useState<string>('');
   const [folder, setFolder] = useState<string | null>(null);
+  const dispatch = useDispatch();
 
-  const handleOpenFolder = async (): Promise<void> => {
-    const results = await editorApi.openSelectFolderDialog();
-    if (!results.canceled || results.filePaths.length === 1) {
-      setFolder(results.filePaths[0]);
-    }
+  const handleOpenFolder = (): void => {
+    editorApi
+      .openSelectFolderDialog()
+      .then((results) => {
+        if (!results.canceled || results.filePaths.length === 1) {
+          setFolder(results.filePaths[0]);
+        }
+      })
+      .catch((e) => dispatch(setFatalError(e)));
   };
 
-  const handleAddFolder = async (): Promise<void> => {
+  const handleAddFolder = (): void => {
     if (name === '' || folder == null) {
       return;
     }
-    await editorApi.addFolder(name, folder);
-    setName('');
-    setFolder(null);
+    editorApi
+      .addFolder(name, folder)
+      .then(() => {
+        setName('');
+        setFolder(null);
+      })
+      .catch((e) => dispatch(setFatalError(e)));
   };
 
   return (

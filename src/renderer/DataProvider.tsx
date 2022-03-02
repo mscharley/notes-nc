@@ -1,6 +1,7 @@
 import { useCallback, useEffect } from 'react';
 import type { FolderConfiguration } from '@shared/model';
 import { setAboutDetails } from './app/features/about/details-slice';
+import { setActiveOverlay } from './app/features/overlay/overlay-slice';
 import { setFatalError } from './app/features/fatal-errors/errors-slice';
 import { setFileListing } from './app/features/markdown-files/files-slice';
 import { useAppDispatch } from './app/hooks';
@@ -20,6 +21,9 @@ export const DataProvider: React.FC = ({ children }) => {
       .listNoteFiles()
       .then((fs) => {
         dispatch(setFileListing(fs));
+        if (Object.values(fs).length === 0) {
+          dispatch(setActiveOverlay('configuration'));
+        }
         return editorApi.on('files-updated', handleFileUpdates);
       })
       .catch((e: unknown) => {

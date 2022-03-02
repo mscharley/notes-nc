@@ -1,15 +1,14 @@
 import * as http from '@shared/http';
 import { useAppSelector, useDebouncedState } from './hooks';
 import { useCallback, useEffect } from 'react';
+import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
 import { DialogOverlays } from './components/DialogOverlays';
+import Drawer from '@mui/material/Drawer';
 import type { FileDescription } from '@shared/model';
 import { FileListing } from './components/FileListing';
-import Grid from '@mui/material/Grid';
-import type { GridProps } from '@mui/material/Grid';
 import { MarkdownEditor } from './components/MarkdownEditor';
 import { SidebarFooter } from './components/SidebarFooter';
-import { styled } from '@mui/material';
 
 const TITLE_SUFFIX = 'Notes';
 // TODO: Make this configurable.
@@ -22,17 +21,6 @@ const renderTitle = (openFile?: string): string => {
     return `${openFile} - ${TITLE_SUFFIX}`;
   }
 };
-
-const GrowingGrid = styled(Grid)<GridProps>(() => ({
-  flexGrow: 1,
-}));
-
-const FullSizeGrid = styled(Grid)<GridProps>(() => ({
-  height: '100%',
-  overflowY: 'auto',
-  display: 'flex',
-  flexDirection: 'column',
-}));
 
 interface FileState {
   file: FileDescription;
@@ -55,6 +43,8 @@ const saveFile = async (state: Partial<FileState>): Promise<void> => {
     }
   }
 };
+
+const drawerWidth = 300;
 
 /**
  * Main application entrypoint component.
@@ -96,26 +86,36 @@ export const Application: React.FC = () => {
   const onChange = useCallback(
     (content: string): void => {
       setContents({ file: openFile.currentFile, content });
+      window.scrollTo({ top: 0 });
     },
     [setContents, openFile.currentFile],
   );
 
   return (
-    <>
-      <GrowingGrid container spacing={0}>
-        <FullSizeGrid item xs={4}>
-          <FileListing />
-          <SidebarFooter />
-        </FullSizeGrid>
-        <FullSizeGrid item xs={8}>
-          {openFile.currentFile == null ? (
-            <CircularProgress />
-          ) : (
-            <MarkdownEditor value={contents.content ?? ''} onChange={onChange} />
-          )}
-        </FullSizeGrid>
-      </GrowingGrid>
+    <Box sx={{ display: 'flex', width: '100%' }}>
+      <Drawer
+        variant='permanent'
+        sx={{
+          'width': drawerWidth,
+          'flexShrink': 0,
+          '& .MuiDrawer-paper': {
+            paddingBottom: '2.5rem',
+            width: drawerWidth,
+            boxSizing: 'border-box',
+          },
+        }}
+      >
+        <FileListing />
+        <SidebarFooter width={`${drawerWidth - 1}px`} />
+      </Drawer>
+      <Box component='main' sx={{ flexGrow: '1' }}>
+        {openFile.currentFile == null ? (
+          <CircularProgress />
+        ) : (
+          <MarkdownEditor value={contents.content ?? ''} onChange={onChange} />
+        )}
+      </Box>
       <DialogOverlays />
-    </>
+    </Box>
   );
 };

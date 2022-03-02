@@ -3,6 +3,7 @@ import AlertTitle from '@mui/material/AlertTitle';
 import Fab from '@mui/material/Fab';
 import Refresh from '@mui/icons-material/Refresh';
 import { useAppSelector } from '../../hooks';
+import { useEffect } from 'react';
 
 export interface FatalErrorDisplayProps {
   overrideError?: Error;
@@ -11,6 +12,12 @@ export interface FatalErrorDisplayProps {
 export const FatalErrorDisplay: React.FC<FatalErrorDisplayProps> = ({ overrideError, children }) => {
   const stateError = useAppSelector((state) => state.fatalError.err);
   const error = overrideError ?? stateError;
+
+  useEffect(() => {
+    if (error != null) {
+      log.error(error);
+    }
+  }, [error]);
 
   if (error != null) {
     return (

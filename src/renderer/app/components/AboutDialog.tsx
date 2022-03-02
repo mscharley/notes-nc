@@ -24,12 +24,11 @@ export const AboutDialog: React.FC<AboutDialogProps> = ({ open, onClose = noop }
           <CircularProgress />
         ) : (
           <>
-            <Typography>
+            <Typography paragraph>
               <strong>Version:</strong>
               {` ${details.version}${details.isDevBuild ? ' (dev)' : ''}`}
               {`${details.updateExists ? ` - update to ${details.updateVersion} by restarting the application.` : ''}`}
-            </Typography>
-            <Typography>
+              <br />
               <strong>Electron Version:</strong>
               {` ${details.electronVersion}`}
             </Typography>

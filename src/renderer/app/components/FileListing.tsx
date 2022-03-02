@@ -7,6 +7,8 @@ import { styled } from '@mui/material';
 import { useAppSelector } from '../hooks';
 
 const ScrollablePaper = styled(Paper)<PaperProps>(() => ({
+  overflowY: 'auto',
+  border: '0px',
   height: '100%',
 }));
 
@@ -15,7 +17,7 @@ export const FileListing: React.FC = () => {
 
   return (
     <ScrollablePaper variant='outlined' square>
-      <List>
+      <List sx={{ padding: '0' }}>
         {files.loading ? (
           <ListItem>Loading...</ListItem>
         ) : (

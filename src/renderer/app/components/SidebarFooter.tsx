@@ -6,11 +6,29 @@ import Settings from '@mui/icons-material/SettingsSharp';
 import Tooltip from '@mui/material/Tooltip';
 import { useAppDispatch } from '../hooks';
 
-export const SidebarFooter: React.FC = () => {
+export interface SidebarFooterProps {
+  width: string;
+}
+
+export const SidebarFooter: React.FC<SidebarFooterProps> = ({ width }) => {
   const dispatch = useAppDispatch();
 
   return (
-    <Paper sx={{ display: 'flex', flexDirection: 'row-reverse' }}>
+    <Paper
+      variant='outlined'
+      square
+      sx={{
+        borderLeft: '0',
+        borderBottom: '0',
+        borderRight: '0',
+        position: 'fixed',
+        bottom: '0px',
+        left: '0px',
+        width: width,
+        display: 'flex',
+        flexDirection: 'row-reverse',
+      }}
+    >
       <Tooltip title='Configuration (Ctrl-,)'>
         <IconButton
           onClick={(): void => {

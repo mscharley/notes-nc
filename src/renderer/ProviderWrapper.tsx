@@ -20,15 +20,14 @@ export const ProviderWrapper: React.FC<RootProps> = ({ cache, children }) => {
   return (
     <CacheProvider value={cache}>
       <ThemeProvider theme={theme}>
-        <CssBaseline>
-          <ReduxProvider store={store}>
-            <ErrorWrapper>
-              <DataProvider>
-                <KeyboardShortcuts>{children}</KeyboardShortcuts>
-              </DataProvider>
-            </ErrorWrapper>
-          </ReduxProvider>
-        </CssBaseline>
+        <CssBaseline />
+        <ReduxProvider store={store}>
+          <ErrorWrapper>
+            <DataProvider>
+              <KeyboardShortcuts>{children}</KeyboardShortcuts>
+            </DataProvider>
+          </ErrorWrapper>
+        </ReduxProvider>
       </ThemeProvider>
     </CacheProvider>
   );
