@@ -58,7 +58,7 @@
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": "eslint --fix",
-    "*.{json,md}": "prettier -w"
+    "*.{json,md,yml}": "prettier -w"
   },
   "dependencies": {
     "@codemirror/lang-markdown": "0.19.6",
