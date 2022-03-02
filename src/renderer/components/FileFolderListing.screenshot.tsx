@@ -7,7 +7,8 @@ const categories: CategoryDescription[] = [
     path: '/Test category',
     files: [
       {
-        name: 'File 1',
+        name: 'File 1.md',
+        displayName: 'File 1',
         url: 'editor://deadbeef/',
       },
     ],

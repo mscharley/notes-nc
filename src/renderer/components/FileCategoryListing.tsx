@@ -1,15 +1,12 @@
 import AddIcon from '@mui/icons-material/Add';
-import ArticleIcon from '@mui/icons-material/Article';
 import Divider from '@mui/material/Divider';
 import type { FileDescription } from '~shared/model';
+import { FileListItem } from './FileListItem';
 import IconButton from '@mui/material/IconButton';
 import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import { setCurrentFile } from '~renderer/redux';
 import Tooltip from '@mui/material/Tooltip';
-import { useAppDispatch } from '~renderer/hooks';
+import { useAppSelector } from '~renderer/hooks';
 
 export interface FileCategoryListingProps {
   name: string;
@@ -17,7 +14,7 @@ export interface FileCategoryListingProps {
 }
 
 export const FileCategoryListing: React.FC<FileCategoryListingProps> = ({ name, files }) => {
-  const dispatch = useAppDispatch();
+  const currentFileUrl = useAppSelector((s) => s.files.currentFile?.url);
 
   return (
     <>
@@ -41,19 +38,7 @@ export const FileCategoryListing: React.FC<FileCategoryListingProps> = ({ name, 
         />
       </ListItem>
       {files.map((f) => (
-        <ListItem key={f.url} disablePadding>
-          <ListItemButton
-            alignItems='flex-start'
-            onClick={(): void => {
-              dispatch(setCurrentFile(f));
-            }}
-          >
-            <ListItemIcon sx={{ marginTop: '3px' }}>
-              <ArticleIcon />
-            </ListItemIcon>
-            <ListItemText primary={f.name} />
-          </ListItemButton>
-        </ListItem>
+        <FileListItem key={f.url} file={f} selected={f.url === currentFileUrl} />
       ))}
     </>
   );

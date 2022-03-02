@@ -32,14 +32,16 @@ class EditorApiImpl implements EditorApi {
   }
 
   public readonly aboutDetails: EditorApi['aboutDetails'] = ipcRenderer.invoke('about-details');
-  public readonly listNoteFiles: EditorApi['listNoteFiles'] = async () => ipcRenderer.invoke('list-files');
-  public readonly getCspNonce: EditorApi['getCspNonce'] = async () => ipcRenderer.invoke('csp-nonce');
   public readonly addFolder: EditorApi['addFolder'] = async (name: string, localPath: string) =>
     ipcRenderer.invoke('add-folder', name, localPath);
   public readonly deleteFolder: EditorApi['deleteFolder'] = async (uuid: string) =>
     ipcRenderer.invoke('delete-folder', uuid);
+  public readonly getCspNonce: EditorApi['getCspNonce'] = async () => ipcRenderer.invoke('csp-nonce');
+  public readonly listNoteFiles: EditorApi['listNoteFiles'] = async () => ipcRenderer.invoke('list-files');
   public readonly openSelectFolderDialog: EditorApi['openSelectFolderDialog'] = async () =>
     ipcRenderer.invoke('open-select-folder');
+  public readonly renameNoteFile: EditorApi['renameNoteFile'] = async (url, title) =>
+    ipcRenderer.invoke('rename-file', url, title);
 
   /* eslint-disable @typescript-eslint/no-explicit-any */
   public readonly on: globalThis.EditorApi['on'] = (event, handler: (...args: any[]) => void) => {
