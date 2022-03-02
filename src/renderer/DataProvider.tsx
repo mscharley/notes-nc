@@ -1,7 +1,12 @@
-import { setAboutDetails, setActiveOverlay, setFatalError, setFileListing } from '~renderer/redux';
+import {
+  setAboutDetails,
+  setActiveOverlay,
+  setFatalError,
+  setFileListing,
+  updateAppConfiguration,
+} from '~renderer/redux';
 import { useCallback, useEffect } from 'react';
 import type { FolderConfiguration } from '~shared/model';
-import { updateAppConfiguration } from './redux/configuration/configuration-slice';
 import { useAppDispatch } from '~renderer/hooks';
 
 export const DataProvider: React.FC = ({ children }) => {
