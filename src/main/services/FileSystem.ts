@@ -5,7 +5,7 @@ import type { CategoryDescription, FileDescription, FolderConfiguration, FolderD
 import { ElectronApp, ElectronIpcMain } from '~main/inversify/tokens';
 import { inject, injectable } from 'inversify';
 import type { Protocol, ProtocolResponse } from 'electron/main';
-import { readdir, writeFile } from 'fs/promises';
+import { readdir, rename, writeFile } from 'fs/promises';
 import { Configuration } from '~main/services/Configuration';
 import type { CustomProtocolProvider } from '~main/interfaces/CustomProtocolProvider';
 import { injectToken } from 'inversify-token';
@@ -36,8 +36,7 @@ export class FileSystem implements CustomProtocolProvider, OnReadyHandler {
     configuration.onChange(() => {
       (async (): Promise<void> => {
         this.folders = configuration.foldersByUuid;
-        const files = await this.listFiles();
-        this.mainWindow.window?.webContents.send('files-updated', files);
+        await this.republishFileList();
       })().catch((e) => {
         log.error(e);
       });
@@ -125,6 +124,7 @@ export class FileSystem implements CustomProtocolProvider, OnReadyHandler {
 
   public readonly onAppReady = (): void | Promise<void> => {
     this.ipcMain.handle('list-files', this.listFiles);
+    this.ipcMain.handle('rename-file', this.renameFile);
     // eslint-disable-next-line @typescript-eslint/require-await
     this.ipcMain.handle('add-folder', async (_ev, name: string, localPath: string): Promise<void> => {
       this.configuration.addFolder(name, localPath);
@@ -154,6 +154,32 @@ export class FileSystem implements CustomProtocolProvider, OnReadyHandler {
       ),
     );
 
+  private readonly renameFile = async (
+    _ev: unknown,
+    file: FileDescription,
+    displayName: string,
+  ): Promise<null | FileDescription> => {
+    if (file.displayName === displayName) {
+      return file;
+    }
+
+    // otherwise...
+    const url = new URL(file.url);
+    const dir = this.folders[url.hostname];
+    const oldFileName = path.join(dir.localPath, decodeURIComponent(url.pathname));
+    const newFileName = path.resolve(oldFileName, `../${displayName}.md`);
+    log.debug(`RENAME ${oldFileName} => ${newFileName}`);
+    await rename(oldFileName, newFileName);
+    await this.republishFileList();
+    url.pathname = path.resolve(url.pathname, `../${displayName}.md`);
+
+    return {
+      displayName,
+      name: `${displayName}.md`,
+      url: url.toString(),
+    };
+  };
+
   public readonly generateFolder = async (
     uuid: string,
     basePath: string,
@@ -167,6 +193,7 @@ export class FileSystem implements CustomProtocolProvider, OnReadyHandler {
       .filter((f) => f.isFile() && f.name.match(/\.(?:md|markdown)$/u) != null)
       .map((f) => ({
         name: f.name,
+        displayName: f.name.replace(/\.md$/u, ''),
         url: `editor://${uuid}/${category}/${f.name}`,
       }));
 
@@ -183,6 +210,11 @@ export class FileSystem implements CustomProtocolProvider, OnReadyHandler {
         ? { files, name: 'Uncategorised', path: `/${category}` }
         : { files, name: category, path: `/${category}` };
     return [description, ...subfolders];
+  };
+
+  private readonly republishFileList = async (): Promise<void> => {
+    const files = await this.listFiles();
+    this.mainWindow.window?.webContents.send('files-updated', files);
   };
 
   private readonly serveLocalFile = (basepath: string, filepath: string, url: string): string | ProtocolResponse => {

@@ -1,19 +1,19 @@
 /* eslint-disable @typescript-eslint/consistent-type-imports */
 
-import { AboutDetails } from './model/AboutDetails';
-import { FolderConfiguration } from './model';
+import { AboutDetails, FileDescription, FolderConfiguration } from './model';
 import { OpenDialogReturnValue } from 'electron';
 
 declare global {
   export interface EditorApi {
+    readonly aboutDetails: Promise<AboutDetails>;
+    readonly addFolder: (name: string, localPath: string) => Promise<void>;
+    readonly deleteFolder: (uuid: string) => Promise<void>;
     readonly getCspNonce: () => Promise<string>;
     readonly isCspEnabled: Promise<boolean>;
     readonly isDev: Promise<boolean>;
     readonly listNoteFiles: () => Promise<FolderConfiguration>;
     readonly openSelectFolderDialog: () => Promise<OpenDialogReturnValue>;
-    readonly addFolder: (name: string, localPath: string) => Promise<void>;
-    readonly deleteFolder: (uuid: string) => Promise<void>;
-    readonly aboutDetails: Promise<AboutDetails>;
+    readonly renameNoteFile: (file: FileDescription, title: string) => Promise<null | FileDescription>;
 
     readonly on: {
       // eslint-disable-next-line @typescript-eslint/prefer-function-type

@@ -21,7 +21,7 @@ export const FatalErrorDisplay: React.FC<FatalErrorDisplayProps> = ({ overrideEr
 
   if (error != null) {
     return (
-      <Alert severity='error'>
+      <Alert severity='error' sx={{ flexGrow: 1 }}>
         <AlertTitle>{error.message}</AlertTitle>
         <pre style={{ whiteSpace: 'pre-wrap' }}>{`${error.stack}`}</pre>
         <Fab
@@ -29,7 +29,7 @@ export const FatalErrorDisplay: React.FC<FatalErrorDisplayProps> = ({ overrideEr
           sx={{ position: 'absolute', bottom: 16, right: 16 }}
           onClick={(): void => window.location.reload()}
         >
-          <Refresh /> Reload
+          <Refresh sx={{ marginRight: 1 }} /> Reload
         </Fab>
       </Alert>
     );

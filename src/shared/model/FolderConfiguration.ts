@@ -2,6 +2,7 @@
 
 export interface FileDescription {
   name: string;
+  displayName: string;
   url: string;
 }
 export type CategoryDescription = {

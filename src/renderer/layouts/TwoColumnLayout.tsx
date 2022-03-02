@@ -66,7 +66,7 @@ export const TwoColumnLayout: React.FC = () => {
   }, [flushContents]);
 
   useEffect(() => {
-    document.title = renderTitle(openFile.currentFile?.name);
+    document.title = renderTitle(openFile.currentFile?.displayName);
 
     // Save current file if necessary
     flushContents();
