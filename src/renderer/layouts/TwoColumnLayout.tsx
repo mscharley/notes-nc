@@ -2,12 +2,12 @@ import * as http from '~shared/http';
 import { useAppSelector, useDebouncedState } from '~renderer/hooks';
 import { useCallback, useEffect } from 'react';
 import Box from '@mui/material/Box';
-import CircularProgress from '@mui/material/CircularProgress';
 import { DialogOverlays } from '~renderer/components/DialogOverlays';
 import Drawer from '@mui/material/Drawer';
 import type { FileDescription } from '~shared/model';
 import { FileListing } from '~renderer/components/FileListing';
 import { MarkdownEditor } from '~renderer/components/MarkdownEditor';
+import { NoFile } from '~renderer/components/NoFile';
 import { SidebarFooter } from '~renderer/components/SidebarFooter';
 
 const TITLE_SUFFIX = 'Notes';
@@ -68,17 +68,23 @@ export const TwoColumnLayout: React.FC = () => {
   useEffect(() => {
     document.title = renderTitle(openFile.currentFile?.name);
 
+    // Save current file if necessary
     flushContents();
     if (openFile.currentFile?.url != null) {
       fetch(openFile.currentFile.url)
         .then(async (v) => v.text())
         .then((content) => {
+          // Open new file and flush through the new state.
           setContents({ file: openFile.currentFile, loading: true, content });
           flushContents();
         })
         .catch((e) => {
           log.error(e);
         });
+    } else {
+      // Reset the contents state so we don't inadvertantly re-save a closed file.
+      setContents({});
+      flushContents();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [openFile.currentFile?.url]);
@@ -110,7 +116,7 @@ export const TwoColumnLayout: React.FC = () => {
       </Drawer>
       <Box component='main' sx={{ flexGrow: '1' }}>
         {openFile.currentFile == null ? (
-          <CircularProgress />
+          <NoFile />
         ) : (
           <MarkdownEditor value={contents.content ?? ''} onChange={onChange} />
         )}
