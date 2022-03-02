@@ -5,9 +5,9 @@ name: Electron Release
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   release:
-    types: [ created ]
+    types: [created]
 
 jobs:
   publish-github:
@@ -20,8 +20,7 @@ jobs:
           ls -l .husky
           npm ci
       - run: npm run build
-      - run: npm run release
-        uses: docker://electronuserland/builder:14-wine-mono
+      - uses: docker://electronuserland/builder:14-wine-mono
         with:
           entrypoint: bash
           args: -c "npm run release"
