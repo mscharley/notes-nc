@@ -4,7 +4,7 @@
   "description": "Note taking app for markdown folders",
   "author": "Matthew Scharley <matt@scharley.me>",
   "private": true,
-  "version": "0.3.0",
+  "version": "0.2.1",
   "funding": {
     "type": "individual",
     "url": "https://github.com/sponsors/mscharley"
