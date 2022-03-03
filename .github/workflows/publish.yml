@@ -34,9 +34,9 @@ jobs:
           # (No need to define this secret in the repo settings)
           github_token: ${{ secrets.github_token }}
 
-          # If the commit is tagged with a version (e.g. "v1.0.0"),
-          # release the app after building
-          release: true
+          # Force releases, even if the release exists on Github already.
+          release: false
+          args: --publish=release
 
           # Allow some retries, the github api can be a bit flaky.
           max_attempts: 3
