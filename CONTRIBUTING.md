@@ -19,6 +19,6 @@ The local development workflow is built around Visual Studio Code. Other IDE's w
 
 Doing a release is a short process:
 
-1. Ensure the current draft is the correct version for the next release.
-2. Officially promote and tag the current draft release.
-3. Push a patch version bump in `package.json`.
+1. `npm version {patch | minor | major}` - Bump the version in the package.json file.
+2. `git push origin main tag {tag-name}` - Push the updates to github for processing. NPM prints the tag name that it creates when you run the first command.
+3. Create a release on Github from the tag which will trigger the build process to create final artifacts for the release.

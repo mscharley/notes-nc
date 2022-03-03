@@ -21,9 +21,12 @@ export class UpdatesProvider implements OnReadyHandler {
 
   public readonly onAppReady = (): void => {
     // TODO: make this configurable.
-    // this.updater.autoDownload = false;
+    this.updater.autoDownload = true;
     if (!this.devtools.isDev || 'FORCE_CHECK_UPDATES' in process.env) {
-      this._checkResults = this.updater.checkForUpdates();
+      this._checkResults = this.updater.checkForUpdates().catch((_e) => {
+        // Don't both logging here, electron-updater already logs the error.
+        return null;
+      });
     }
   };
 }
