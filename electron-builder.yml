@@ -1,3 +1,4 @@
+productName: 'Notes'
 appId: 'com.github.mscharley.notes-nc'
 files:
   - '**/*'

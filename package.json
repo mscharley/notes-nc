@@ -1,6 +1,5 @@
 {
-  "name": "@mscharley/notes-nc",
-  "productName": "notes-nc",
+  "name": "notes-nc",
   "description": "Note taking app for markdown folders",
   "author": "Matthew Scharley <matt@scharley.me>",
   "private": true,
@@ -43,7 +42,7 @@
     "test:jest": "jest",
     "viteshot": "viteshot",
     "viteshot:ci": "node ./bin/viteshot-ci.mjs",
-    "pack": "electron-builder --win --linux --publish never",
+    "pack": "npm run release -- --publish never",
     "release": "electron-builder --win --linux"
   },
   "watch": {
