@@ -2,6 +2,7 @@ productName: 'Notes'
 appId: 'com.github.mscharley.notes-nc'
 files:
   - 'package.json'
+  - 'share/**/*'
   - 'ts-build/**/*'
   - '!node_modules/**/*'
   - '!**/__screenshots__/**/*'
