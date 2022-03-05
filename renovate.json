@@ -20,6 +20,14 @@
     {
       "matchPackageNames": ["node"],
       "rangeStrategy": "replace"
+    },
+    {
+      "matchPackageNames": [
+        "@mscharley/eslint-config",
+        "@mscharley/prettier-config"
+      ],
+      "groupName": "eslint packages",
+      "additionalBranchPrefix": ""
     }
   ]
 }
