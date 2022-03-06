@@ -22,8 +22,6 @@ linux:
     Type: Application
     Categories: 'Utility;'
 
-compression: maximum
-
 publish:
   - provider: github
     owner: mscharley

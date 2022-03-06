@@ -1,5 +1,13 @@
+/* eslint-disable no-process-exit */
+
 import 'source-map-support';
 import 'reflect-metadata';
+
+if (process.argv.includes('--self-test')) {
+  // eslint-disable-next-line no-console
+  console.log('Self test successful.');
+  process.exit(0);
+}
 
 import log from 'electron-log';
 log.transports.file.level = 'silly';
@@ -15,6 +23,5 @@ try {
   container.get(Entrypoint).start();
 } catch (e: unknown) {
   log.error(e);
-  // eslint-disable-next-line no-process-exit
   process.exit(1);
 }
