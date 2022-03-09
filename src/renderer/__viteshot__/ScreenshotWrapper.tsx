@@ -1,3 +1,4 @@
+import './ScreenshotWrapper.css';
 import './mocks';
 
 import CssBaseline from '@mui/material/CssBaseline';

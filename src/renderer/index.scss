@@ -12,8 +12,6 @@ body,
 }
 
 #root {
-  display: flex;
-
   & > .simple-message {
     padding: 0 1rem;
   }
