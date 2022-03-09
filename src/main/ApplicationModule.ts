@@ -5,6 +5,7 @@ import { ContainerModule } from 'inversify';
 import { DevTools } from '~main/services/DevTools';
 import { Entrypoint } from '~main/Entrypoint';
 import { FileSystem } from '~main/services/FileSystem';
+import { LinuxIntegration } from './services/LinuxIntegration';
 import log from 'electron-log';
 import { MainWindow } from '~main/MainWindow';
 import { RendererLogging } from '~main/services/RendererLogging';
@@ -28,6 +29,9 @@ export const ApplicationModule = (): ContainerModule =>
     bind(FileSystem).toSelf();
     bindToken(CustomProtocol).toDynamicValue(({ container }) => container.get(FileSystem));
     bindToken(ReadyHandler).toDynamicValue(({ container }) => container.get(FileSystem));
+
+    bind(LinuxIntegration).toSelf();
+    bindToken(ReadyHandler).toDynamicValue(({ container }) => container.get(LinuxIntegration));
 
     bind(MainWindow).toSelf();
     bindToken(ReadyHandler).toDynamicValue(({ container }) => container.get(MainWindow));

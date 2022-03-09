@@ -1,13 +1,15 @@
 /* eslint-disable @typescript-eslint/consistent-type-imports */
 
-import { AboutDetails, FileDescription, FolderConfiguration } from './model';
+import { AboutDetails, FileDescription, FolderConfiguration, LinuxInstallOptions } from './model';
 import { OpenDialogReturnValue } from 'electron';
 
 declare global {
   export interface EditorApi {
     readonly aboutDetails: Promise<AboutDetails>;
     readonly addFolder: (name: string, localPath: string) => Promise<void>;
+    readonly checkLinuxInstallation: () => Promise<boolean>;
     readonly deleteFolder: (uuid: string) => Promise<void>;
+    readonly doLinuxInstallation: (options: LinuxInstallOptions) => Promise<void>;
     readonly getCspNonce: () => Promise<string>;
     readonly isCspEnabled: Promise<boolean>;
     readonly isDev: Promise<boolean>;

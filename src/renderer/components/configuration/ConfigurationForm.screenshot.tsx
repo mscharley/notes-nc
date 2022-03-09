@@ -1,9 +1,10 @@
+import { setFileListing, updateAppConfiguration } from '~renderer/redux';
 import { ConfigurationForm } from './ConfigurationForm';
-import { setFileListing } from '~renderer/redux';
 import { useAppDispatch } from '~renderer/hooks';
 
 export const NoteFolders = () => {
-  useAppDispatch()(
+  const dispatch = useAppDispatch();
+  dispatch(
     setFileListing({
       uuid: {
         uuid: 'uuid',
@@ -15,8 +16,14 @@ export const NoteFolders = () => {
       },
     }),
   );
+  dispatch(updateAppConfiguration({ isLinux: false }));
 
   return <ConfigurationForm initialTab={0} />;
 };
 
-export const SecondTab = () => <ConfigurationForm initialTab={1} />;
+export const SecondTab = () => {
+  const dispatch = useAppDispatch();
+  dispatch(updateAppConfiguration({ isLinux: false }));
+
+  return <ConfigurationForm initialTab={1} />;
+};
