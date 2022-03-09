@@ -1,12 +1,18 @@
 import { createAction, createSlice } from '@reduxjs/toolkit';
-import type { FileDescription, FolderConfiguration } from '~shared/model';
+import type { FileDescription, FolderConfiguration, FolderDescription } from '~shared/model';
 
 export type FilesState =
-  | { loading: true; folders?: undefined; currentFile?: undefined }
+  | {
+      loading: true;
+      folders?: undefined;
+      currentFile?: undefined;
+      currentFolder?: undefined;
+    }
   | {
       loading: false;
       folders: FolderConfiguration;
       currentFile?: FileDescription;
+      currentFolder?: string;
     };
 
 // Unfortunately, typescript is too smart for it's own good here and infers the very specific loading type for the slice.
@@ -16,6 +22,7 @@ const initialState = { loading: true } as FilesState;
 export const setFileListing = createAction<FolderConfiguration>('setFileListing');
 export const setCurrentFile = createAction<FileDescription>('setCurrentFile');
 export const closeCurrentFile = createAction('closeCurrentFile');
+export const setCurrentFolder = createAction<string>('setCurrentFolder');
 
 const slice = createSlice({
   name: 'files',
@@ -25,7 +32,10 @@ const slice = createSlice({
     builder
       .addCase(setFileListing, (state, { payload: folders }) => {
         if (state.loading) {
-          return { loading: false, folders };
+          const firstFolder: FolderDescription | undefined = Object.values(folders)[0];
+
+          // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+          return { loading: false, folders, currentFolder: firstFolder?.uuid };
         }
 
         state.folders = folders;
@@ -45,6 +55,13 @@ const slice = createSlice({
         }
 
         state.currentFile = undefined;
+      })
+      .addCase(setCurrentFolder, (state, { payload: currentFolder }) => {
+        if (state.loading) {
+          return;
+        }
+
+        state.currentFolder = currentFolder;
       }),
 });
 
