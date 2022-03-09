@@ -1,5 +1,5 @@
+import { ConfigurationForm, TabOptions } from './ConfigurationForm';
 import { setFileListing, updateAppConfiguration } from '~renderer/redux';
-import { ConfigurationForm } from './ConfigurationForm';
 import { useAppDispatch } from '~renderer/hooks';
 
 export const NoteFolders = () => {
@@ -18,12 +18,12 @@ export const NoteFolders = () => {
   );
   dispatch(updateAppConfiguration({ isLinux: false }));
 
-  return <ConfigurationForm initialTab={0} />;
+  return <ConfigurationForm initialTab={TabOptions.FolderManagement} />;
 };
 
 export const SecondTab = () => {
   const dispatch = useAppDispatch();
   dispatch(updateAppConfiguration({ isLinux: false }));
 
-  return <ConfigurationForm initialTab={1} />;
+  return <ConfigurationForm initialTab={TabOptions.TBC} />;
 };
