@@ -47,7 +47,18 @@ export const DataProvider: React.FC = ({ children }) => {
   });
 
   useEffect(() => {
-    dispatch(updateAppConfiguration({ layout: 'two-column' }));
+    editorApi
+      .checkLinuxInstallation()
+      .then((isLinux) =>
+        // TODO: fetch these details from the main thread
+        dispatch(
+          updateAppConfiguration({
+            isLinux,
+            layout: 'two-column',
+          }),
+        ),
+      )
+      .catch((e) => dispatch(setFatalError(e)));
   });
 
   return <>{children}</>;

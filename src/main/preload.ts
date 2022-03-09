@@ -1,5 +1,6 @@
 import { contextBridge, ipcRenderer } from 'electron/renderer';
 import type ElectronLog from 'electron-log';
+import { LinuxInstallOptions } from '~shared/model';
 
 const exposeBridge = (exports: EditorGlobalApi): void => {
   Object.entries(exports).forEach(([name, value]) => {
@@ -34,8 +35,12 @@ class EditorApiImpl implements EditorApi {
   public readonly aboutDetails: EditorApi['aboutDetails'] = ipcRenderer.invoke('about-details');
   public readonly addFolder: EditorApi['addFolder'] = async (name: string, localPath: string) =>
     ipcRenderer.invoke('add-folder', name, localPath);
+  public readonly checkLinuxInstallation: EditorApi['checkLinuxInstallation'] = async () =>
+    ipcRenderer.invoke('check-linux-install');
   public readonly deleteFolder: EditorApi['deleteFolder'] = async (uuid: string) =>
     ipcRenderer.invoke('delete-folder', uuid);
+  public readonly doLinuxInstallation: EditorApi['doLinuxInstallation'] = async (options) =>
+    ipcRenderer.invoke('linux-install', options);
   public readonly getCspNonce: EditorApi['getCspNonce'] = async () => ipcRenderer.invoke('csp-nonce');
   public readonly listNoteFiles: EditorApi['listNoteFiles'] = async () => ipcRenderer.invoke('list-files');
   public readonly openSelectFolderDialog: EditorApi['openSelectFolderDialog'] = async () =>
