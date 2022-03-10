@@ -1,5 +1,5 @@
 import { ElectronApp, ElectronIpcMain } from '~main/inversify/tokens';
-import { rename, writeFile } from 'fs/promises';
+import { copyFile, rename, unlink, writeFile } from 'fs/promises';
 import { injectable } from 'inversify';
 import { injectToken } from 'inversify-token';
 import type { LinuxInstallOptions } from '~shared/model/LinuxInstallOptions';
@@ -65,7 +65,17 @@ export class LinuxIntegration implements OnReadyHandler {
     log.info('Running Linux installation.');
     const appImage = moveAppImage ? this.installedAppImage : this.APPIMAGE;
     if (moveAppImage) {
-      await rename(this.APPIMAGE, appImage);
+      try {
+        await rename(this.APPIMAGE, appImage);
+      } catch (e: unknown) {
+        if ((e as { code?: string }).code === 'EXDEV') {
+          // If this is a cross-device move then we need to copy and unlink instead.
+          await copyFile(this.APPIMAGE, appImage);
+          await unlink(this.APPIMAGE);
+        } else {
+          throw e;
+        }
+      }
     }
 
     if (createDesktopEntry) {
