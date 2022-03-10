@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from '~renderer/hooks';
-import { closeCurrentFile } from '~renderer/redux';
+import { closeCurrentFile, setCurrentFolder } from '~renderer/redux';
 import { FileCategoryListing } from './FileCategoryListing';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
@@ -11,7 +11,6 @@ import Select from '@mui/material/Select';
 import type { SelectChangeEvent } from '@mui/material/Select';
 import { styled } from '@mui/material';
 import Typography from '@mui/material/Typography';
-import { useState } from 'react';
 
 const ScrollablePaper = styled(Paper)<PaperProps>(() => ({
   overflowY: 'auto',
@@ -22,13 +21,15 @@ const ScrollablePaper = styled(Paper)<PaperProps>(() => ({
 export const FileListing: React.FC = () => {
   const dispatch = useAppDispatch();
   const files = useAppSelector((s) => s.files);
-  const [currentFolder, setCurrentFolder] = useState('');
+  const currentFolder = useAppSelector((s) => s.files.currentFolder);
 
   const folder = Object.values(files.folders ?? {}).find((v) => v.uuid === currentFolder);
 
   const handleFolderChange = (ev: SelectChangeEvent<string | null>): void => {
-    setCurrentFolder(ev.target.value ?? '');
-    dispatch(closeCurrentFile());
+    if (ev.target.value != null) {
+      dispatch(setCurrentFolder(ev.target.value));
+      dispatch(closeCurrentFile());
+    }
   };
 
   return (
@@ -39,7 +40,7 @@ export const FileListing: React.FC = () => {
         <>
           <FormControl variant='filled' sx={{ width: '100%' }}>
             <InputLabel>Note folder</InputLabel>
-            <Select value={currentFolder} id='folder' onChange={handleFolderChange}>
+            <Select value={currentFolder ?? ''} id='folder' onChange={handleFolderChange}>
               {Object.values(files.folders).map(({ uuid, name }) => (
                 <MenuItem key={uuid} value={uuid}>
                   {name}
