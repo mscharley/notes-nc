@@ -18,4 +18,7 @@ export interface FolderDescription {
   baseUrl: string;
   categories: CategoryDescription[];
 }
+/**
+ * An list of FolderDescriptions, indexed by name.
+ */
 export type FolderConfiguration = Record<string, FolderDescription>;

@@ -1,5 +1,5 @@
-import { useAppDispatch, useAppSelector } from '~renderer/hooks';
 import { closeCurrentFile, setCurrentFolder } from '~renderer/redux';
+import { useAppDispatch, useAppSelector } from '~renderer/hooks';
 import { FileCategoryListing } from './FileCategoryListing';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';

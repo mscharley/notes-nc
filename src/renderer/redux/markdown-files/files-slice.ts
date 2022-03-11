@@ -47,6 +47,8 @@ const slice = createSlice({
           return;
         }
 
+        editorApi.setLastFile(currentFile.url).catch((e) => log.error(e));
+
         state.currentFile = currentFile;
       })
       .addCase(closeCurrentFile, (state) => {
@@ -60,6 +62,8 @@ const slice = createSlice({
         if (state.loading) {
           return;
         }
+
+        editorApi.setLastFolder(currentFolder).catch((e) => log.error(e));
 
         state.currentFolder = currentFolder;
       }),

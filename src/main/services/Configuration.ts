@@ -1,8 +1,12 @@
-import { ElectronApp } from '~main/inversify/tokens';
+import { ElectronApp, ElectronIpcMain } from '~main/inversify/tokens';
+import { inject, injectable } from 'inversify';
+import type { AppConfiguration } from '~shared/model';
 import EventEmitter from 'events';
 import { v4 as generateUuid } from 'uuid';
-import { injectable } from 'inversify';
 import { injectToken } from 'inversify-token';
+import { LinuxIntegration } from './LinuxIntegration';
+import { MainWindow } from '~main/MainWindow';
+import type { ReadyHandler } from '~main/inversify/tokens';
 import type { Schema } from 'electron-store';
 import Store from 'electron-store';
 
@@ -12,6 +16,8 @@ interface ConfigurationFile {
     name: string;
     localPath: string;
   }>;
+  lastFolder?: string;
+  lastFile?: string;
 }
 
 const schema: Schema<ConfigurationFile> = {
@@ -28,16 +34,29 @@ const schema: Schema<ConfigurationFile> = {
       },
     },
   },
+  lastFolder: {
+    default: undefined,
+    type: 'string',
+  },
+  lastFile: {
+    default: undefined,
+    type: 'string',
+  },
 };
 
 const CONFIG_CHANGE = 'config-change';
 
 @injectable()
-export class Configuration {
+export class Configuration implements ReadyHandler {
   private readonly store: Store<ConfigurationFile>;
   private readonly events: EventEmitter;
 
-  public constructor(@injectToken(ElectronApp) private readonly application: ElectronApp) {
+  public constructor(
+    @injectToken(ElectronApp) private readonly application: ElectronApp,
+    @injectToken(ElectronIpcMain) private readonly ipcMain: ElectronIpcMain,
+    @inject(LinuxIntegration) private readonly linux: LinuxIntegration,
+    @inject(MainWindow) private readonly window: MainWindow,
+  ) {
     this.events = new EventEmitter();
     this.store = new Store({
       clearInvalidConfig: true,
@@ -48,6 +67,15 @@ export class Configuration {
       this.events.emit(CONFIG_CHANGE);
     });
   }
+
+  public readonly onAppReady = (): void => {
+    this.ipcMain.handle('get-configuration', () => this.asAppConfiguration());
+    this.ipcMain.handle('set-last-folder', (_ev, uuid: string) => this.store.set('lastFolder', uuid));
+    this.ipcMain.handle('set-last-file', (_ev, url: string) => this.store.set('lastFile', url));
+    this.onChange(() => {
+      this.window.window?.webContents.send('configuration', this.asAppConfiguration());
+    });
+  };
 
   public readonly onChange = (fn: () => void): EventEmitter => this.events.on(CONFIG_CHANGE, fn);
   public readonly onceChange = (fn: () => void): EventEmitter => this.events.once(CONFIG_CHANGE, fn);
@@ -62,7 +90,7 @@ export class Configuration {
   }
 
   public readonly setFolders = (folders: Array<{ uuid: string; name: string; localPath: string }>): void => {
-    this.store.set<'folders'>('folders', folders);
+    this.store.set('folders', folders);
   };
 
   public readonly addFolder = (name: string, localPath: string): void => {
@@ -80,4 +108,11 @@ export class Configuration {
   public readonly deleteFolder = (uuid: string): void => {
     this.setFolders(this.store.get('folders').filter((f) => f.uuid !== uuid));
   };
+
+  private readonly asAppConfiguration = (): AppConfiguration => ({
+    isAppImage: this.linux.isAppImage,
+    layout: 'two-column',
+    lastFile: this.store.get('lastFile'),
+    lastFolder: this.store.get('lastFolder'),
+  });
 }

@@ -1,5 +1,5 @@
-import { ElectronApp, ElectronIpcMain } from '~main/inversify/tokens';
 import { copyFile, rename, unlink, writeFile } from 'fs/promises';
+import { ElectronApp, ElectronIpcMain } from '~main/inversify/tokens';
 import { injectable } from 'inversify';
 import { injectToken } from 'inversify-token';
 import type { LinuxInstallOptions } from '~shared/model/LinuxInstallOptions';
@@ -9,6 +9,8 @@ import { resolve } from 'path';
 
 @injectable()
 export class LinuxIntegration implements OnReadyHandler {
+  public readonly isAppImage: boolean;
+
   private readonly XDG_CONFIG_HOME: string;
   private readonly XDG_CACHE_HOME: string;
   private readonly XDG_BIN_HOME: string;
@@ -18,7 +20,7 @@ export class LinuxIntegration implements OnReadyHandler {
   private readonly APPLICATIONS_DIR: string;
   private readonly BIN_DIR: string;
 
-  private readonly APPIMAGE?: string;
+  private readonly APPIMAGE: string;
   private readonly installedAppImage: string;
   private readonly isInstalled: boolean;
 
@@ -37,15 +39,16 @@ export class LinuxIntegration implements OnReadyHandler {
     this.APPLICATIONS_DIR = resolve(this.XDG_DATA_HOME, 'applications');
     this.BIN_DIR = this.XDG_BIN_HOME;
 
-    this.APPIMAGE = process.env.APPIMAGE;
+    this.APPIMAGE = process.env.APPIMAGE ?? '';
     this.installedAppImage = resolve(this.XDG_BIN_HOME, 'Notes.AppImage');
     this.isInstalled = this.APPIMAGE === this.installedAppImage;
+    this.isAppImage = process.env.APPIMAGE != null;
   }
 
   public readonly onAppReady = (): void => {
     // eslint-disable-next-line @typescript-eslint/require-await
     this.ipcMain.handle('check-linux-install', async (): Promise<boolean> => {
-      if (this.APPIMAGE != null) {
+      if (this.isAppImage) {
         this.ipcMain.handleOnce('linux-install', this.doInstallation);
         return true;
       }
@@ -58,7 +61,7 @@ export class LinuxIntegration implements OnReadyHandler {
     _ev: unknown,
     { createDesktopEntry, moveAppImage }: LinuxInstallOptions,
   ): Promise<void> => {
-    if (this.APPIMAGE == null) {
+    if (!this.isAppImage) {
       return;
     }
 

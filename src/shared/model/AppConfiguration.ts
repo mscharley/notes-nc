@@ -1,4 +1,6 @@
 export interface AppConfiguration {
-  isLinux: boolean;
+  isAppImage: boolean;
   layout?: 'two-column';
+  lastFile?: string;
+  lastFolder?: string;
 }
