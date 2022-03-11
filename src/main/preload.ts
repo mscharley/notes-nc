@@ -1,6 +1,5 @@
 import { contextBridge, ipcRenderer } from 'electron/renderer';
 import type ElectronLog from 'electron-log';
-import { LinuxInstallOptions } from '~shared/model';
 
 const exposeBridge = (exports: EditorGlobalApi): void => {
   Object.entries(exports).forEach(([name, value]) => {

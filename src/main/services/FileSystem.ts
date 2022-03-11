@@ -14,6 +14,8 @@ import { MainWindow } from '~main/MainWindow';
 import type { OnReadyHandler } from '~main/interfaces/OnReadyHandler';
 import path from 'path';
 
+const matchMarkdownSuffix = /\.(?:md|markdown)/u;
+
 @injectable()
 export class FileSystem implements CustomProtocolProvider, OnReadyHandler {
   private readonly appBasePath: string;
@@ -167,7 +169,8 @@ export class FileSystem implements CustomProtocolProvider, OnReadyHandler {
     const url = new URL(file.url);
     const dir = this.folders[url.hostname];
     const oldFileName = path.join(dir.localPath, decodeURIComponent(url.pathname));
-    const newFileName = path.resolve(oldFileName, `../${displayName}.md`);
+    const suffix = oldFileName.match(matchMarkdownSuffix) ?? ['.md'];
+    const newFileName = path.resolve(oldFileName, `../${displayName}${suffix[0]}`);
     log.debug(`RENAME ${oldFileName} => ${newFileName}`);
     await rename(oldFileName, newFileName);
     await this.republishFileList();
@@ -190,10 +193,10 @@ export class FileSystem implements CustomProtocolProvider, OnReadyHandler {
     });
 
     const files: FileDescription[] = dir
-      .filter((f) => f.isFile() && f.name.match(/\.(?:md|markdown)$/u) != null)
+      .filter((f) => f.isFile() && f.name.match(matchMarkdownSuffix) != null)
       .map((f) => ({
         name: f.name,
-        displayName: f.name.replace(/\.md$/u, ''),
+        displayName: f.name.replace(matchMarkdownSuffix, ''),
         url: `editor://${uuid}/${category}/${f.name}`,
       }));
 
