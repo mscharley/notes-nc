@@ -34,18 +34,21 @@ class EditorApiImpl implements EditorApi {
   public readonly aboutDetails: EditorApi['aboutDetails'] = ipcRenderer.invoke('about-details');
   public readonly addFolder: EditorApi['addFolder'] = async (name: string, localPath: string) =>
     ipcRenderer.invoke('add-folder', name, localPath);
-  public readonly checkLinuxInstallation: EditorApi['checkLinuxInstallation'] = async () =>
-    ipcRenderer.invoke('check-linux-install');
   public readonly deleteFolder: EditorApi['deleteFolder'] = async (uuid: string) =>
     ipcRenderer.invoke('delete-folder', uuid);
   public readonly doLinuxInstallation: EditorApi['doLinuxInstallation'] = async (options) =>
     ipcRenderer.invoke('linux-install', options);
   public readonly getCspNonce: EditorApi['getCspNonce'] = async () => ipcRenderer.invoke('csp-nonce');
+  public readonly getAppConfiguration: EditorApi['getAppConfiguration'] = async () =>
+    ipcRenderer.invoke('get-configuration');
   public readonly listNoteFiles: EditorApi['listNoteFiles'] = async () => ipcRenderer.invoke('list-files');
   public readonly openSelectFolderDialog: EditorApi['openSelectFolderDialog'] = async () =>
     ipcRenderer.invoke('open-select-folder');
   public readonly renameNoteFile: EditorApi['renameNoteFile'] = async (url, title) =>
     ipcRenderer.invoke('rename-file', url, title);
+  public readonly setLastFile: EditorApi['setLastFile'] = async (url) => ipcRenderer.invoke('set-last-file', url);
+  public readonly setLastFolder: EditorApi['setLastFolder'] = async (uuid) =>
+    ipcRenderer.invoke('set-last-folder', uuid);
 
   /* eslint-disable @typescript-eslint/no-explicit-any */
   public readonly on: globalThis.EditorApi['on'] = (event, handler: (...args: any[]) => void) => {

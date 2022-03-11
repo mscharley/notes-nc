@@ -1,30 +1,29 @@
 /* eslint-disable @typescript-eslint/consistent-type-imports */
 
-import { AboutDetails, FileDescription, FolderConfiguration, LinuxInstallOptions } from './model';
+import { AboutDetails, AppConfiguration, FileDescription, FolderConfiguration, LinuxInstallOptions } from './model';
 import { OpenDialogReturnValue } from 'electron';
 
 declare global {
   export interface EditorApi {
     readonly aboutDetails: Promise<AboutDetails>;
     readonly addFolder: (name: string, localPath: string) => Promise<void>;
-    readonly checkLinuxInstallation: () => Promise<boolean>;
     readonly deleteFolder: (uuid: string) => Promise<void>;
     readonly doLinuxInstallation: (options: LinuxInstallOptions) => Promise<void>;
+    readonly getAppConfiguration: () => Promise<AppConfiguration>;
     readonly getCspNonce: () => Promise<string>;
     readonly isCspEnabled: Promise<boolean>;
     readonly isDev: Promise<boolean>;
     readonly listNoteFiles: () => Promise<FolderConfiguration>;
     readonly openSelectFolderDialog: () => Promise<OpenDialogReturnValue>;
     readonly renameNoteFile: (file: FileDescription, title: string) => Promise<null | FileDescription>;
+    readonly setLastFile: (url: string) => Promise<void>;
+    readonly setLastFolder: (uuid: string) => Promise<void>;
 
     readonly on: {
-      // eslint-disable-next-line @typescript-eslint/prefer-function-type
       (event: 'files-updated', handler: (files: FolderConfiguration) => void): number;
+      (event: 'configuration', handler: (config: AppConfiguration) => void): number;
     };
-    readonly off: {
-      // eslint-disable-next-line @typescript-eslint/prefer-function-type
-      (event: 'files-updated', handler: number): void;
-    };
+    readonly off: (event: 'files-updated' | 'configuration', handler: number) => void;
   }
 
   export interface EditorGlobalApi {

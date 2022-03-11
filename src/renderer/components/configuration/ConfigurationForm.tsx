@@ -21,7 +21,7 @@ export interface ConfigurationFormProps {
 
 export const ConfigurationForm: React.FC<ConfigurationFormProps> = ({ initialTab }) => {
   const dispatch = useDispatch();
-  const isLinux = useAppSelector((s) => s.configuration.isLinux);
+  const isAppImage = useAppSelector((s) => s.configuration.isAppImage);
   const [selectedTab, setSelectedTab] = useState(initialTab ?? TabOptions.FolderManagement);
 
   const doInstallation = (): void => {
@@ -38,7 +38,7 @@ export const ConfigurationForm: React.FC<ConfigurationFormProps> = ({ initialTab
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={selectedTab} onChange={(_ev, v: TabOptions): void => setSelectedTab(v)}>
           <Tab label='Note folders' value={TabOptions.FolderManagement} />
-          {isLinux ? <Tab label='Linux' value={TabOptions.Linux} /> : null}
+          {isAppImage ? <Tab label='Linux' value={TabOptions.Linux} /> : null}
           <Tab label='TBC' value={TabOptions.TBC} />
         </Tabs>
       </Box>

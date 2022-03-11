@@ -18,13 +18,14 @@ export const ApplicationModule = (): ContainerModule =>
     const bindToken = tokenBinder(bind);
     log.debug('Binding application modules.');
 
-    bind(Configuration).toSelf();
-    bind(Entrypoint).toSelf();
-
-    bind(DevTools).toSelf();
-
     bind(AboutElectron).toSelf();
     bindToken(ReadyHandler).toDynamicValue(({ container }) => container.get(AboutElectron));
+
+    bind(Configuration).toSelf();
+    bindToken(ReadyHandler).toDynamicValue(({ container }) => container.get(Configuration));
+
+    bind(DevTools).toSelf();
+    bind(Entrypoint).toSelf();
 
     bind(FileSystem).toSelf();
     bindToken(CustomProtocol).toDynamicValue(({ container }) => container.get(FileSystem));

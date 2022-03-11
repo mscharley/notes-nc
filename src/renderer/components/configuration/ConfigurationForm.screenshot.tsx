@@ -16,14 +16,14 @@ export const NoteFolders = () => {
       },
     }),
   );
-  dispatch(updateAppConfiguration({ isLinux: false }));
+  dispatch(updateAppConfiguration({ isAppImage: false }));
 
   return <ConfigurationForm initialTab={TabOptions.FolderManagement} />;
 };
 
 export const SecondTab = () => {
   const dispatch = useAppDispatch();
-  dispatch(updateAppConfiguration({ isLinux: false }));
+  dispatch(updateAppConfiguration({ isAppImage: false }));
 
   return <ConfigurationForm initialTab={TabOptions.TBC} />;
 };
