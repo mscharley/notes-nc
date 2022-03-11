@@ -197,7 +197,7 @@ export class FileSystem implements CustomProtocolProvider, OnReadyHandler {
       .map((f) => ({
         name: f.name,
         displayName: f.name.replace(matchMarkdownSuffix, ''),
-        url: `editor://${uuid}/${category}/${f.name}`,
+        url: new URL(`editor://${uuid}/${category}/${f.name}`).toString(),
       }));
 
     const subfolders: CategoryDescription[] = (
