@@ -1,4 +1,4 @@
-import { closeCurrentFile, setCurrentFile, setFatalError } from '~renderer/redux';
+import { closeCurrentFile, confirmDelete, setCurrentFile, setFatalError } from '~renderer/redux';
 import ArticleIcon from '@mui/icons-material/Article';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -49,7 +49,7 @@ export const FileListItem: React.FC<FileListItemProps> = ({ file, selected }) =>
   };
 
   const handleDelete: React.MouseEventHandler = () => {
-    // TODO: implement deletes.
+    dispatch(confirmDelete(file));
   };
 
   return editing ? (

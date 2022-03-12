@@ -7,7 +7,7 @@ import Drawer from '@mui/material/Drawer';
 import type { FileDescription } from '~shared/model';
 import { FileListing } from '~renderer/components/sidebar/FileListing';
 import { MarkdownEditor } from '~renderer/components/editor/MarkdownEditor';
-import { NoFile } from '~renderer/components/NoFile';
+import { NoFile } from '~renderer/components/editor/NoFile';
 import { SidebarFooter } from '~renderer/components/sidebar/SidebarFooter';
 
 const TITLE_SUFFIX = 'Notes';

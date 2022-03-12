@@ -2,6 +2,7 @@ import { useAppDispatch, useAppSelector } from '~renderer/hooks';
 import { AboutDialog } from '~renderer/components/AboutDialog';
 import { closeOverlay } from '~renderer/redux';
 import { ConfigurationDialog } from '~renderer/components/configuration/ConfigurationDialog';
+import { DeleteConfirmationDialog } from './sidebar/DeleteConfirmationDialog';
 
 export const DialogOverlays: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -19,6 +20,12 @@ export const DialogOverlays: React.FC = () => {
         open={openDialog === 'configuration'}
         onClose={(): void => {
           dispatch(closeOverlay('configuration'));
+        }}
+      />
+      <DeleteConfirmationDialog
+        open={openDialog === 'delete'}
+        onClose={(): void => {
+          dispatch(closeOverlay('delete'));
         }}
       />
     </>

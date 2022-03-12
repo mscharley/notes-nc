@@ -31,6 +31,7 @@ export const FileCategoryListing: React.FC<FileCategoryListingProps> = ({ name, 
     if (addedItem === '') {
       return;
     }
+    setAddedItem('');
 
     fetch(`${baseUrl}/${addedItem}.md`, {
       method: 'PUT',

@@ -5,7 +5,7 @@ import type { CategoryDescription, FileDescription, FolderConfiguration, FolderD
 import { ElectronApp, ElectronIpcMain } from '~main/inversify/tokens';
 import { inject, injectable } from 'inversify';
 import type { Protocol, ProtocolResponse } from 'electron/main';
-import { readdir, rename, stat, writeFile } from 'fs/promises';
+import { readdir, rename, stat, unlink, writeFile } from 'fs/promises';
 import { Configuration } from '~main/services/Configuration';
 import type { CustomProtocolProvider } from '~main/interfaces/CustomProtocolProvider';
 import { injectToken } from 'inversify-token';
@@ -103,7 +103,7 @@ export class FileSystem implements CustomProtocolProvider, OnReadyHandler {
         switch (request.method) {
           case 'GET':
             return cb(this.serveLocalFile(dir.localPath, decodeURIComponent(url.pathname), request.url));
-          default:
+          case 'PUT':
             if (request.uploadData == null) {
               return cb({
                 statusCode: http.BAD_REQUEST,
@@ -119,6 +119,13 @@ export class FileSystem implements CustomProtocolProvider, OnReadyHandler {
                 (request.uploadData[0] ?? { bytes: '' }).bytes.toString('utf-8'),
               ),
             );
+          case 'DELETE':
+            return cb(await this.deleteLocalFile(dir.localPath, decodeURI(url.pathname), request.url));
+          default:
+            return cb({
+              statusCode: http.BAD_REQUEST,
+              path: path.join(this.errorBasePath, '400.txt'),
+            });
         }
       })().catch((e) => log.error(e));
     });
@@ -255,25 +262,50 @@ export class FileSystem implements CustomProtocolProvider, OnReadyHandler {
         statusCode: http.BAD_REQUEST,
         path: path.join(this.errorBasePath, '400.txt'),
       };
-    } else {
-      let fileExists = false;
-      try {
-        fileExists = (await stat(file)).isFile();
-      } catch (e: unknown) {
-        /* noop */
-      }
+    }
 
-      log.verbose(`PUT ${url} => ${file}`);
-      await writeFile(file, content);
-      if (!fileExists) {
-        await this.republishFileList();
-      }
+    let fileExists = false;
+    try {
+      fileExists = (await stat(file)).isFile();
+    } catch (e: unknown) {
+      /* noop */
+    }
 
+    log.verbose(`PUT ${url} => ${file}`);
+    await writeFile(file, content);
+    if (!fileExists) {
+      await this.republishFileList();
+    }
+
+    return {
+      statusCode: http.OK,
+      path: path.join(this.errorBasePath, '200.txt'),
+    };
+  };
+
+  private readonly deleteLocalFile = async (
+    basepath: string,
+    filepath: string,
+    url: string,
+  ): Promise<string | ProtocolResponse> => {
+    const file = path.join(basepath, filepath);
+    if (!file.startsWith(basepath)) {
+      // Don't allow malicious URL's that try to span the file system.
+      log.warn(`Invalid DELETE request for ${url}`);
       return {
-        statusCode: http.OK,
-        path: path.join(this.errorBasePath, '200.txt'),
+        statusCode: http.BAD_REQUEST,
+        path: path.join(this.errorBasePath, '400.txt'),
       };
     }
+
+    log.verbose(`DELETE ${url} => ${file}`);
+    await unlink(file);
+    await this.republishFileList();
+
+    return {
+      statusCode: http.OK,
+      path: path.join(this.errorBasePath, '200.txt'),
+    };
   };
 
   public readonly generateDisplayPath = (localPath: string): string => {
