@@ -52,10 +52,11 @@ export const FileListing: React.FC = () => {
             <></>
           ) : (
             <List sx={{ padding: '0' }}>
-              {folder.categories.map(({ name: categoryName, files: categoryFiles }) =>
+              {folder.categories.map(({ name: categoryName, path, files: categoryFiles }) =>
                 categoryFiles.length === 0 ? null : (
                   <FileCategoryListing
                     key={`${folder.name}-${categoryName}`}
+                    baseUrl={`${folder.baseUrl}${path}`}
                     name={categoryName}
                     files={categoryFiles}
                   />

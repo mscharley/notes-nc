@@ -5,7 +5,7 @@ import type { CategoryDescription, FileDescription, FolderConfiguration, FolderD
 import { ElectronApp, ElectronIpcMain } from '~main/inversify/tokens';
 import { inject, injectable } from 'inversify';
 import type { Protocol, ProtocolResponse } from 'electron/main';
-import { readdir, rename, writeFile } from 'fs/promises';
+import { readdir, rename, stat, writeFile } from 'fs/promises';
 import { Configuration } from '~main/services/Configuration';
 import type { CustomProtocolProvider } from '~main/interfaces/CustomProtocolProvider';
 import { injectToken } from 'inversify-token';
@@ -116,7 +116,7 @@ export class FileSystem implements CustomProtocolProvider, OnReadyHandler {
                 dir.localPath,
                 decodeURI(url.pathname),
                 request.url,
-                request.uploadData[0].bytes.toString('utf-8'),
+                (request.uploadData[0] ?? { bytes: '' }).bytes.toString('utf-8'),
               ),
             );
         }
@@ -256,8 +256,19 @@ export class FileSystem implements CustomProtocolProvider, OnReadyHandler {
         path: path.join(this.errorBasePath, '400.txt'),
       };
     } else {
+      let fileExists = false;
+      try {
+        fileExists = (await stat(file)).isFile();
+      } catch (e: unknown) {
+        /* noop */
+      }
+
       log.verbose(`PUT ${url} => ${file}`);
       await writeFile(file, content);
+      if (!fileExists) {
+        await this.republishFileList();
+      }
+
       return {
         statusCode: http.OK,
         path: path.join(this.errorBasePath, '200.txt'),

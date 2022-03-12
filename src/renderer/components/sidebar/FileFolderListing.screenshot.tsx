@@ -17,9 +17,9 @@ const categories: CategoryDescription[] = [
 ];
 
 export const BasicFileFolderListing = () => (
-  <FileFolderListing name='Hello world' categories={categories} showEmpty={true} />
+  <FileFolderListing name='Hello world' baseUrl='' categories={categories} showEmpty={true} />
 );
 
 export const HideEmptyFileFolderListing = () => (
-  <FileFolderListing name='Hello world' categories={categories} showEmpty={false} />
+  <FileFolderListing name='Hello world' baseUrl='' categories={categories} showEmpty={false} />
 );
