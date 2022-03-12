@@ -5,10 +5,10 @@ import Box from '@mui/material/Box';
 import { DialogOverlays } from '~renderer/components/DialogOverlays';
 import Drawer from '@mui/material/Drawer';
 import type { FileDescription } from '~shared/model';
-import { FileListing } from '~renderer/components/FileListing';
-import { MarkdownEditor } from '~renderer/components/MarkdownEditor';
-import { NoFile } from '~renderer/components/NoFile';
-import { SidebarFooter } from '~renderer/components/SidebarFooter';
+import { FileListing } from '~renderer/components/sidebar/FileListing';
+import { MarkdownEditor } from '~renderer/components/editor/MarkdownEditor';
+import { NoFile } from '~renderer/components/editor/NoFile';
+import { SidebarFooter } from '~renderer/components/sidebar/SidebarFooter';
 
 const TITLE_SUFFIX = 'Notes';
 // TODO: Make this configurable.

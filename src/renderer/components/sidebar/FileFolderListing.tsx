@@ -12,11 +12,13 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 export interface FileFolderListingProps {
   name: string;
+  baseUrl: string;
   categories: CategoryDescription[];
   showEmpty?: boolean;
 }
 
 export const FileFolderListing: React.FC<FileFolderListingProps> = ({
+  baseUrl,
   categories,
   showEmpty: defaultShowEmpty,
   name,
@@ -51,9 +53,14 @@ export const FileFolderListing: React.FC<FileFolderListingProps> = ({
       >
         <ListItemText primary={name} />
       </ListItem>
-      {categories.map(({ name: categoryName, files }) =>
+      {categories.map(({ name: categoryName, path, files }) =>
         !showEmpty && files.length === 0 ? null : (
-          <FileCategoryListing key={`${name}-${categoryName}`} name={categoryName} files={files} />
+          <FileCategoryListing
+            key={`${name}-${categoryName}`}
+            baseUrl={`${baseUrl}${path}`}
+            name={categoryName}
+            files={files}
+          />
         ),
       )}
       <Divider />
