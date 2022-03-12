@@ -2,8 +2,10 @@
 import './index.scss';
 
 import createCache from '@emotion/cache';
+import { DialogOverlays } from './components/DialogOverlays';
 import { generateStore } from '~renderer/redux';
 import { LayoutRouter } from './layouts/LayoutRouter';
+import { NotificationsOverlay } from './components/NotificationsOverlay';
 import { ProviderWrapper } from './ProviderWrapper';
 import { render } from 'react-dom';
 import { sleep } from '~shared/util';
@@ -33,6 +35,8 @@ if (root == null) {
     render(
       <ProviderWrapper cache={cache} store={store}>
         <LayoutRouter />
+        <DialogOverlays />
+        <NotificationsOverlay />
       </ProviderWrapper>,
       root,
     );

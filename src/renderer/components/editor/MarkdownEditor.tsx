@@ -1,11 +1,10 @@
 import { markdown, markdownLanguage } from '@codemirror/lang-markdown';
+import { useEffect, useRef } from 'react';
 import Box from '@mui/material/Box';
-import CodeMirror from '@uiw/react-codemirror';
 import { languages } from '@codemirror/language-data';
-import type { ReactCodeMirrorRef } from '@uiw/react-codemirror';
 import { setFatalError } from '~renderer/redux';
 import { useAppDispatch } from '~renderer/hooks';
-import { useRef } from 'react';
+import { useCodeMirror } from '@uiw/react-codemirror';
 
 export interface MarkdownEditorProps {
   value: string;
@@ -14,26 +13,35 @@ export interface MarkdownEditorProps {
 
 export const MarkdownEditor: React.FC<MarkdownEditorProps> = ({ onChange, value }) => {
   const dispatch = useAppDispatch();
-  const codemirror = useRef<ReactCodeMirrorRef | null>(null);
+  const editor = useRef<HTMLDivElement | null>(null);
 
-  const handleClick: React.MouseEventHandler<HTMLDivElement> = (ev) => {
-    if (ev.target !== codemirror.current?.editor) {
-      codemirror.current?.view?.focus();
+  const { setContainer, view } = useCodeMirror({
+    container: editor.current,
+    extensions: [markdown({ base: markdownLanguage, codeLanguages: languages })],
+    onChange: (s) => {
+      Promise.resolve(onChange(s)).catch((e) => {
+        dispatch(setFatalError(e));
+      });
+    },
+    value,
+  });
+
+  useEffect(() => {
+    if (editor.current != null) {
+      setContainer(editor.current);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [editor.current]);
+
+  const handleBackgroundClick: React.MouseEventHandler<HTMLDivElement> = (ev) => {
+    if (ev.target !== editor.current) {
+      view?.focus();
     }
   };
 
   return (
-    <Box sx={{ paddingBottom: 'calc(100vh - 1.7em)' }} onClick={handleClick}>
-      <CodeMirror
-        extensions={[markdown({ base: markdownLanguage, codeLanguages: languages })]}
-        onChange={(s): void => {
-          Promise.resolve(onChange(s)).catch((e) => {
-            dispatch(setFatalError(e));
-          });
-        }}
-        value={value}
-        ref={codemirror}
-      />
+    <Box sx={{ paddingBottom: 'calc(100vh - 1.7em)' }} onClick={handleBackgroundClick}>
+      <div ref={editor}></div>
     </Box>
   );
 };
