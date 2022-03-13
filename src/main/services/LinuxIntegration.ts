@@ -46,15 +46,9 @@ export class LinuxIntegration implements OnReadyHandler {
   }
 
   public readonly onAppReady = (): void => {
-    // eslint-disable-next-line @typescript-eslint/require-await
-    this.ipcMain.handle('check-linux-install', async (): Promise<boolean> => {
-      if (this.isAppImage) {
-        this.ipcMain.handleOnce('linux-install', this.doInstallation);
-        return true;
-      }
-
-      return false;
-    });
+    if (this.isAppImage) {
+      this.ipcMain.handle('linux-install', this.doInstallation);
+    }
   };
 
   private readonly doInstallation = async (
