@@ -82,17 +82,16 @@ export class LinuxIntegration implements OnReadyHandler {
     }
 
     if (createDesktopEntry) {
-      await writeFile(resolve(this.APPLICATIONS_DIR, 'note-nc.desktop'), this.generateDesktopEntry(appImage));
+      await writeFile(resolve(this.APPLICATIONS_DIR, 'notes-nc.desktop'), this.generateDesktopEntry(appImage));
     }
   };
 
   private readonly generateDesktopEntry = (appImage: string): string => `[Desktop Entry]
-
 Type=Application
 Name=Notes
 Comment=Notes for Nextcloud
 Terminal=false
-Categories="Utility;"
+Categories=Utility;
 Exec=${appImage}
 `;
 }
