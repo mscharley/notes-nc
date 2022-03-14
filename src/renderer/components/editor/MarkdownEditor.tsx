@@ -33,6 +33,10 @@ export const MarkdownEditor: React.FC<MarkdownEditorProps> = ({ onChange, value 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [editor.current]);
 
+  useEffect(() => {
+    view?.focus();
+  }, [view]);
+
   const handleBackgroundClick: React.MouseEventHandler<HTMLDivElement> = (ev) => {
     if (ev.target !== editor.current) {
       view?.focus();
