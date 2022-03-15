@@ -29,6 +29,7 @@ export class AboutElectron implements OnReadyHandler {
 
         updateExists: compare(updateCheckResults?.updateInfo.version ?? '0.0.0', version, '>'),
         updateVersion: updateCheckResults?.updateInfo.version,
+        updateDownloaded: false,
 
         osName: this.process.platform,
         osVersion: this.process.getSystemVersion(),

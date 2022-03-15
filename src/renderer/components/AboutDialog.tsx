@@ -27,7 +27,13 @@ export const AboutDialog: React.FC<AboutDialogProps> = ({ open, onClose = noop }
             <Typography paragraph>
               <strong>Version:</strong>
               {` ${details.version}${details.isDevBuild ? ' (dev)' : ''}`}
-              {`${details.updateExists ? ` - update to ${details.updateVersion} by restarting the application.` : ''}`}
+              {`${
+                details.updateDownloaded
+                  ? ` - update to ${details.updateVersion} by restarting the application.`
+                  : details.updateExists
+                  ? ` - update to ${details.updateVersion} downloading...`
+                  : ''
+              }`}
               <br />
               <strong>Electron Version:</strong>
               {` ${details.electronVersion}`}

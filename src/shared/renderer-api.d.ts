@@ -20,10 +20,11 @@ declare global {
     readonly setLastFolder: (uuid: string) => Promise<void>;
 
     readonly on: {
-      (event: 'files-updated', handler: (files: FolderConfiguration) => void): number;
       (event: 'configuration', handler: (config: AppConfiguration) => void): number;
+      (event: 'files-updated', handler: (files: FolderConfiguration) => void): number;
+      (event: 'update-downloaded', handler: (completed: boolean) => void): number;
     };
-    readonly off: (event: 'files-updated' | 'configuration', handler: number) => void;
+    readonly off: (event: 'configuration' | 'files-updated' | 'update-downloaded', handler: number) => void;
   }
 
   export interface EditorGlobalApi {

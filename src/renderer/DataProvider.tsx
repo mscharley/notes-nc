@@ -11,6 +11,7 @@ import { useAppDispatch, useAppSelector } from '~renderer/hooks';
 import { useCallback, useEffect, useState } from 'react';
 import CircularProgress from '@mui/material/CircularProgress';
 import type { FolderConfiguration } from '~shared/model';
+import { setUpdateDownloaded } from './redux/about/details-slice';
 
 export const DataProvider: React.FC = ({ children }) => {
   const dispatch = useAppDispatch();
@@ -50,21 +51,39 @@ export const DataProvider: React.FC = ({ children }) => {
   }, [dispatch, handleFileUpdates]);
 
   useEffect(() => {
-    editorApi.aboutDetails
-      .then((details) => dispatch(setAboutDetails(details)))
-      .catch((e) => dispatch(setFatalError(e)));
-  }, [dispatch]);
-
-  useEffect(() => {
-    editorApi
+    const result = editorApi
       .getAppConfiguration()
       .then((configuration) => {
         setLoadedConfiguration(true);
-        editorApi.on('configuration', (newConfiguration) => {
+        const handler = editorApi.on('configuration', (newConfiguration) => {
           dispatch(updateAppConfiguration(newConfiguration));
         });
         dispatch(updateAppConfiguration(configuration));
+
+        return handler;
       })
+      .catch((e) => dispatch(setFatalError(e)));
+
+    return (): void => {
+      result
+        .then((v) => (typeof v === 'number' ? editorApi.off('configuration', v) : undefined))
+        .catch((e) => dispatch(setFatalError(e)));
+    };
+  }, [dispatch]);
+
+  useEffect(() => {
+    const handler = editorApi.on('update-downloaded', (completed) => {
+      dispatch(setUpdateDownloaded(completed));
+    });
+
+    return (): void => {
+      editorApi.off('update-downloaded', handler);
+    };
+  }, [dispatch]);
+
+  useEffect(() => {
+    editorApi.aboutDetails
+      .then((details) => dispatch(setAboutDetails(details)))
       .catch((e) => dispatch(setFatalError(e)));
   }, [dispatch]);
 

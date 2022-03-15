@@ -85,6 +85,10 @@ export class MainWindow implements OnReadyHandler {
     }
   };
 
+  public readonly send = (channel: string, ...args: unknown[]): void => {
+    this.window?.webContents.send(channel, ...args);
+  };
+
   private readonly isAllowedInternalNavigationUrl = (url: string): boolean => {
     const parsed = new URL(url);
 
