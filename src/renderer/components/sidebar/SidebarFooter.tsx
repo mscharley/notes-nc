@@ -1,10 +1,11 @@
+import { closeCurrentFile, setActiveOverlay, setFatalError, setFileListing } from '~renderer/redux';
+import { useAppDispatch, useAppSelector } from '~renderer/hooks';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import IconButton from '@mui/material/IconButton';
 import Paper from '@mui/material/Paper';
-import { setActiveOverlay } from '~renderer/redux';
-import Settings from '@mui/icons-material/SettingsSharp';
+import RefreshIcon from '@mui/icons-material/Refresh';
+import SettingsIcon from '@mui/icons-material/SettingsSharp';
 import Tooltip from '@mui/material/Tooltip';
-import { useAppDispatch } from '~renderer/hooks';
 
 export interface SidebarFooterProps {
   width: string;
@@ -12,6 +13,26 @@ export interface SidebarFooterProps {
 
 export const SidebarFooter: React.FC<SidebarFooterProps> = ({ width }) => {
   const dispatch = useAppDispatch();
+  const currentFile = useAppSelector((s) => s.files.currentFile);
+
+  const handleRefresh: React.MouseEventHandler = (ev) => {
+    editorApi
+      .listNoteFiles()
+      .then((fs) => {
+        dispatch(setFileListing(fs));
+
+        const newFiles = Object.values(fs)
+          .flatMap((f) => f.categories)
+          .flatMap((c) => c.files);
+        if (newFiles.find((f) => f.url === currentFile?.url) == null) {
+          // Currently editing file no longer exists...
+          dispatch(closeCurrentFile());
+        }
+      })
+      .catch((e: unknown) => {
+        dispatch(setFatalError(e));
+      });
+  };
 
   return (
     <Paper
@@ -35,7 +56,7 @@ export const SidebarFooter: React.FC<SidebarFooterProps> = ({ width }) => {
             dispatch(setActiveOverlay('configuration'));
           }}
         >
-          <Settings />
+          <SettingsIcon />
         </IconButton>
       </Tooltip>
       <Tooltip title='About'>
@@ -45,6 +66,11 @@ export const SidebarFooter: React.FC<SidebarFooterProps> = ({ width }) => {
           }}
         >
           <HelpOutlineIcon />
+        </IconButton>
+      </Tooltip>
+      <Tooltip title='Refresh'>
+        <IconButton onClick={handleRefresh}>
+          <RefreshIcon />
         </IconButton>
       </Tooltip>
     </Paper>
