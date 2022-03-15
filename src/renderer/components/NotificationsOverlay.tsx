@@ -30,7 +30,7 @@ const fontSize = 'small';
 export const NotificationsOverlay: React.FC = () => {
   const isDev = useAppSelector((s) => s.about.details?.isDevBuild) ?? false;
   const notificationsState = useAppSelector((s) => s.notifications);
-  const updateDownloaded = useAppSelector((s) => s.about.details?.updateDownloaded ?? false);
+  const updateDownloaded = useAppSelector((s) => s.updates.status?.updateDownloaded ?? false);
   const [saving, setSaving, flushSaving] = useDebouncedState(false, 2_000);
 
   useEffect(() => {

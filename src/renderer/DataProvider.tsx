@@ -5,13 +5,13 @@ import {
   setCurrentFolder,
   setFatalError,
   setFileListing,
+  setUpdateStatus,
   updateAppConfiguration,
 } from '~renderer/redux';
 import { useAppDispatch, useAppSelector } from '~renderer/hooks';
 import { useCallback, useEffect, useState } from 'react';
 import CircularProgress from '@mui/material/CircularProgress';
 import type { FolderConfiguration } from '~shared/model';
-import { setUpdateDownloaded } from './redux/about/details-slice';
 
 export const DataProvider: React.FC = ({ children }) => {
   const dispatch = useAppDispatch();
@@ -72,12 +72,13 @@ export const DataProvider: React.FC = ({ children }) => {
   }, [dispatch]);
 
   useEffect(() => {
-    const handler = editorApi.on('update-downloaded', (completed) => {
-      dispatch(setUpdateDownloaded(completed));
+    const handler = editorApi.on('update-status', (status) => {
+      dispatch(setUpdateStatus(status));
     });
+    editorApi.checkForUpdates();
 
     return (): void => {
-      editorApi.off('update-downloaded', handler);
+      editorApi.off('update-status', handler);
     };
   }, [dispatch]);
 

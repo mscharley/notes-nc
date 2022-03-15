@@ -3,10 +3,6 @@ export interface AboutDetails {
   version: string;
   isDevBuild: boolean;
 
-  updateExists: boolean;
-  updateDownloaded: boolean;
-  updateVersion?: string;
-
   osName: string;
   osVersion: string;
 }
