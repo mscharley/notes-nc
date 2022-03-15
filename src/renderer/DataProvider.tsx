@@ -5,6 +5,7 @@ import {
   setCurrentFolder,
   setFatalError,
   setFileListing,
+  setUpdateStatus,
   updateAppConfiguration,
 } from '~renderer/redux';
 import { useAppDispatch, useAppSelector } from '~renderer/hooks';
@@ -50,21 +51,40 @@ export const DataProvider: React.FC = ({ children }) => {
   }, [dispatch, handleFileUpdates]);
 
   useEffect(() => {
-    editorApi.aboutDetails
-      .then((details) => dispatch(setAboutDetails(details)))
-      .catch((e) => dispatch(setFatalError(e)));
-  }, [dispatch]);
-
-  useEffect(() => {
-    editorApi
+    const result = editorApi
       .getAppConfiguration()
       .then((configuration) => {
         setLoadedConfiguration(true);
-        editorApi.on('configuration', (newConfiguration) => {
+        const handler = editorApi.on('configuration', (newConfiguration) => {
           dispatch(updateAppConfiguration(newConfiguration));
         });
         dispatch(updateAppConfiguration(configuration));
+
+        return handler;
       })
+      .catch((e) => dispatch(setFatalError(e)));
+
+    return (): void => {
+      result
+        .then((v) => (typeof v === 'number' ? editorApi.off('configuration', v) : undefined))
+        .catch((e) => dispatch(setFatalError(e)));
+    };
+  }, [dispatch]);
+
+  useEffect(() => {
+    const handler = editorApi.on('update-status', (status) => {
+      dispatch(setUpdateStatus(status));
+    });
+    editorApi.checkForUpdates();
+
+    return (): void => {
+      editorApi.off('update-status', handler);
+    };
+  }, [dispatch]);
+
+  useEffect(() => {
+    editorApi.aboutDetails
+      .then((details) => dispatch(setAboutDetails(details)))
       .catch((e) => dispatch(setFatalError(e)));
   }, [dispatch]);
 

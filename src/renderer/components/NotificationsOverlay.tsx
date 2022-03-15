@@ -1,8 +1,10 @@
 import { useAppSelector, useDebouncedState } from '~renderer/hooks';
+import Autorenew from '@mui/icons-material/Autorenew';
 import Box from '@mui/material/Box';
 import type { BoxProps } from '@mui/system/Box';
 import SaveAsSharp from '@mui/icons-material/SaveAsSharp';
 import { styled } from '@mui/material';
+import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
 import { useEffect } from 'react';
 
@@ -20,7 +22,6 @@ const NotificationsBox = styled(Box)<BoxProps>((context) => ({
   borderLeft: '1px solid',
   borderColor: context.theme.palette.text.disabled,
   borderRadius: '3px 0 0 0',
-  pointerEvents: 'none',
   background: context.theme.palette.background.paper,
 }));
 
@@ -29,6 +30,7 @@ const fontSize = 'small';
 export const NotificationsOverlay: React.FC = () => {
   const isDev = useAppSelector((s) => s.about.details?.isDevBuild) ?? false;
   const notificationsState = useAppSelector((s) => s.notifications);
+  const updateDownloaded = useAppSelector((s) => s.updates.status?.updateDownloaded ?? false);
   const [saving, setSaving, flushSaving] = useDebouncedState(false, 2_000);
 
   useEffect(() => {
@@ -44,8 +46,13 @@ export const NotificationsOverlay: React.FC = () => {
     </Typography>
   ) : null;
   const saveIcon = saving ? <SaveAsSharp key='save' fontSize={fontSize} /> : null;
+  const updateAvailable = updateDownloaded ? (
+    <Tooltip title='Update available'>
+      <Autorenew />
+    </Tooltip>
+  ) : null;
 
-  const notifications = [devBuild, saveIcon].filter((x) => x != null);
+  const notifications = [devBuild, saveIcon, updateAvailable].filter((x) => x != null);
 
   return notifications.length > 0 ? <NotificationsBox>{notifications}</NotificationsBox> : <></>;
 };

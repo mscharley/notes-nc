@@ -4,7 +4,9 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
+import IconButton from '@mui/material/IconButton';
 import { noop } from '~shared/util';
+import { SpinningRefreshIcon } from './SpinningRefreshIcon';
 import Typography from '@mui/material/Typography';
 import { useAppSelector } from '~renderer/hooks';
 
@@ -15,6 +17,12 @@ export interface AboutDialogProps {
 
 export const AboutDialog: React.FC<AboutDialogProps> = ({ open, onClose = noop }) => {
   const details = useAppSelector((s) => s.about.details);
+  const updates = useAppSelector((s) => s.updates.status) ?? {
+    canCheckForUpdates: false,
+    checkingForUpdate: false,
+    updateDownloaded: false,
+    updateExists: false,
+  };
 
   return (
     <Dialog open={open} onClose={onClose} fullWidth={true} maxWidth={'sm'}>
@@ -27,7 +35,20 @@ export const AboutDialog: React.FC<AboutDialogProps> = ({ open, onClose = noop }
             <Typography paragraph>
               <strong>Version:</strong>
               {` ${details.version}${details.isDevBuild ? ' (dev)' : ''}`}
-              {`${details.updateExists ? ` - update to ${details.updateVersion} by restarting the application.` : ''}`}
+              {updates.updateDownloaded ? (
+                <> - update to {updates.updateVersion} by restarting the application.</>
+              ) : updates.updateExists ? (
+                <> - update to {updates.updateVersion} downloading...</>
+              ) : updates.canCheckForUpdates ? (
+                <>
+                  <IconButton onClick={(): void => editorApi.checkForUpdates()}>
+                    <SpinningRefreshIcon spinning={updates.checkingForUpdate} />
+                  </IconButton>
+                  Check for updates
+                </>
+              ) : (
+                ''
+              )}
               <br />
               <strong>Electron Version:</strong>
               {` ${details.electronVersion}`}

@@ -1,10 +1,10 @@
 import { createAction, createSlice } from '@reduxjs/toolkit';
-import type { AboutDetails } from '~shared/model/AboutDetails';
+import type { AboutDetails } from '~shared/model';
 
-export type AboutSlice = { loading: false; details?: undefined } | { loading: true; details: AboutDetails };
+export type AboutSlice = { loading: true; details?: undefined } | { loading: false; details: AboutDetails };
 
 // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-const initialState = { loading: false } as AboutSlice;
+const initialState = { loading: true } as AboutSlice;
 
 export const setAboutDetails = createAction<AboutDetails>('setAboutDetails');
 

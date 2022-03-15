@@ -34,6 +34,7 @@ class EditorApiImpl implements EditorApi {
   public readonly aboutDetails: EditorApi['aboutDetails'] = ipcRenderer.invoke('about-details');
   public readonly addFolder: EditorApi['addFolder'] = async (name: string, localPath: string) =>
     ipcRenderer.invoke('add-folder', name, localPath);
+  public readonly checkForUpdates: EditorApi['checkForUpdates'] = () => ipcRenderer.send('check-updates');
   public readonly deleteFolder: EditorApi['deleteFolder'] = async (uuid: string) =>
     ipcRenderer.invoke('delete-folder', uuid);
   public readonly doLinuxInstallation: EditorApi['doLinuxInstallation'] = async (options) =>

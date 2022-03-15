@@ -8,3 +8,4 @@ export { setFatalError } from './fatal-errors/errors-slice';
 export { closeCurrentFile, setCurrentFile, setCurrentFolder, setFileListing } from './markdown-files/files-slice';
 export { setSaving } from './notifications/notifications-slice';
 export { closeOverlay, confirmDelete, overrideActiveOverlay, setActiveOverlay } from './overlay/overlay-slice';
+export { setUpdateStatus } from './updates/update-slice';

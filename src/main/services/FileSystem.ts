@@ -224,7 +224,7 @@ export class FileSystem implements CustomProtocolProvider, OnReadyHandler {
 
   private readonly republishFileList = async (): Promise<void> => {
     const files = await this.listFiles();
-    this.mainWindow.window?.webContents.send('files-updated', files);
+    this.mainWindow.send('files-updated', files);
   };
 
   private readonly serveLocalFile = (basepath: string, filepath: string, url: string): string | ProtocolResponse => {

@@ -1,12 +1,20 @@
 /* eslint-disable @typescript-eslint/consistent-type-imports */
 
-import { AboutDetails, AppConfiguration, FileDescription, FolderConfiguration, LinuxInstallOptions } from './model';
+import {
+  AboutDetails,
+  AppConfiguration,
+  FileDescription,
+  FolderConfiguration,
+  LinuxInstallOptions,
+  UpdateStatus,
+} from './model';
 import { OpenDialogReturnValue } from 'electron';
 
 declare global {
   export interface EditorApi {
     readonly aboutDetails: Promise<AboutDetails>;
     readonly addFolder: (name: string, localPath: string) => Promise<void>;
+    readonly checkForUpdates: () => void;
     readonly deleteFolder: (uuid: string) => Promise<void>;
     readonly doLinuxInstallation: (options: LinuxInstallOptions) => Promise<void>;
     readonly getAppConfiguration: () => Promise<AppConfiguration>;
@@ -20,10 +28,11 @@ declare global {
     readonly setLastFolder: (uuid: string) => Promise<void>;
 
     readonly on: {
-      (event: 'files-updated', handler: (files: FolderConfiguration) => void): number;
       (event: 'configuration', handler: (config: AppConfiguration) => void): number;
+      (event: 'files-updated', handler: (files: FolderConfiguration) => void): number;
+      (event: 'update-status', handler: (status: UpdateStatus) => void): number;
     };
-    readonly off: (event: 'files-updated' | 'configuration', handler: number) => void;
+    readonly off: (event: 'configuration' | 'files-updated' | 'update-status', handler: number) => void;
   }
 
   export interface EditorGlobalApi {

@@ -37,8 +37,7 @@ export class Entrypoint {
     this.application.on('second-instance', this.onSecondInstance);
     this.application.on('window-all-closed', this.onWindowAllClosed);
 
-    // The ready handler should be the last registered as it may be fired immediately.
-    this.application.on('ready', this.onReady);
+    this.application.whenReady().then(this.onReady).catch(this.onFatalError);
   };
 
   private readonly onSecondInstance = (

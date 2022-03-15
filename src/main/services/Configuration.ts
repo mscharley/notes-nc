@@ -73,7 +73,7 @@ export class Configuration implements ReadyHandler {
     this.ipcMain.handle('set-last-folder', (_ev, uuid: string) => this.store.set('lastFolder', uuid));
     this.ipcMain.handle('set-last-file', (_ev, url: string) => this.store.set('lastFile', url));
     this.onChange(() => {
-      this.window.window?.webContents.send('configuration', this.asAppConfiguration());
+      this.window.send('configuration', this.asAppConfiguration());
     });
   };
 
