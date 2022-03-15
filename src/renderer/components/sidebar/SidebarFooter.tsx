@@ -1,21 +1,43 @@
 import { closeCurrentFile, setActiveOverlay, setFatalError, setFileListing } from '~renderer/redux';
-import { useAppDispatch, useAppSelector } from '~renderer/hooks';
+import { useAppDispatch, useAppSelector, useDebouncedState } from '~renderer/hooks';
+import cn from 'classnames';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import IconButton from '@mui/material/IconButton';
 import Paper from '@mui/material/Paper';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import SettingsIcon from '@mui/icons-material/SettingsSharp';
+import { styled } from '@mui/material';
 import Tooltip from '@mui/material/Tooltip';
 
 export interface SidebarFooterProps {
   width: string;
 }
 
+const SpinningRefreshIcon = styled(RefreshIcon)`
+  &.spin {
+    animation-name: spin;
+    animation-duration: 1s;
+    animation-timing-function: linear;
+  }
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+`;
+
 export const SidebarFooter: React.FC<SidebarFooterProps> = ({ width }) => {
   const dispatch = useAppDispatch();
   const currentFile = useAppSelector((s) => s.files.currentFile);
+  const [spinning, setSpinning, flushSpinning] = useDebouncedState(false, 1_000);
 
-  const handleRefresh: React.MouseEventHandler = (ev) => {
+  const handleRefresh: React.MouseEventHandler = () => {
+    setSpinning(true);
+    flushSpinning();
+
     editorApi
       .listNoteFiles()
       .then((fs) => {
@@ -28,6 +50,8 @@ export const SidebarFooter: React.FC<SidebarFooterProps> = ({ width }) => {
           // Currently editing file no longer exists...
           dispatch(closeCurrentFile());
         }
+
+        setSpinning(false);
       })
       .catch((e: unknown) => {
         dispatch(setFatalError(e));
@@ -68,9 +92,9 @@ export const SidebarFooter: React.FC<SidebarFooterProps> = ({ width }) => {
           <HelpOutlineIcon />
         </IconButton>
       </Tooltip>
-      <Tooltip title='Refresh'>
+      <Tooltip title='Refresh notes list'>
         <IconButton onClick={handleRefresh}>
-          <RefreshIcon />
+          <SpinningRefreshIcon className={cn({ spin: spinning })} />
         </IconButton>
       </Tooltip>
     </Paper>
