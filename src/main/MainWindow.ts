@@ -76,6 +76,15 @@ export class MainWindow implements OnReadyHandler {
     );
   };
 
+  public readonly bringWindowToTop = (): void => {
+    if (this.window != null) {
+      if (this.window.isMinimized()) {
+        this.window.restore();
+      }
+      this.window.focus();
+    }
+  };
+
   private readonly isAllowedInternalNavigationUrl = (url: string): boolean => {
     const parsed = new URL(url);
 

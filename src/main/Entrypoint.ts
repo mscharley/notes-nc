@@ -22,6 +22,11 @@ export class Entrypoint {
   }
 
   public readonly start = (): void => {
+    // Check we're the first instance of this application.
+    if (!this.application.requestSingleInstanceLock()) {
+      this.application.quit();
+    }
+
     const privSchemes = this.customProtocols.map((p) => p.privilegedSchemes).flat();
     log.verbose(
       'Registering schemes as privileged:',
@@ -29,16 +34,20 @@ export class Entrypoint {
     );
     protocol.registerSchemesAsPrivileged(privSchemes);
 
+    this.application.on('second-instance', this.onSecondInstance);
     this.application.on('window-all-closed', this.onWindowAllClosed);
 
-    // Signal to Electron that we're ready to go when it is.
+    // The ready handler should be the last registered as it may be fired immediately.
     this.application.on('ready', this.onReady);
   };
 
-  private readonly onWindowAllClosed = (): void => {
-    if (process.platform !== 'darwin') {
-      this.application.quit();
-    }
+  private readonly onSecondInstance = (
+    _event: Electron.Event,
+    _argv: string[],
+    _workingDirectory: string,
+    _additionalData: unknown,
+  ): void => {
+    this.mainWindow.bringWindowToTop();
   };
 
   private readonly onReady = (): void => {
@@ -47,6 +56,10 @@ export class Entrypoint {
       .reduce<Promise<void>>(async (acc, handler) => acc.then(handler.onAppReady), Promise.resolve())
       .then(async () => this.mainWindow.initialise())
       .catch(this.onFatalError);
+  };
+
+  private readonly onWindowAllClosed = (): void => {
+    this.application.quit();
   };
 
   private readonly onFatalError = (error: unknown): never => {
