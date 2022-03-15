@@ -1,10 +1,10 @@
+import { EditorView, useCodeMirror } from '@uiw/react-codemirror';
 import { markdown, markdownLanguage } from '@codemirror/lang-markdown';
 import { useEffect, useRef } from 'react';
 import Box from '@mui/material/Box';
 import { languages } from '@codemirror/language-data';
 import { setFatalError } from '~renderer/redux';
 import { useAppDispatch } from '~renderer/hooks';
-import { useCodeMirror } from '@uiw/react-codemirror';
 
 export interface MarkdownEditorProps {
   value: string;
@@ -17,7 +17,7 @@ export const MarkdownEditor: React.FC<MarkdownEditorProps> = ({ onChange, value 
 
   const { setContainer, view } = useCodeMirror({
     container: editor.current,
-    extensions: [markdown({ base: markdownLanguage, codeLanguages: languages })],
+    extensions: [markdown({ base: markdownLanguage, codeLanguages: languages }), EditorView.lineWrapping],
     onChange: (s) => {
       Promise.resolve(onChange(s)).catch((e) => {
         dispatch(setFatalError(e));
