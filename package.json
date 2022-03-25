@@ -115,7 +115,7 @@
     "react-test-renderer": "17.0.2",
     "rimraf": "3.0.2",
     "testdouble": "3.16.4",
-    "ts-jest": "27.1.3",
+    "ts-jest": "27.1.4",
     "typescript": "4.6.2",
     "vite": "2.8.6",
     "viteshot": "0.3.1"
