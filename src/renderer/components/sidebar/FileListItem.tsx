@@ -38,7 +38,7 @@ export const FileListItem: React.FC<FileListItemProps> = ({ file, selected }) =>
   const handleClickAway = (): void => {
     setEditing(false);
     dispatch(closeCurrentFile());
-    editorApi
+    window.editorApi
       .renameNoteFile(file, filename)
       .then((newFile) => {
         if (newFile != null) {

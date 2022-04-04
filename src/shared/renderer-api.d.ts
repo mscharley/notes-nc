@@ -13,12 +13,14 @@ import { OpenDialogReturnValue } from 'electron';
 declare global {
   export interface EditorApi {
     readonly aboutDetails: Promise<AboutDetails>;
+    readonly addCategory: (folderUuid: string, category: string) => Promise<void>;
     readonly addFolder: (name: string, localPath: string) => Promise<void>;
     readonly checkForUpdates: () => void;
+    readonly cspNonce: Promise<string>;
+    readonly deleteCategory: (folderUuid: string, categoryPath: string) => Promise<void>;
     readonly deleteFolder: (uuid: string) => Promise<void>;
     readonly doLinuxInstallation: (options: LinuxInstallOptions) => Promise<void>;
     readonly getAppConfiguration: () => Promise<AppConfiguration>;
-    readonly getCspNonce: () => Promise<string>;
     readonly isCspEnabled: Promise<boolean>;
     readonly isDev: Promise<boolean>;
     readonly listNoteFiles: () => Promise<FolderConfiguration>;
@@ -39,9 +41,6 @@ declare global {
     editorApi: EditorApi;
     log: import('electron-log').LogFunctions;
   }
-
-  export const editorApi: EditorApi;
-  export const log: import('electron-log').LogFunctions;
 
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
   interface Window extends EditorGlobalApi {}

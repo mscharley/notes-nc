@@ -4,8 +4,8 @@ import * as http from '~shared/http';
 import type { CategoryDescription, FileDescription, FolderConfiguration, FolderDescription } from '~shared/model';
 import { ElectronApp, ElectronIpcMain } from '~main/inversify/tokens';
 import { inject, injectable } from 'inversify';
+import { mkdirp, readdir, rename, rmdir, stat, unlink, writeFile } from 'fs-extra';
 import type { Protocol, ProtocolResponse } from 'electron/main';
-import { readdir, rename, stat, unlink, writeFile } from 'fs/promises';
 import { Configuration } from '~main/services/Configuration';
 import type { CustomProtocolProvider } from '~main/interfaces/CustomProtocolProvider';
 import { injectToken } from 'inversify-token';
@@ -134,10 +134,12 @@ export class FileSystem implements CustomProtocolProvider, OnReadyHandler {
   public readonly onAppReady = (): void | Promise<void> => {
     this.ipcMain.handle('list-files', this.listFiles);
     this.ipcMain.handle('rename-file', this.renameFile);
+    this.ipcMain.handle('add-category', this.addCategory);
     // eslint-disable-next-line @typescript-eslint/require-await
     this.ipcMain.handle('add-folder', async (_ev, name: string, localPath: string): Promise<void> => {
       this.configuration.addFolder(name, localPath);
     });
+    this.ipcMain.handle('delete-category', this.deleteCategory);
     // eslint-disable-next-line @typescript-eslint/require-await
     this.ipcMain.handle('delete-folder', async (_ev, uuid: string): Promise<void> => {
       this.configuration.deleteFolder(uuid);
@@ -188,6 +190,51 @@ export class FileSystem implements CustomProtocolProvider, OnReadyHandler {
       name: `${displayName}.md`,
       url: url.toString(),
     };
+  };
+
+  public readonly addCategory = async (_ev: unknown, folderUuid: string, category: string): Promise<void> => {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    if (this.folders[folderUuid] == null) {
+      log.warn('Attempted to add category to unknown folder:', folderUuid);
+      return;
+    }
+
+    await mkdirp(path.resolve(this.folders[folderUuid].localPath, category));
+    await this.republishFileList();
+  };
+
+  public readonly deleteCategory = async (_ev: unknown, folderUuid: string, categoryPath: string): Promise<void> => {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    if (this.folders[folderUuid] == null) {
+      log.warn('Attempted to remove category from unknown folder:', folderUuid);
+      return;
+    }
+
+    const folderPath = this.folders[folderUuid].localPath;
+    const absolutePath = path.resolve(folderPath, categoryPath.substring(1));
+    if (folderPath === absolutePath) {
+      log.warn('Refusing to delete the uncategorised category from folder:', folderUuid);
+    }
+
+    try {
+      if (!(await stat(absolutePath)).isDirectory()) {
+        log.warn('Requested category is not a directory:', absolutePath);
+        return;
+      }
+    } catch (e: unknown) {
+      // If stat fails, then the category already doesn't exist.
+      log.warn(e);
+      return;
+    }
+
+    const files = await readdir(absolutePath);
+    await Promise.all(
+      files.map(async (f) => {
+        await rename(path.resolve(absolutePath, f), path.resolve(folderPath, f));
+      }),
+    );
+    await rmdir(absolutePath);
+    await this.republishFileList();
   };
 
   public readonly generateFolder = async (

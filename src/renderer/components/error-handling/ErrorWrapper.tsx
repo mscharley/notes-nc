@@ -22,7 +22,7 @@ export class ErrorWrapper extends React.Component<ErrorWrapperProps, ErrorWrappe
   }
 
   public override componentDidCatch(error: Error, errorInfo: React.ErrorInfo): void {
-    log.error(error, errorInfo);
+    window.log.error(error, errorInfo);
   }
 
   public override render(): React.ReactNode {

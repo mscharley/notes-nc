@@ -13,7 +13,7 @@ export const AddFolder: React.FC = () => {
   const dispatch = useDispatch();
 
   const handleOpenFolder = (): void => {
-    editorApi
+    window.editorApi
       .openSelectFolderDialog()
       .then((results) => {
         if (!results.canceled || results.filePaths.length === 1) {
@@ -27,7 +27,7 @@ export const AddFolder: React.FC = () => {
     if (name === '' || folder == null) {
       return;
     }
-    editorApi
+    window.editorApi
       .addFolder(name, folder)
       .then(() => {
         setName('');

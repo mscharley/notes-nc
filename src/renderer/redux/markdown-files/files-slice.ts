@@ -47,7 +47,7 @@ const slice = createSlice({
           return;
         }
 
-        editorApi.setLastFile(currentFile.url).catch((e) => log.error(e));
+        window.editorApi.setLastFile(currentFile.url).catch((e) => window.log.error(e));
 
         state.currentFile = currentFile;
       })
@@ -63,7 +63,7 @@ const slice = createSlice({
           return;
         }
 
-        editorApi.setLastFolder(currentFolder).catch((e) => log.error(e));
+        window.editorApi.setLastFolder(currentFolder).catch((e) => window.log.error(e));
 
         state.currentFolder = currentFolder;
       }),

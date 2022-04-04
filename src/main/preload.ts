@@ -32,14 +32,17 @@ class EditorApiImpl implements EditorApi {
   }
 
   public readonly aboutDetails: EditorApi['aboutDetails'] = ipcRenderer.invoke('about-details');
-  public readonly addFolder: EditorApi['addFolder'] = async (name: string, localPath: string) =>
+  public readonly addCategory: EditorApi['addCategory'] = async (folderUuid, category) =>
+    ipcRenderer.invoke('add-category', folderUuid, category);
+  public readonly addFolder: EditorApi['addFolder'] = async (name, localPath) =>
     ipcRenderer.invoke('add-folder', name, localPath);
   public readonly checkForUpdates: EditorApi['checkForUpdates'] = () => ipcRenderer.send('check-updates');
-  public readonly deleteFolder: EditorApi['deleteFolder'] = async (uuid: string) =>
-    ipcRenderer.invoke('delete-folder', uuid);
+  public readonly cspNonce: EditorApi['cspNonce'] = ipcRenderer.invoke('csp-nonce');
+  public readonly deleteCategory: EditorApi['deleteCategory'] = async (folderUuid, category) =>
+    ipcRenderer.invoke('delete-category', folderUuid, category);
+  public readonly deleteFolder: EditorApi['deleteFolder'] = async (uuid) => ipcRenderer.invoke('delete-folder', uuid);
   public readonly doLinuxInstallation: EditorApi['doLinuxInstallation'] = async (options) =>
     ipcRenderer.invoke('linux-install', options);
-  public readonly getCspNonce: EditorApi['getCspNonce'] = async () => ipcRenderer.invoke('csp-nonce');
   public readonly getAppConfiguration: EditorApi['getAppConfiguration'] = async () =>
     ipcRenderer.invoke('get-configuration');
   public readonly listNoteFiles: EditorApi['listNoteFiles'] = async () => ipcRenderer.invoke('list-files');

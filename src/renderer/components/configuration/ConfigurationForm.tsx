@@ -25,7 +25,7 @@ export const ConfigurationForm: React.FC<ConfigurationFormProps> = ({ initialTab
   const [selectedTab, setSelectedTab] = useState(initialTab ?? TabOptions.FolderManagement);
 
   const doInstallation = (): void => {
-    editorApi
+    window.editorApi
       .doLinuxInstallation({
         createDesktopEntry: true,
         moveAppImage: true,

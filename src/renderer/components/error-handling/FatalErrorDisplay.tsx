@@ -16,7 +16,7 @@ export const FatalErrorDisplay: React.FC<FatalErrorDisplayProps> = ({ overrideEr
 
   useEffect(() => {
     if (error != null) {
-      log.error(error);
+      window.log.error(error);
     }
   }, [error]);
 

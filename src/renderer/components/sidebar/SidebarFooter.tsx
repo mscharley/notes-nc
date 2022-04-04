@@ -20,7 +20,7 @@ export const SidebarFooter: React.FC<SidebarFooterProps> = ({ width }) => {
   const handleRefresh: React.MouseEventHandler = () => {
     setSpinning(true);
 
-    editorApi
+    window.editorApi
       .listNoteFiles()
       .then((fs) => {
         dispatch(setFileListing(fs));
