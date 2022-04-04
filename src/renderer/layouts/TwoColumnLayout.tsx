@@ -51,14 +51,14 @@ const drawerWidth = 300;
 /**
  * Main application entrypoint component.
  */
-export const TwoColumnLayout: React.FC = () => {
+const TwoColumnLayout: React.FC = () => {
   const dispatch = useAppDispatch();
   const openFile = useAppSelector((state) => state.files);
   const [contents, setContents, flushContents] = useDebouncedState<Partial<FileState>>({}, SAVE_DELAY);
 
   useEffect(() => {
     saveFile(dispatch, contents as FileState).catch((e) => {
-      log.error(e);
+      window.log.error(e);
     });
   }, [dispatch, contents]);
 
@@ -82,7 +82,7 @@ export const TwoColumnLayout: React.FC = () => {
           flushContents();
         })
         .catch((e) => {
-          log.error(e);
+          window.log.error(e);
         });
     } else {
       // Reset the contents state so we don't inadvertantly re-save a closed file.
@@ -127,3 +127,5 @@ export const TwoColumnLayout: React.FC = () => {
     </Box>
   );
 };
+
+export default TwoColumnLayout;

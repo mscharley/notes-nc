@@ -29,7 +29,7 @@ export const DataProvider: React.FC = ({ children }) => {
   );
 
   useEffect(() => {
-    const result = editorApi
+    const result = window.editorApi
       .listNoteFiles()
       .then((fs) => {
         dispatch(setFileListing(fs));
@@ -37,7 +37,7 @@ export const DataProvider: React.FC = ({ children }) => {
         if (Object.values(fs).length === 0) {
           dispatch(setActiveOverlay('configuration'));
         }
-        return editorApi.on('files-updated', handleFileUpdates);
+        return window.editorApi.on('files-updated', handleFileUpdates);
       })
       .catch((e: unknown) => {
         dispatch(setFatalError(e));
@@ -45,17 +45,17 @@ export const DataProvider: React.FC = ({ children }) => {
 
     return (): void => {
       result
-        .then((v) => (typeof v === 'number' ? editorApi.off('files-updated', v) : undefined))
+        .then((v) => (typeof v === 'number' ? window.editorApi.off('files-updated', v) : undefined))
         .catch((e) => dispatch(setFatalError(e)));
     };
   }, [dispatch, handleFileUpdates]);
 
   useEffect(() => {
-    const result = editorApi
+    const result = window.editorApi
       .getAppConfiguration()
       .then((configuration) => {
         setLoadedConfiguration(true);
-        const handler = editorApi.on('configuration', (newConfiguration) => {
+        const handler = window.editorApi.on('configuration', (newConfiguration) => {
           dispatch(updateAppConfiguration(newConfiguration));
         });
         dispatch(updateAppConfiguration(configuration));
@@ -66,24 +66,24 @@ export const DataProvider: React.FC = ({ children }) => {
 
     return (): void => {
       result
-        .then((v) => (typeof v === 'number' ? editorApi.off('configuration', v) : undefined))
+        .then((v) => (typeof v === 'number' ? window.editorApi.off('configuration', v) : undefined))
         .catch((e) => dispatch(setFatalError(e)));
     };
   }, [dispatch]);
 
   useEffect(() => {
-    const handler = editorApi.on('update-status', (status) => {
+    const handler = window.editorApi.on('update-status', (status) => {
       dispatch(setUpdateStatus(status));
     });
-    editorApi.checkForUpdates();
+    window.editorApi.checkForUpdates();
 
     return (): void => {
-      editorApi.off('update-status', handler);
+      window.editorApi.off('update-status', handler);
     };
   }, [dispatch]);
 
   useEffect(() => {
-    editorApi.aboutDetails
+    window.editorApi.aboutDetails
       .then((details) => dispatch(setAboutDetails(details)))
       .catch((e) => dispatch(setFatalError(e)));
   }, [dispatch]);

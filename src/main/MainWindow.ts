@@ -33,6 +33,7 @@ export class MainWindow implements OnReadyHandler {
       // eslint-disable-next-line @typescript-eslint/no-magic-numbers
       width: this.devtools.isDev ? 1524 : 1024,
       height: 768,
+      backgroundColor: '#ffffff',
       webPreferences: {
         contextIsolation: true,
         disableBlinkFeatures: 'Auxclick',

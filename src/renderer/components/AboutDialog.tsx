@@ -41,7 +41,7 @@ export const AboutDialog: React.FC<AboutDialogProps> = ({ open, onClose = noop }
                 <> - update to {updates.updateVersion} downloading...</>
               ) : updates.canCheckForUpdates ? (
                 <>
-                  <IconButton onClick={(): void => editorApi.checkForUpdates()}>
+                  <IconButton onClick={(): void => window.editorApi.checkForUpdates()}>
                     <SpinningRefreshIcon spinning={updates.checkingForUpdate} />
                   </IconButton>
                   Check for updates

@@ -1,4 +1,5 @@
 import { CacheProvider } from '@emotion/react';
+import { CircularProgress } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
 import { DataProvider } from './DataProvider';
 import type { EmotionCache } from '@emotion/cache';
@@ -10,7 +11,7 @@ import { theme } from './theme';
 import { ThemeProvider } from '@mui/material/styles';
 
 export interface RootProps {
-  cache: EmotionCache;
+  cache?: EmotionCache;
   store: Store;
 }
 
@@ -18,18 +19,20 @@ export interface RootProps {
  * The root element that configures all global providers.
  */
 export const ProviderWrapper: React.FC<RootProps> = ({ cache, children, store }) => {
-  return (
-    <CacheProvider value={cache}>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <ReduxProvider store={store}>
+  return cache == null ? (
+    <CircularProgress />
+  ) : (
+    <ReduxProvider store={store}>
+      <CacheProvider value={cache}>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
           <ErrorWrapper>
             <DataProvider>
               <KeyboardShortcuts>{children}</KeyboardShortcuts>
             </DataProvider>
           </ErrorWrapper>
-        </ReduxProvider>
-      </ThemeProvider>
-    </CacheProvider>
+        </ThemeProvider>
+      </CacheProvider>
+    </ReduxProvider>
   );
 };

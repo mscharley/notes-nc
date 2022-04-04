@@ -1,19 +1,26 @@
+import { lazy, Suspense } from 'react';
 import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
-import { TwoColumnLayout } from './TwoColumnLayout';
 import { useAppSelector } from '~renderer/hooks';
+
+const TwoColumnLayout = lazy(async () => import('./TwoColumnLayout'));
 
 export const LayoutRouter: React.FC = () => {
   const layout = useAppSelector((s) => s.configuration.layout);
+  const standby = (
+    <Box sx={{ display: 'flex', flexGrow: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <CircularProgress />
+    </Box>
+  );
 
   switch (layout) {
     case 'two-column':
-      return <TwoColumnLayout />;
-    default:
       return (
-        <Box sx={{ display: 'flex', flexGrow: 1, justifyContent: 'center', alignItems: 'center' }}>
-          <CircularProgress />
-        </Box>
+        <Suspense fallback={standby}>
+          <TwoColumnLayout />
+        </Suspense>
       );
+    default:
+      return standby;
   }
 };

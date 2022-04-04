@@ -12,7 +12,10 @@ export const NoteFolders = () => {
         displayPath: '~/hello/world.md',
         localPath: '/home/tester/hello/world.md',
         name: 'Testing',
-        categories: [],
+        categories: [
+          { name: 'First category', path: '/First category', files: [] },
+          { name: 'Second category', path: '/Second category', files: [] },
+        ],
       },
     }),
   );
