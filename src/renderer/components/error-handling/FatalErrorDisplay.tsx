@@ -7,6 +7,7 @@ import ReportIcon from '@mui/icons-material/Report';
 import { useAppSelector } from '~renderer/hooks';
 
 export interface FatalErrorDisplayProps {
+  children: React.ReactNode;
   overrideError?: Error;
 }
 

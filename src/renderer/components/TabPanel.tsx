@@ -1,4 +1,5 @@
 export interface TabPanelProps {
+  children: React.ReactNode;
   name: string;
   hidden: boolean;
 }

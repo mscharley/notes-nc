@@ -1,9 +1,9 @@
 import { lazy, Suspense } from 'react';
-import { render } from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { sleep } from '~shared/util';
 
-const root = document.querySelector('#root');
-if (root == null) {
+const container = document.querySelector('#root');
+if (container == null) {
   window.log.error('Unable to find a root element.');
 } else {
   window.log.debug('Injecting React into page.');
@@ -19,7 +19,8 @@ if (root == null) {
 
       return component;
     });
-    render(
+    const root = createRoot(container);
+    root.render(
       <Suspense
         fallback={
           <div className='simple-message'>
@@ -29,9 +30,8 @@ if (root == null) {
       >
         <Application />
       </Suspense>,
-      root,
     );
   } catch (e: unknown) {
-    root.innerHTML = `<div class="simple-message"><p>Unable to load application.</p><pre>${e}</pre></div>`;
+    container.innerHTML = `<div class="simple-message"><p>Unable to load application.</p><pre>${e}</pre></div>`;
   }
 }
