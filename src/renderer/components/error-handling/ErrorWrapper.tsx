@@ -1,8 +1,9 @@
 import { FatalErrorDisplay } from './FatalErrorDisplay';
 import React from 'react';
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface ErrorWrapperProps {}
+export interface ErrorWrapperProps {
+  children: React.ReactNode;
+}
 export type ErrorWrapperState =
   | { hasError: false; error?: undefined }
   | {

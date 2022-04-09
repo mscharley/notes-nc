@@ -12,6 +12,7 @@ import { ThemeProvider } from '@mui/material/styles';
 
 export interface RootProps {
   cache?: EmotionCache;
+  children: React.ReactNode;
   store: Store;
 }
 

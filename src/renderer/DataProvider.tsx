@@ -13,7 +13,7 @@ import { useCallback, useEffect, useState } from 'react';
 import CircularProgress from '@mui/material/CircularProgress';
 import type { FolderConfiguration } from '~shared/model';
 
-export const DataProvider: React.FC = ({ children }) => {
+export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const dispatch = useAppDispatch();
   const [loadedConfiguration, setLoadedConfiguration] = useState(false);
   const [loadedFiles, setLoadedFiles] = useState(false);

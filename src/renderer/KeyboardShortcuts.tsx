@@ -2,7 +2,7 @@ import { setActiveOverlay } from '~renderer/redux';
 import { useAppDispatch } from '~renderer/hooks';
 import { useEffect } from 'react';
 
-export const KeyboardShortcuts: React.FC = ({ children }) => {
+export const KeyboardShortcuts: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
