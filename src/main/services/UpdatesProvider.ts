@@ -53,7 +53,7 @@ export class UpdatesProvider implements OnReadyHandler {
     this._checkResults = this.updater
       .checkForUpdates()
       .then((update) => {
-        if (update.downloadPromise != null) {
+        if (update?.downloadPromise != null) {
           this.updateStatus({
             canCheckForUpdates: true,
             checkingForUpdate: false,
@@ -76,7 +76,7 @@ export class UpdatesProvider implements OnReadyHandler {
             });
         } else {
           this.updateStatus({
-            canCheckForUpdates: true,
+            canCheckForUpdates: update != null,
             checkingForUpdate: false,
             updateDownloaded: false,
             updateExists: false,
