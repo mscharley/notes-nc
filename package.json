@@ -108,7 +108,7 @@
     "html-webpack-plugin": "5.5.0",
     "husky": "7.0.4",
     "install": "0.13.0",
-    "jest": "27.5.1",
+    "jest": "28.1.0",
     "lint-staged": "12.4.1",
     "npm-watch": "0.11.0",
     "patch-package": "6.4.7",
@@ -116,7 +116,7 @@
     "react-test-renderer": "18.1.0",
     "rimraf": "3.0.2",
     "testdouble": "3.16.5",
-    "ts-jest": "27.1.4",
+    "ts-jest": "28.0.1",
     "typescript": "4.6.4",
     "vite": "2.9.6",
     "viteshot": "0.3.1"
