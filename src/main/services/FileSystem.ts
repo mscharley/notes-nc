@@ -158,7 +158,10 @@ export class FileSystem implements CustomProtocolProvider, OnReadyHandler {
               localPath: localPath,
               displayPath: this.generateDisplayPath(localPath),
               baseUrl: `editor://${uuid}`,
-              categories: await this.generateFolder(uuid, localPath, ''),
+              categories: await this.generateFolder(uuid, localPath, '').catch((e) => {
+                log.error(e);
+                return [];
+              }),
             },
           ],
         ),
