@@ -118,7 +118,7 @@
     "testdouble": "3.16.5",
     "ts-jest": "28.0.4",
     "typescript": "4.7.3",
-    "vite": "2.9.9",
+    "vite": "2.9.12",
     "viteshot": "0.3.1"
   }
 }
