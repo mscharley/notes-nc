@@ -61,8 +61,8 @@
     "*.{json,md,yml}": "prettier -w"
   },
   "dependencies": {
-    "@codemirror/lang-markdown": "0.20.1",
-    "@codemirror/language-data": "0.20.0",
+    "@codemirror/lang-markdown": "6.0.0",
+    "@codemirror/language-data": "6.1.0",
     "@emotion/cache": "11.9.3",
     "@emotion/react": "11.9.3",
     "@emotion/styled": "11.9.3",
