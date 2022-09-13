@@ -1,10 +1,11 @@
-import { EditorView, useCodeMirror } from '@uiw/react-codemirror';
 import { markdown, markdownLanguage } from '@codemirror/lang-markdown';
 import { useEffect, useRef } from 'react';
 import Box from '@mui/material/Box';
+import { EditorView } from '@codemirror/view';
 import { languages } from '@codemirror/language-data';
 import { setFatalError } from '~renderer/redux';
 import { useAppDispatch } from '~renderer/hooks';
+import { useCodeMirror } from '@uiw/react-codemirror';
 
 export interface MarkdownEditorProps {
   value: string;
