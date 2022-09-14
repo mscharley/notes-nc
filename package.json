@@ -63,9 +63,9 @@
   "dependencies": {
     "@codemirror/lang-markdown": "6.0.1",
     "@codemirror/language-data": "6.1.0",
-    "@emotion/cache": "11.10.1",
-    "@emotion/react": "11.10.0",
-    "@emotion/styled": "11.10.0",
+    "@emotion/cache": "11.10.3",
+    "@emotion/react": "11.10.4",
+    "@emotion/styled": "11.10.4",
     "@fontsource/roboto": "4.5.7",
     "@mui/icons-material": "5.8.4",
     "@mui/material": "5.9.3",
