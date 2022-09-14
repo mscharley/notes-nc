@@ -88,8 +88,8 @@
     "uuid": "9.0.0"
   },
   "devDependencies": {
-    "@mscharley/eslint-config": "1.8.4",
-    "@mscharley/prettier-config": "1.2.3",
+    "@mscharley/eslint-config": "1.8.5",
+    "@mscharley/prettier-config": "1.2.4",
     "@types/jest": "29.0.2",
     "@types/lodash.debounce": "4.0.7",
     "@types/node": "16.11.12",
