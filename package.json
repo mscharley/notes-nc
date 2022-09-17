@@ -97,7 +97,7 @@
     "@types/react-dom": "18.0.6",
     "@types/uuid": "8.3.4",
     "@vitejs/plugin-react": "2.1.0",
-    "concurrently": "7.3.0",
+    "concurrently": "7.4.0",
     "copyfiles": "2.4.1",
     "electron": "20.1.4",
     "electron-builder": "23.3.3",
