@@ -1,5 +1,4 @@
 .vscode/settings.json
-build/
 ts-build/
 dist/
 node_modules/
