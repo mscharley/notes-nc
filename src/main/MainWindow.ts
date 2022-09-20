@@ -34,6 +34,7 @@ export class MainWindow implements OnReadyHandler {
       width: this.devtools.isDev ? 1524 : 1024,
       height: 768,
       backgroundColor: '#ffffff',
+      icon: path.join(__dirname, '../../build/icon.png'),
       webPreferences: {
         contextIsolation: true,
         disableBlinkFeatures: 'Auxclick',
