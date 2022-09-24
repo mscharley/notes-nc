@@ -112,13 +112,13 @@
     "lint-staged": "13.0.3",
     "npm-watch": "0.11.0",
     "patch-package": "6.4.7",
-    "playwright": "1.25.2",
+    "playwright": "1.26.0",
     "react-test-renderer": "18.2.0",
     "rimraf": "3.0.2",
     "testdouble": "3.16.6",
     "ts-jest": "29.0.1",
     "typescript": "4.8.3",
-    "vite": "3.1.2",
+    "vite": "3.1.3",
     "viteshot": "0.3.1"
   }
 }
