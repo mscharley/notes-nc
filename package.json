@@ -93,7 +93,7 @@
     "@types/jest": "29.2.0",
     "@types/lodash.debounce": "4.0.7",
     "@types/node": "16.11.12",
-    "@types/react": "18.0.21",
+    "@types/react": "18.0.24",
     "@types/react-dom": "18.0.6",
     "@types/uuid": "8.3.4",
     "@vitejs/plugin-react": "2.1.0",
