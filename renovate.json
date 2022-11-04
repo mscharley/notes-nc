@@ -14,7 +14,7 @@
   "prConcurrentLimit": 3,
   "packageRules": [
     {
-      "matchPackageNames": ["@types/node"],
+      "matchPackageNames": ["node", "@types/node"],
       "allowedVersions": "^16.13.0",
       "major": { "enabled": true }
     },
