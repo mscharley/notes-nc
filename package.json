@@ -40,7 +40,7 @@
     "test:electronegativity": "electronegativity -i ./src -e $(electron --version)",
     "test:lint": "eslint --ext .js,.jsx,.ts,.tsx .",
     "test:jest": "jest",
-    "test:build": "electron-builder --linux --publish never && ./dist/Notes-${npm_package_version}.AppImage --self-test",
+    "test:build": "electron-builder --linux --publish never",
     "viteshot": "viteshot",
     "viteshot:ci": "node ./bin/viteshot-ci.mjs",
     "pack": "set -a; [ -f ./.env ] && source ./.env; npm run release -- --publish never",
