@@ -16,7 +16,7 @@ jobs:
         with:
           node-version-file: .nvmrc
 
-      - uses: doyensec/electronegativity-action@v1.1
+      - uses: doyensec/electronegativity-action@v2.0
 
       - name: Upload sarif
         uses: github/codeql-action/upload-sarif@v2
