@@ -76,8 +76,6 @@
     "electron-store": "8.1.0",
     "electron-updater": "6.1.4",
     "fs-extra": "11.1.1",
-    "inversify": "6.0.1",
-    "inversify-token": "6.0.2",
     "lodash.debounce": "4.0.8",
     "react": "18.2.0",
     "react-dom": "18.2.0",

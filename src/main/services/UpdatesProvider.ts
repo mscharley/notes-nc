@@ -1,9 +1,8 @@
 import type { AppUpdater, UpdateCheckResult } from 'electron-updater';
-import { inject, injectable, unmanaged } from 'inversify';
+import { injectable, unmanaged } from '@mscharley/dot';
 import { autoUpdater } from 'electron-updater';
 import { DevTools } from '~main/services/DevTools';
 import { ElectronIpcMain } from '~main/inversify/tokens';
-import { injectToken } from 'inversify-token';
 import log from 'electron-log';
 import { MainWindow } from '~main/MainWindow';
 import type { OnReadyHandler } from '~main/interfaces/OnReadyHandler';
@@ -12,13 +11,13 @@ import type { UpdateStatus } from '~shared/model';
 // eslint-disable-next-line @typescript-eslint/no-magic-numbers
 export const ONE_WEEK_IN_MILLISECONDS = 7 * 24 * 60 * 60 * 1000;
 
-@injectable()
+@injectable(DevTools, MainWindow, ElectronIpcMain, unmanaged(autoUpdater))
 export class UpdatesProvider implements OnReadyHandler {
   public constructor(
-    @inject(DevTools) private readonly devtools: DevTools,
-    @inject(MainWindow) private readonly mainWindow: MainWindow,
-    @injectToken(ElectronIpcMain) private readonly ipcMain: ElectronIpcMain,
-    @unmanaged() private readonly updater: AppUpdater = autoUpdater,
+    private readonly devtools: DevTools,
+    private readonly mainWindow: MainWindow,
+    private readonly ipcMain: ElectronIpcMain,
+    private readonly updater: AppUpdater,
   ) {
     this.updater.logger = log;
   }

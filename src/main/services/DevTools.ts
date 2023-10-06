@@ -9,6 +9,7 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
 /* eslint-disable @typescript-eslint/no-var-requires */
 
+import { injectable } from '@mscharley/dot';
 import log from 'electron-log';
 
 let isDevTmp = false;
@@ -42,8 +43,6 @@ try {
     throw e;
   };
 }
-
-import { injectable } from 'inversify';
 
 @injectable()
 export class DevTools {

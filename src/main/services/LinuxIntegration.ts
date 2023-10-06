@@ -1,13 +1,12 @@
 import { copyFile, rename, unlink, writeFile } from 'fs/promises';
 import { ElectronApp, ElectronIpcMain } from '~main/inversify/tokens';
-import { injectable } from 'inversify';
-import { injectToken } from 'inversify-token';
+import { injectable } from '@mscharley/dot';
 import type { LinuxInstallOptions } from '~shared/model/LinuxInstallOptions';
 import log from 'electron-log';
 import type { OnReadyHandler } from '~main/interfaces/OnReadyHandler';
 import { resolve } from 'path';
 
-@injectable()
+@injectable(ElectronApp, ElectronIpcMain)
 export class LinuxIntegration implements OnReadyHandler {
   public readonly isAppImage: boolean;
 
@@ -24,10 +23,7 @@ export class LinuxIntegration implements OnReadyHandler {
   private readonly installedAppImage: string;
   private readonly isInstalled: boolean;
 
-  public constructor(
-    @injectToken(ElectronApp) app: ElectronApp,
-    @injectToken(ElectronIpcMain) private readonly ipcMain: ElectronIpcMain,
-  ) {
+  public constructor(app: ElectronApp, private readonly ipcMain: ElectronIpcMain) {
     const HOME = app.getPath('home');
 
     this.XDG_CONFIG_HOME = process.env.XDG_CONFIG_HOME ?? resolve(HOME, '.config');

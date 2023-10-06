@@ -1,48 +1,63 @@
 import { CustomProtocol, ReadyHandler } from '~main/inversify/tokens';
 import { AboutElectron } from '~main/services/AboutElectron';
 import { Configuration } from '~main/services/Configuration';
-import { ContainerModule } from 'inversify';
 import { DevTools } from '~main/services/DevTools';
 import { Entrypoint } from '~main/Entrypoint';
 import { FileSystem } from '~main/services/FileSystem';
+import type { interfaces } from '@mscharley/dot';
 import { LinuxIntegration } from './services/LinuxIntegration';
 import log from 'electron-log';
 import { MainWindow } from '~main/MainWindow';
 import { RendererLogging } from '~main/services/RendererLogging';
 import { SecurityProvider } from '~main/services/SecurityProvider';
-import { tokenBinder } from 'inversify-token';
 import { UpdatesProvider } from '~main/services/UpdatesProvider';
 
-export const ApplicationModule = (): ContainerModule =>
-  new ContainerModule((bind) => {
-    const bindToken = tokenBinder(bind);
-    log.debug('Binding application modules.');
+export const ApplicationModule = (): interfaces.SyncContainerModule => (bind) => {
+  log.debug('Binding application modules.');
 
-    bind(AboutElectron).toSelf();
-    bindToken(ReadyHandler).toDynamicValue(({ container }) => container.get(AboutElectron));
+  bind(AboutElectron).inSingletonScope().toSelf();
+  bind(ReadyHandler)
+    .inSingletonScope()
+    .toDynamicValue([AboutElectron], (about) => about);
 
-    bind(Configuration).toSelf();
-    bindToken(ReadyHandler).toDynamicValue(({ container }) => container.get(Configuration));
+  bind(Configuration).inSingletonScope().toSelf();
+  bind(ReadyHandler)
+    .inSingletonScope()
+    .toDynamicValue([Configuration], (config) => config);
 
-    bind(DevTools).toSelf();
-    bind(Entrypoint).toSelf();
+  bind(DevTools).inSingletonScope().toSelf();
+  bind(Entrypoint).inSingletonScope().toSelf();
 
-    bind(FileSystem).toSelf();
-    bindToken(CustomProtocol).toDynamicValue(({ container }) => container.get(FileSystem));
-    bindToken(ReadyHandler).toDynamicValue(({ container }) => container.get(FileSystem));
+  bind(FileSystem).inSingletonScope().toSelf();
+  bind(CustomProtocol)
+    .inSingletonScope()
+    .toDynamicValue([FileSystem], (fs) => fs);
+  bind(ReadyHandler)
+    .inSingletonScope()
+    .toDynamicValue([FileSystem], (fs) => fs);
 
-    bind(LinuxIntegration).toSelf();
-    bindToken(ReadyHandler).toDynamicValue(({ container }) => container.get(LinuxIntegration));
+  bind(LinuxIntegration).inSingletonScope().toSelf();
+  bind(ReadyHandler)
+    .inSingletonScope()
+    .toDynamicValue([LinuxIntegration], (linux) => linux);
 
-    bind(MainWindow).toSelf();
-    bindToken(ReadyHandler).toDynamicValue(({ container }) => container.get(MainWindow));
+  bind(MainWindow).inSingletonScope().toSelf();
+  bind(ReadyHandler)
+    .inSingletonScope()
+    .toDynamicValue([MainWindow], (window) => window);
 
-    bind(RendererLogging).toSelf();
-    bindToken(ReadyHandler).toDynamicValue(({ container }) => container.get(RendererLogging));
+  bind(RendererLogging).inSingletonScope().toSelf();
+  bind(ReadyHandler)
+    .inSingletonScope()
+    .toDynamicValue([RendererLogging], (renderer) => renderer);
 
-    bind(SecurityProvider).toSelf();
-    bindToken(ReadyHandler).toDynamicValue(({ container }) => container.get(SecurityProvider));
+  bind(SecurityProvider).inSingletonScope().toSelf();
+  bind(ReadyHandler)
+    .inSingletonScope()
+    .toDynamicValue([SecurityProvider], (security) => security);
 
-    bind(UpdatesProvider).toSelf();
-    bindToken(ReadyHandler).toDynamicValue(({ container }) => container.get(UpdatesProvider));
-  });
+  bind(UpdatesProvider).inSingletonScope().toSelf();
+  bind(ReadyHandler)
+    .inSingletonScope()
+    .toDynamicValue([UpdatesProvider], (updates) => updates);
+};
