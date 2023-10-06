@@ -12,10 +12,11 @@
   "automergeStrategy": "fast-forward",
   "automergeType": "branch",
   "prConcurrentLimit": 3,
+	"transitiveRemediation": true,
   "packageRules": [
     {
       "matchPackageNames": ["node", "@types/node"],
-      "allowedVersions": "^16.13.0",
+      "allowedVersions": "^18.0.0",
       "major": { "enabled": true }
     },
     {
