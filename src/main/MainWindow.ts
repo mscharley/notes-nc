@@ -1,21 +1,20 @@
 import { BrowserWindow, Menu } from 'electron/main';
 import { ElectronDialog, ElectronIpcMain } from '~main/inversify/tokens';
-import { inject, injectable, unmanaged } from 'inversify';
+import { injectable, unmanaged } from '@mscharley/dot';
 import { DEFAULT_VITE_PORT } from '~shared/defaults';
 import { DevTools } from '~main/services/DevTools';
-import { injectToken } from 'inversify-token';
 import log from 'electron-log';
 import type { OnReadyHandler } from '~main/interfaces/OnReadyHandler';
 import path from 'path';
 import { shell } from 'electron/common';
 
-@injectable()
+@injectable(DevTools, ElectronIpcMain, ElectronDialog, unmanaged(Menu))
 export class MainWindow implements OnReadyHandler {
   public constructor(
-    @inject(DevTools) private readonly devtools: DevTools,
-    @injectToken(ElectronIpcMain) private readonly ipcMain: ElectronIpcMain,
-    @injectToken(ElectronDialog) private readonly dialog: ElectronDialog,
-    @unmanaged() private readonly menu: typeof Menu = Menu,
+    private readonly devtools: DevTools,
+    private readonly ipcMain: ElectronIpcMain,
+    private readonly dialog: ElectronDialog,
+    private readonly menu: typeof Menu,
   ) {}
 
   private _window?: Electron.BrowserWindow;

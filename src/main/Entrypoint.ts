@@ -1,20 +1,22 @@
 /* eng-disable REMOTE_MODULE_JS_CHECK */
 
 import { CustomProtocol, ElectronApp, ReadyHandler } from '~main/inversify/tokens';
-import { inject, injectable } from 'inversify';
-import { injectToken, multiInjectToken } from 'inversify-token';
+import { injectable, withOptions } from '@mscharley/dot';
 import log from 'electron-log';
 import { MainWindow } from '~main/MainWindow';
 import { protocol } from 'electron/main';
 
-@injectable()
+@injectable(
+  ElectronApp,
+  MainWindow,
+  withOptions(CustomProtocol, { multiple: true }),
+  withOptions(ReadyHandler, { multiple: true }),
+)
 export class Entrypoint {
   public constructor(
-    @injectToken(ElectronApp) private readonly application: ElectronApp,
-    @inject(MainWindow) private readonly mainWindow: MainWindow,
-    @multiInjectToken(CustomProtocol)
+    private readonly application: ElectronApp,
+    private readonly mainWindow: MainWindow,
     private readonly customProtocols: CustomProtocol[],
-    @multiInjectToken(ReadyHandler)
     private readonly onReadyHandlers: ReadyHandler[],
   ) {
     log.debug(`Config directory: ${application.getPath('userData')}`);

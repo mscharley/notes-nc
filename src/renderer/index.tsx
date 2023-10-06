@@ -10,7 +10,7 @@ if (container == null) {
 
   try {
     const Application = lazy(async () => {
-      const component = import('./Application');
+      const component = import('./Application.js');
       if (await window.editorApi.isDev) {
         window.log.info('DEVELOPER MODE: Delaying to allow time for Chromium to connect to a remote debugger');
         // eslint-disable-next-line @typescript-eslint/no-magic-numbers

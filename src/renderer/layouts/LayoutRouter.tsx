@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useAppSelector } from '~renderer/hooks';
 
-const TwoColumnLayout = lazy(async () => import('./TwoColumnLayout'));
+const TwoColumnLayout = lazy(async () => import('./TwoColumnLayout.js'));
 
 export const LayoutRouter: React.FC = () => {
   const layout = useAppSelector((s) => s.configuration.layout);

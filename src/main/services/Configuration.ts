@@ -1,9 +1,8 @@
 import { ElectronApp, ElectronIpcMain } from '~main/inversify/tokens';
-import { inject, injectable } from 'inversify';
 import type { AppConfiguration } from '~shared/model';
 import EventEmitter from 'events';
 import { v4 as generateUuid } from 'uuid';
-import { injectToken } from 'inversify-token';
+import { injectable } from '@mscharley/dot';
 import { LinuxIntegration } from './LinuxIntegration';
 import { MainWindow } from '~main/MainWindow';
 import type { ReadyHandler } from '~main/inversify/tokens';
@@ -46,16 +45,16 @@ const schema: Schema<ConfigurationFile> = {
 
 const CONFIG_CHANGE = 'config-change';
 
-@injectable()
+@injectable(ElectronApp, ElectronIpcMain, LinuxIntegration, MainWindow)
 export class Configuration implements ReadyHandler {
   private readonly store: Store<ConfigurationFile>;
   private readonly events: EventEmitter;
 
   public constructor(
-    @injectToken(ElectronApp) private readonly application: ElectronApp,
-    @injectToken(ElectronIpcMain) private readonly ipcMain: ElectronIpcMain,
-    @inject(LinuxIntegration) private readonly linux: LinuxIntegration,
-    @inject(MainWindow) private readonly window: MainWindow,
+    private readonly application: ElectronApp,
+    private readonly ipcMain: ElectronIpcMain,
+    private readonly linux: LinuxIntegration,
+    private readonly window: MainWindow,
   ) {
     this.events = new EventEmitter();
     this.store = new Store({

@@ -1,4 +1,4 @@
-import { injectable } from 'inversify';
+import { injectable } from '@mscharley/dot';
 import { ipcMain } from 'electron';
 import log from 'electron-log';
 import type { OnReadyHandler } from '~main/interfaces/OnReadyHandler';

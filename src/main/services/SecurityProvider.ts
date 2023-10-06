@@ -1,19 +1,19 @@
 /* eng-disable CSP_GLOBAL_CHECK */
 
-import { inject, injectable } from 'inversify';
 import { ipcMain, session } from 'electron/main';
 import { DEFAULT_VITE_PORT } from '~shared/defaults';
 import { DevTools } from '~main/services/DevTools';
+import { injectable } from '@mscharley/dot';
 import log from 'electron-log';
 import type { OnReadyHandler } from '~main/interfaces/OnReadyHandler';
 import { v4 as uuid } from 'uuid';
 
-@injectable()
+@injectable(DevTools)
 export class SecurityProvider implements OnReadyHandler {
   public readonly cspNonce = uuid();
   public readonly isCspEnabled: boolean = true;
 
-  public constructor(@inject(DevTools) private readonly devtools: DevTools) {}
+  public constructor(private readonly devtools: DevTools) {}
 
   public onAppReady = (): void => {
     if (!this.isCspEnabled) {

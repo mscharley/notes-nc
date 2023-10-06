@@ -3,12 +3,11 @@
 import * as http from '~shared/http';
 import type { CategoryDescription, FileDescription, FolderConfiguration, FolderDescription } from '~shared/model';
 import { ElectronApp, ElectronIpcMain } from '~main/inversify/tokens';
-import { inject, injectable } from 'inversify';
 import { mkdirp, readdir, rename, rmdir, stat, unlink, writeFile } from 'fs-extra';
 import type { Protocol, ProtocolResponse } from 'electron/main';
 import { Configuration } from '~main/services/Configuration';
 import type { CustomProtocolProvider } from '~main/interfaces/CustomProtocolProvider';
-import { injectToken } from 'inversify-token';
+import { injectable } from '@mscharley/dot';
 import log from 'electron-log';
 import { MainWindow } from '~main/MainWindow';
 import type { OnReadyHandler } from '~main/interfaces/OnReadyHandler';
@@ -16,7 +15,7 @@ import path from 'path';
 
 const matchMarkdownSuffix = /\.(?:md|markdown)/u;
 
-@injectable()
+@injectable(ElectronApp, ElectronIpcMain, MainWindow, Configuration)
 export class FileSystem implements CustomProtocolProvider, OnReadyHandler {
   private readonly appBasePath: string;
   private readonly errorBasePath: string;
@@ -24,10 +23,10 @@ export class FileSystem implements CustomProtocolProvider, OnReadyHandler {
   private folders: Record<string, { name: string; localPath: string }>;
 
   public constructor(
-    @injectToken(ElectronApp) application: ElectronApp,
-    @injectToken(ElectronIpcMain) private readonly ipcMain: ElectronIpcMain,
-    @inject(MainWindow) private readonly mainWindow: MainWindow,
-    @inject(Configuration) private readonly configuration: Configuration,
+    application: ElectronApp,
+    private readonly ipcMain: ElectronIpcMain,
+    private readonly mainWindow: MainWindow,
+    private readonly configuration: Configuration,
   ) {
     this.appBasePath = path.join(application.getAppPath(), 'ts-build');
     this.errorBasePath = path.join(application.getAppPath(), 'share/static');

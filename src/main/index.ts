@@ -20,7 +20,13 @@ import { getContainer } from '~main/inversify';
 
 try {
   const container = getContainer(app);
-  container.get(Entrypoint).start();
+  container
+    .get(Entrypoint)
+    .then((_) => _.start())
+    .catch((e) => {
+      log.error(e);
+      process.exit(1);
+    });
 } catch (e: unknown) {
   log.error(e);
   process.exit(1);

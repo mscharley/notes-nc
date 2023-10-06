@@ -1,10 +1,9 @@
 /* eslint-disable @typescript-eslint/no-type-alias */
 
 import type { Dialog, IpcMain } from 'electron/main';
+import { Token, type TokenType } from '@mscharley/dot';
 import type { CustomProtocolProvider } from '~main/interfaces/CustomProtocolProvider';
 import type { OnReadyHandler } from '~main/interfaces/OnReadyHandler';
-import { Token } from 'inversify-token';
-import type { TokenType } from 'inversify-token';
 
 export const ElectronApp = new Token<Electron.App>('electron.app');
 export type ElectronApp = TokenType<typeof ElectronApp>;

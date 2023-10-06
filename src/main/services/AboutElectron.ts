@@ -1,17 +1,16 @@
 import { ElectronApp, ElectronIpcMain } from '~main/inversify/tokens';
-import { inject, injectable, unmanaged } from 'inversify';
+import { injectable, unmanaged } from '@mscharley/dot';
 import type { AboutDetails } from '~shared/model/AboutDetails';
 import { DevTools } from '~main/services/DevTools';
-import { injectToken } from 'inversify-token';
 import type { OnReadyHandler } from '~main/interfaces/OnReadyHandler';
 
-@injectable()
+@injectable(ElectronApp, ElectronIpcMain, DevTools, unmanaged(globalThis.process))
 export class AboutElectron implements OnReadyHandler {
   public constructor(
-    @injectToken(ElectronApp) private readonly app: ElectronApp,
-    @injectToken(ElectronIpcMain) private readonly ipcMain: ElectronIpcMain,
-    @inject(DevTools) private readonly devtools: DevTools,
-    @unmanaged() private readonly process: NodeJS.Process = globalThis.process,
+    private readonly app: ElectronApp,
+    private readonly ipcMain: ElectronIpcMain,
+    private readonly devtools: DevTools,
+    private readonly process: NodeJS.Process,
   ) {}
 
   public readonly onAppReady = (): void => {

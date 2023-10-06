@@ -1,14 +1,17 @@
 import { ApplicationModule } from '~main/ApplicationModule';
-import { Container } from 'inversify';
+import { createContainer } from '@mscharley/dot';
 import { ElectronModule } from '~main/inversify/ElectronModule';
-import type { interfaces } from 'inversify';
+import type { interfaces } from '@mscharley/dot';
 
 export const getContainer = (app: Electron.App): interfaces.Container => {
-  const container = new Container({
-    defaultScope: 'Singleton',
+  const container = createContainer({
+    defaultScope: 'singleton',
   });
 
-  container.load(ElectronModule(app), ApplicationModule());
+  container.load(ElectronModule(app));
+  container.load(ApplicationModule());
+
+  container.validate();
 
   return container;
 };
