@@ -112,7 +112,7 @@
     "lint-staged": "13.0.4",
     "npm-watch": "0.11.0",
     "patch-package": "8.0.0",
-    "playwright": "1.28.1",
+    "playwright": "1.38.1",
     "react-test-renderer": "18.2.0",
     "rimraf": "3.0.2",
     "testdouble": "3.16.8",
