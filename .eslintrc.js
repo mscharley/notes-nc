@@ -20,5 +20,6 @@ module.exports = {
         },
       },
     ],
+    'import/no-unresolved': ['error', { commonjs: true, ignore: ['^electron/'] }],
   },
 };
