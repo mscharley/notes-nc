@@ -75,7 +75,7 @@
     "compare-versions": "5.0.3",
     "electron-log": "4.4.8",
     "electron-store": "8.1.0",
-    "electron-updater": "5.3.0",
+    "electron-updater": "6.1.4",
     "fs-extra": "10.1.0",
     "inversify": "6.0.1",
     "inversify-token": "6.0.2",
