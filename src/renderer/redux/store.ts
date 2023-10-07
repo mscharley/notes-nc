@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/no-type-alias */
 
 import { configureStore } from '@reduxjs/toolkit';
-import { reducer } from '~renderer/redux';
+import { reducer } from './reducer';
 
 export const generateStore = () =>
   configureStore({
