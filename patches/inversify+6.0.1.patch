@@ -1,0 +1,9 @@
+diff --git a/node_modules/inversify/lib/annotation/unmanaged.d.ts b/node_modules/inversify/lib/annotation/unmanaged.d.ts
+index e4f481c..d32f860 100644
+--- a/node_modules/inversify/lib/annotation/unmanaged.d.ts
++++ b/node_modules/inversify/lib/annotation/unmanaged.d.ts
+@@ -1,3 +1,3 @@
+ import { DecoratorTarget } from "./decorator_utils";
+-declare function unmanaged(): (target: DecoratorTarget, targetKey: string, index: number) => void;
++declare function unmanaged(): (target: DecoratorTarget, targetKey: string | undefined, index: number) => void;
+ export { unmanaged };
