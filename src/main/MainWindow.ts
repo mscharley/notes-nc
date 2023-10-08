@@ -1,5 +1,5 @@
 import { BrowserWindow, Menu } from 'electron/main';
-import { ElectronDialog, ElectronIpcMain } from '~main/inversify/tokens';
+import { ElectronDialog, ElectronIpcMain } from '~main/dot/tokens';
 import { injectable, unmanaged } from '@mscharley/dot';
 import { DEFAULT_VITE_PORT } from '~shared/defaults';
 import { DevTools } from '~main/services/DevTools';

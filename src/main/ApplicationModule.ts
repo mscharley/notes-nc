@@ -1,4 +1,4 @@
-import { CustomProtocol, ReadyHandler } from '~main/inversify/tokens';
+import { CustomProtocol, ReadyHandler } from '~main/dot/tokens';
 import { AboutElectron } from '~main/services/AboutElectron';
 import { Configuration } from '~main/services/Configuration';
 import { DevTools } from '~main/services/DevTools';

@@ -1,11 +1,11 @@
-import { ElectronApp, ElectronIpcMain } from '~main/inversify/tokens';
+import { ElectronApp, ElectronIpcMain } from '~main/dot/tokens';
 import type { AppConfiguration } from '~shared/model';
 import EventEmitter from 'events';
 import { v4 as generateUuid } from 'uuid';
 import { injectable } from '@mscharley/dot';
 import { LinuxIntegration } from './LinuxIntegration';
 import { MainWindow } from '~main/MainWindow';
-import type { ReadyHandler } from '~main/inversify/tokens';
+import type { ReadyHandler } from '~main/dot/tokens';
 import type { Schema } from 'electron-store';
 import Store from 'electron-store';
 

@@ -1,5 +1,5 @@
 import { copyFile, rename, unlink, writeFile } from 'fs/promises';
-import { ElectronApp, ElectronIpcMain } from '~main/inversify/tokens';
+import { ElectronApp, ElectronIpcMain } from '~main/dot/tokens';
 import { injectable } from '@mscharley/dot';
 import type { LinuxInstallOptions } from '~shared/model/LinuxInstallOptions';
 import log from 'electron-log';
