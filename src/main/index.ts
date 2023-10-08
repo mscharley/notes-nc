@@ -2,6 +2,10 @@
 
 import 'source-map-support';
 import 'reflect-metadata';
+import { app } from 'electron/main';
+import { Entrypoint } from '~main/Entrypoint';
+import { getContainer } from '~main/dot';
+import log from 'electron-log';
 
 if (process.argv.includes('--self-test')) {
   // eslint-disable-next-line no-console
@@ -9,14 +13,9 @@ if (process.argv.includes('--self-test')) {
   process.exit(0);
 }
 
-import log from 'electron-log';
 log.transports.file.level = 'silly';
 log.transports.console.level = (process.env.LOG_LEVEL as undefined | log.LevelOption) ?? 'info';
 log.debug('Notes booting');
-
-import { app } from 'electron/main';
-import { Entrypoint } from '~main/Entrypoint';
-import { getContainer } from '~main/inversify';
 
 try {
   const container = getContainer(app);

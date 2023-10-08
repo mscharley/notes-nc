@@ -2,7 +2,7 @@ import type { AppUpdater, UpdateCheckResult } from 'electron-updater';
 import { injectable, unmanaged } from '@mscharley/dot';
 import { autoUpdater } from 'electron-updater';
 import { DevTools } from '~main/services/DevTools';
-import { ElectronIpcMain } from '~main/inversify/tokens';
+import { ElectronIpcMain } from '~main/dot/tokens';
 import log from 'electron-log';
 import { MainWindow } from '~main/MainWindow';
 import type { OnReadyHandler } from '~main/interfaces/OnReadyHandler';

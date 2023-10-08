@@ -2,7 +2,7 @@
 
 import * as http from '~shared/http';
 import type { CategoryDescription, FileDescription, FolderConfiguration, FolderDescription } from '~shared/model';
-import { ElectronApp, ElectronIpcMain } from '~main/inversify/tokens';
+import { ElectronApp, ElectronIpcMain } from '~main/dot/tokens';
 import { mkdirp, readdir, rename, rmdir, stat, unlink, writeFile } from 'fs-extra';
 import type { Protocol, ProtocolResponse } from 'electron/main';
 import { Configuration } from '~main/services/Configuration';

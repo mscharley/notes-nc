@@ -1,4 +1,4 @@
-import { ElectronApp, ElectronIpcMain } from '~main/inversify/tokens';
+import { ElectronApp, ElectronIpcMain } from '~main/dot/tokens';
 import { injectable, unmanaged } from '@mscharley/dot';
 import type { AboutDetails } from '~shared/model/AboutDetails';
 import { DevTools } from '~main/services/DevTools';
