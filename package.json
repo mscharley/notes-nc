@@ -95,7 +95,7 @@
     "@types/react": "18.2.25",
     "@types/react-dom": "18.2.11",
     "@types/uuid": "9.0.5",
-    "@vitejs/plugin-react": "2.2.0",
+    "@vitejs/plugin-react": "4.1.0",
     "concurrently": "8.2.1",
     "copyfiles": "2.4.1",
     "electron": "26.3.0",
@@ -117,7 +117,7 @@
     "testdouble": "3.19.0",
     "ts-jest": "29.1.1",
     "typescript": "5.2.2",
-    "vite": "3.2.7",
+    "vite": "4.4.11",
     "viteshot": "0.3.1"
   }
 }
