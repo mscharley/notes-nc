@@ -101,7 +101,7 @@
     "electron-builder": "24.6.4",
     "electron-devtools-installer": "3.2.0",
     "electron-is-dev": "2.0.0",
-    "esbuild": "0.19.4",
+    "esbuild": "0.19.5",
     "generic-type-guard": "3.7.2",
     "html-webpack-plugin": "5.5.3",
     "husky": "8.0.3",
