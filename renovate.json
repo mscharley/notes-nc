@@ -1,32 +1,14 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:js-app",
-    "schedule:weekends",
-    ":automergeMinor",
-    ":semanticCommits",
-    ":rebaseStalePrs",
-    ":labels(dependencies)"
-  ],
-  "timezone": "Australia/Melbourne",
-  "automergeStrategy": "fast-forward",
-  "automergeType": "branch",
-  "prConcurrentLimit": 3,
-	"transitiveRemediation": true,
+    "github>equiem/mscharley"
+  ]
   "packageRules": [
     {
       "matchPackageNames": ["node", "@types/node"],
+      "groupName": "node",
       "allowedVersions": "^18.0.0",
-      "major": { "enabled": true }
-    },
-    {
-      "matchPackageNames": ["node"],
-      "rangeStrategy": "replace"
-    },
-    {
-      "matchPackageNames": ["@mscharley/eslint-config", "@mscharley/prettier-config"],
-      "groupName": "eslint packages",
-      "additionalBranchPrefix": ""
+      "major": { "enabled": true, "semanticCommitType": "fix" }
     },
     {
       "matchPackageNames": ["vite", "viteshot", "playwright"],
