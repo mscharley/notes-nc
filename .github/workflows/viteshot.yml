@@ -23,15 +23,15 @@ jobs:
           - windows-latest
           - macos-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
         with:
           lfs: true
       - name: Use Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@60edb5dd545a775178f52524783378180af0d1f8 # v4
         with:
           node-version-file: .nvmrc
       - name: Cache Node.js modules
-        uses: actions/cache@v3
+        uses: actions/cache@e12d46a63a90f2fae62d114769bbf2a179198b5c # v3
         with:
           path: |
             **/node_modules
@@ -47,7 +47,7 @@ jobs:
         run: npm run viteshot:ci
       - name: Erase Vite caches
         run: npx --no-install rimraf "**/node_modules/.vite"
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@a8a3f3ad30e3422c9c7b888a15615d19a852ae32 # v3
         if: failure()
         with:
           name: screenshots
