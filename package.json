@@ -88,7 +88,7 @@
   "devDependencies": {
     "@mscharley/eslint-config": "2.0.4",
     "@mscharley/prettier-config": "2.0.2",
-    "@types/jest": "29.5.6",
+    "@types/jest": "29.5.12",
     "@types/lodash.debounce": "4.0.8",
     "@types/node": "16.18.3",
     "@types/react": "18.2.33",
