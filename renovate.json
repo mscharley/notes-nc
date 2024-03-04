@@ -1,15 +1,8 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "github>mscharley/renovate-config"
-  ],
+  "extends": ["github>mscharley/renovate-config"],
+  "ignoreDeps": ["node", "@types/node"],
   "packageRules": [
-    {
-      "matchPackageNames": ["node", "@types/node"],
-      "groupName": "node",
-      "allowedVersions": "^18.0.0",
-      "major": { "enabled": true, "semanticCommitType": "fix" }
-    },
     {
       "matchPackageNames": ["vite", "viteshot", "playwright"],
       "matchPackagePrefixes": ["@vitejs/"],
