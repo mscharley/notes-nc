@@ -20,15 +20,15 @@ jobs:
 
     steps:
       - name: Check out Git repository
-        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
 
       - name: Install Node.js, NPM and Yarn
-        uses: actions/setup-node@60edb5dd545a775178f52524783378180af0d1f8 # v4
+        uses: actions/setup-node@60edb5dd545a775178f52524783378180af0d1f8 # v4.0.2
         with:
           node-version-file: .nvmrc
 
       - name: Build/release Electron app
-        uses: samuelmeuli/action-electron-builder@92327c67bc45ff7c38bf55d8aa8c4d75b7ea38e7 # v1
+        uses: samuelmeuli/action-electron-builder@92327c67bc45ff7c38bf55d8aa8c4d75b7ea38e7 # v1.6.0
         with:
           # GitHub token, automatically provided to the action
           # (No need to define this secret in the repo settings)
