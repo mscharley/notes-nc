@@ -24,7 +24,7 @@
   },
   "engineStrict": true,
   "scripts": {
-    "prepare": "husky install",
+    "prepare": "husky",
     "postinstall": "node ./bin/postinstall.mjs",
     "electron": "node ./bin/electron.mjs",
     "electron:dev": "node ./bin/electron.mjs --dev",
