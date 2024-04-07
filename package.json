@@ -114,7 +114,7 @@
     "rimraf": "3.0.2",
     "testdouble": "3.20.2",
     "ts-jest": "29.1.2",
-    "typescript": "5.4.3",
+    "typescript": "5.4.4",
     "vite": "4.5.3",
     "viteshot": "0.3.1"
   }
