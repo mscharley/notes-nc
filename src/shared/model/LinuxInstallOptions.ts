@@ -1,4 +1,4 @@
 export interface LinuxInstallOptions {
-  createDesktopEntry: boolean;
-  moveAppImage: boolean;
+	createDesktopEntry: boolean;
+	moveAppImage: boolean;
 }

@@ -7,11 +7,11 @@ import overlayReducer from './overlay/overlay-slice';
 import updateReducer from './updates/update-slice';
 
 export const reducer = {
-  about: aboutReducer,
-  configuration: configurationReducer,
-  fatalError: errorReducer,
-  files: filesReducer,
-  notifications: notificationsReducer,
-  overlay: overlayReducer,
-  updates: updateReducer,
+	about: aboutReducer,
+	configuration: configurationReducer,
+	fatalError: errorReducer,
+	files: filesReducer,
+	notifications: notificationsReducer,
+	overlay: overlayReducer,
+	updates: updateReducer,
 } as const;

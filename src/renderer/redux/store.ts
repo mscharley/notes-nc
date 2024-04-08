@@ -6,9 +6,9 @@ import { configureStore } from '@reduxjs/toolkit';
 import { reducer } from './reducer';
 
 export const generateStore = () =>
-  configureStore({
-    reducer,
-  });
+	configureStore({
+		reducer,
+	});
 
 export type Store = ReturnType<typeof generateStore>;
 export type AppDispatch = Store['dispatch'];

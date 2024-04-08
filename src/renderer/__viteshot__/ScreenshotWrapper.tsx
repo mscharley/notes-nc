@@ -8,9 +8,9 @@ import { theme } from '~renderer/theme';
 import { ThemeProvider } from '@mui/material/styles';
 
 export const ScreenshotWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-  <ThemeProvider theme={theme}>
-    <CssBaseline>
-      <ReduxProvider store={generateStore()}>{children}</ReduxProvider>
-    </CssBaseline>
-  </ThemeProvider>
+	<ThemeProvider theme={theme}>
+		<CssBaseline>
+			<ReduxProvider store={generateStore()}>{children}</ReduxProvider>
+		</CssBaseline>
+	</ThemeProvider>
 );
