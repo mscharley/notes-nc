@@ -9,14 +9,14 @@ const initialState = { loading: true } as AboutSlice;
 export const setAboutDetails = createAction<AboutDetails>('setAboutDetails');
 
 const slice = createSlice({
-  name: 'about-details',
-  initialState,
-  reducers: {},
-  extraReducers: (builder) =>
-    builder.addCase(setAboutDetails, (state, { payload: details }): void => {
-      state.loading = false;
-      state.details = details;
-    }),
+	name: 'about-details',
+	initialState,
+	reducers: {},
+	extraReducers: (builder) =>
+		builder.addCase(setAboutDetails, (state, { payload: details }): void => {
+			state.loading = false;
+			state.details = details;
+		}),
 });
 
 export default slice.reducer;

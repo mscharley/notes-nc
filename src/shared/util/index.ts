@@ -10,7 +10,7 @@ export const sleep = (milliseconds: number): Promise<void> => new Promise((r) =>
  * Tiny helper for a function that does nothing, when required.
  */
 export const noop = (): void => {
-  /* noop */
+	/* noop */
 };
 
 /**
@@ -19,5 +19,5 @@ export const noop = (): void => {
  * This should only be used for tests - it is dangerous in application code.
  */
 export type Mutable<T> = {
-  -readonly [P in keyof T]: T[P];
+	-readonly [P in keyof T]: T[P];
 };

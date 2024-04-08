@@ -1,7 +1,7 @@
 export interface UpdateStatus {
-  canCheckForUpdates: boolean;
-  checkingForUpdate: boolean;
-  updateExists: boolean;
-  updateDownloaded: boolean;
-  updateVersion?: string;
+	canCheckForUpdates: boolean;
+	checkingForUpdate: boolean;
+	updateExists: boolean;
+	updateDownloaded: boolean;
+	updateVersion?: string;
 }

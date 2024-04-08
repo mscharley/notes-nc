@@ -11,59 +11,63 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 export interface FileFolderListingProps {
-  name: string;
-  baseUrl: string;
-  categories: CategoryDescription[];
-  showEmpty?: boolean;
+	name: string;
+	baseUrl: string;
+	categories: CategoryDescription[];
+	showEmpty?: boolean;
 }
 
 export const FileFolderListing: React.FC<FileFolderListingProps> = ({
-  baseUrl,
-  categories,
-  showEmpty: defaultShowEmpty,
-  name,
+	baseUrl,
+	categories,
+	showEmpty: defaultShowEmpty,
+	name,
 }) => {
-  const [showEmpty, setShowEmpty] = useState<boolean>(defaultShowEmpty ?? false);
+	const [showEmpty, setShowEmpty] = useState<boolean>(defaultShowEmpty ?? false);
 
-  return (
-    <>
-      <ListItem
-        secondaryAction={
-          <>
-            {showEmpty ? (
-              <Tooltip title='Hide empty categories' placement='bottom'>
-                <IconButton onClick={(): void => setShowEmpty(false)}>
-                  <VisibilityIcon />
-                </IconButton>
-              </Tooltip>
-            ) : (
-              <Tooltip title='Show empty categories' placement='bottom'>
-                <IconButton onClick={(): void => setShowEmpty(true)}>
-                  <VisibilityOffIcon />
-                </IconButton>
-              </Tooltip>
-            )}
-            <Tooltip title='Add new category' placement='bottom'>
-              <IconButton>
-                <AddIcon />
-              </IconButton>
-            </Tooltip>
-          </>
-        }
-      >
-        <ListItemText primary={name} />
-      </ListItem>
-      {categories.map(({ name: categoryName, path, files }) =>
-        !showEmpty && files.length === 0 ? null : (
-          <FileCategoryListing
-            key={`${name}-${categoryName}`}
-            baseUrl={`${baseUrl}${path}`}
-            name={categoryName}
-            files={files}
-          />
-        ),
-      )}
-      <Divider />
-    </>
-  );
+	return (
+		<>
+			<ListItem
+				secondaryAction={(
+					<>
+						{showEmpty
+							? (
+								<Tooltip title="Hide empty categories" placement="bottom">
+									<IconButton onClick={(): void => setShowEmpty(false)}>
+										<VisibilityIcon />
+									</IconButton>
+								</Tooltip>
+								)
+							: (
+								<Tooltip title="Show empty categories" placement="bottom">
+									<IconButton onClick={(): void => setShowEmpty(true)}>
+										<VisibilityOffIcon />
+									</IconButton>
+								</Tooltip>
+								)}
+						<Tooltip title="Add new category" placement="bottom">
+							<IconButton>
+								<AddIcon />
+							</IconButton>
+						</Tooltip>
+					</>
+				)}
+			>
+				<ListItemText primary={name} />
+			</ListItem>
+			{categories.map(({ name: categoryName, path, files }) =>
+				!showEmpty && files.length === 0
+					? null
+					: (
+						<FileCategoryListing
+							key={`${name}-${categoryName}`}
+							baseUrl={`${baseUrl}${path}`}
+							name={categoryName}
+							files={files}
+						/>
+						),
+			)}
+			<Divider />
+		</>
+	);
 };

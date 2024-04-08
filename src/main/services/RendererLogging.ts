@@ -5,9 +5,9 @@ import type { OnReadyHandler } from '~main/interfaces/OnReadyHandler';
 
 @injectable()
 export class RendererLogging implements OnReadyHandler {
-  public readonly onAppReady = (): void => {
-    ipcMain.on('log', (_event, level: keyof log.LogFunctions, ...args) => {
-      log[level](...args);
-    });
-  };
+	public readonly onAppReady = (): void => {
+		ipcMain.on('log', (_event, level: keyof log.LogFunctions, ...args) => {
+			log[level](...args);
+		});
+	};
 }

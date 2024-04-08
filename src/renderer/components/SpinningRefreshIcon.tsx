@@ -21,19 +21,19 @@ const Icon = styled(RefreshIcon)`
 `;
 
 export interface SpinningRefreshIconProps {
-  spinning: boolean;
-  minimumSpinTime?: number;
+	spinning: boolean;
+	minimumSpinTime?: number;
 }
 
 export const SpinningRefreshIcon: React.FC<SpinningRefreshIconProps> = ({ spinning, minimumSpinTime = 1_000 }) => {
-  const [spinningState, setSpinning, flushSpinning] = useDebouncedState(false, minimumSpinTime);
+	const [spinningState, setSpinning, flushSpinning] = useDebouncedState(false, minimumSpinTime);
 
-  useEffect(() => {
-    setSpinning(spinning);
-    if (spinning) {
-      flushSpinning();
-    }
-  }, [spinning, setSpinning, flushSpinning]);
+	useEffect(() => {
+		setSpinning(spinning);
+		if (spinning) {
+			flushSpinning();
+		}
+	}, [spinning, setSpinning, flushSpinning]);
 
-  return <Icon className={cn({ spin: spinningState })} />;
+	return <Icon className={cn({ spin: spinningState })} />;
 };
