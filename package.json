@@ -19,7 +19,7 @@
 	},
 	"homepage": "https://github.com/mscharley/notes-nc#readme",
 	"engines": {
-		"node": ">= 18.19"
+		"node": ">= 20.11"
 	},
 	"engineStrict": true,
 	"scripts": {
