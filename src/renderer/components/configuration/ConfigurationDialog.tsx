@@ -1,9 +1,6 @@
-import Button from '@mui/material/Button';
-import { ConfigurationForm } from './ConfigurationForm';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import { noop } from '~shared/util';
+import { Button, Dialog, DialogActions, DialogContent } from '@mui/material';
+import { ConfigurationForm } from './ConfigurationForm.js';
+import { noop } from '~shared/util/index.js';
 
 export interface ConfigurationDialogProps {
 	open: boolean;

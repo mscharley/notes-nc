@@ -7,11 +7,11 @@ import {
 	setFileListing,
 	setUpdateStatus,
 	updateAppConfiguration,
-} from '~renderer/redux';
-import { useAppDispatch, useAppSelector } from '~renderer/hooks';
+} from '~renderer/redux/index.js';
+import { useAppDispatch, useAppSelector } from '~renderer/hooks/index.js';
 import { useCallback, useEffect, useState } from 'react';
-import CircularProgress from '@mui/material/CircularProgress';
-import type { FolderConfiguration } from '~shared/model';
+import { CircularProgress } from '@mui/material';
+import type { FolderConfiguration } from '~shared/model/index.js';
 
 export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 	const dispatch = useAppDispatch();

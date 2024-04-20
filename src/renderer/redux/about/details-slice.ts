@@ -1,5 +1,5 @@
 import { createAction, createSlice } from '@reduxjs/toolkit';
-import type { AboutDetails } from '~shared/model';
+import type { AboutDetails } from '~shared/model/index.js';
 
 export type AboutSlice = { loading: true; details?: undefined } | { loading: false; details: AboutDetails };
 

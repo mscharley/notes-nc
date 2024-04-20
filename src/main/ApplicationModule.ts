@@ -1,16 +1,16 @@
-import { CustomProtocol, ReadyHandler } from '~main/dot/tokens';
-import { AboutElectron } from '~main/services/AboutElectron';
-import { Configuration } from '~main/services/Configuration';
-import { DevTools } from '~main/services/DevTools';
-import { Entrypoint } from '~main/Entrypoint';
-import { FileSystem } from '~main/services/FileSystem';
+import { CustomProtocol, ReadyHandler } from '~main/dot/tokens.js';
+import { AboutElectron } from '~main/services/AboutElectron.js';
+import { Configuration } from '~main/services/Configuration.js';
+import { DevTools } from '~main/services/DevTools.js';
+import { Entrypoint } from '~main/Entrypoint.js';
+import { FileSystem } from '~main/services/FileSystem.js';
 import type { interfaces } from '@mscharley/dot';
-import { LinuxIntegration } from './services/LinuxIntegration';
+import { LinuxIntegration } from './services/LinuxIntegration.js';
 import log from 'electron-log';
-import { MainWindow } from '~main/MainWindow';
-import { RendererLogging } from '~main/services/RendererLogging';
-import { SecurityProvider } from '~main/services/SecurityProvider';
-import { UpdatesProvider } from '~main/services/UpdatesProvider';
+import { MainWindow } from '~main/MainWindow.js';
+import { RendererLogging } from '~main/services/RendererLogging.js';
+import { SecurityProvider } from '~main/services/SecurityProvider.js';
+import { UpdatesProvider } from '~main/services/UpdatesProvider.js';
 
 export const ApplicationModule = (): interfaces.SyncContainerModule => (bind) => {
 	log.debug('Binding application modules.');

@@ -1,13 +1,12 @@
+import { CircularProgress, CssBaseline } from '@mui/material';
 import { CacheProvider } from '@emotion/react';
-import { CircularProgress } from '@mui/material';
-import CssBaseline from '@mui/material/CssBaseline';
-import { DataProvider } from './DataProvider';
+import { DataProvider } from './DataProvider.js';
 import type { EmotionCache } from '@emotion/cache';
-import { ErrorWrapper } from './components/error-handling/ErrorWrapper';
-import { KeyboardShortcuts } from './KeyboardShortcuts';
+import { ErrorWrapper } from './components/error-handling/ErrorWrapper.js';
+import { KeyboardShortcuts } from './KeyboardShortcuts.js';
 import { Provider as ReduxProvider } from 'react-redux';
-import type { Store } from './redux';
-import { theme } from './theme';
+import type { Store } from './redux/index.js';
+import { theme } from './theme.js';
 import { ThemeProvider } from '@mui/material/styles';
 
 export interface RootProps {

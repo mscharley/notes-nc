@@ -1,12 +1,12 @@
 import type { AppUpdater, UpdateCheckResult } from 'electron-updater';
 import { injectable, unmanaged } from '@mscharley/dot';
 import { autoUpdater } from 'electron-updater';
-import { DevTools } from '~main/services/DevTools';
-import { ElectronIpcMain } from '~main/dot/tokens';
+import { DevTools } from '~main/services/DevTools.js';
+import { ElectronIpcMain } from '~main/dot/tokens.js';
 import log from 'electron-log';
-import { MainWindow } from '~main/MainWindow';
-import type { OnReadyHandler } from '~main/interfaces/OnReadyHandler';
-import type { UpdateStatus } from '~shared/model';
+import { MainWindow } from '~main/MainWindow.js';
+import type { OnReadyHandler } from '~main/interfaces/OnReadyHandler.js';
+import type { UpdateStatus } from '~shared/model/index.js';
 
 // eslint-disable-next-line @typescript-eslint/no-magic-numbers
 export const ONE_WEEK_IN_MILLISECONDS = 7 * 24 * 60 * 60 * 1000;

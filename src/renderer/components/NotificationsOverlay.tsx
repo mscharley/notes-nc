@@ -1,11 +1,7 @@
-import { useAppSelector, useDebouncedState } from '~renderer/hooks';
-import Autorenew from '@mui/icons-material/Autorenew';
-import Box from '@mui/material/Box';
+import { Autorenew, SaveAsSharp } from '@mui/icons-material';
+import { Box, styled, Tooltip, Typography } from '@mui/material';
+import { useAppSelector, useDebouncedState } from '~renderer/hooks/index.js';
 import type { BoxProps } from '@mui/system/Box';
-import SaveAsSharp from '@mui/icons-material/SaveAsSharp';
-import { styled } from '@mui/material';
-import Tooltip from '@mui/material/Tooltip';
-import Typography from '@mui/material/Typography';
 import { useEffect } from 'react';
 
 const NotificationsBox = styled(Box)<BoxProps>((context) => ({

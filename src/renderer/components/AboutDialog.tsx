@@ -1,14 +1,7 @@
-import Button from '@mui/material/Button';
-import CircularProgress from '@mui/material/CircularProgress';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
-import IconButton from '@mui/material/IconButton';
-import { noop } from '~shared/util';
-import { SpinningRefreshIcon } from './SpinningRefreshIcon';
-import Typography from '@mui/material/Typography';
-import { useAppSelector } from '~renderer/hooks';
+import { Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Typography } from '@mui/material';
+import { noop } from '~shared/util/index.js';
+import { SpinningRefreshIcon } from './SpinningRefreshIcon.js';
+import { useAppSelector } from '~renderer/hooks/index.js';
 
 export interface AboutDialogProps {
 	open: boolean;

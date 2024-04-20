@@ -1,17 +1,9 @@
-import { closeCurrentFile, confirmDelete, setCurrentFile, setFatalError } from '~renderer/redux';
-import ArticleIcon from '@mui/icons-material/Article';
-import ClickAwayListener from '@mui/material/ClickAwayListener';
-import DeleteIcon from '@mui/icons-material/Delete';
-import type { FileDescription } from '~shared/model';
-import IconButton from '@mui/material/IconButton';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import type { ListItemProps } from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
-import { styled } from '@mui/material';
-import TextField from '@mui/material/TextField';
-import { useAppDispatch } from '~renderer/hooks';
+import { Article as ArticleIcon, Delete as DeleteIcon } from '@mui/icons-material';
+import { ClickAwayListener, IconButton, ListItem, ListItemButton, ListItemIcon, ListItemText, styled, TextField } from '@mui/material';
+import { closeCurrentFile, confirmDelete, setCurrentFile, setFatalError } from '~renderer/redux/index.js';
+import type { FileDescription } from '~shared/model/index.js';
+import type { ListItemProps } from '@mui/material';
+import { useAppDispatch } from '~renderer/hooks/index.js';
 import { useState } from 'react';
 
 export interface FileListItemProps {

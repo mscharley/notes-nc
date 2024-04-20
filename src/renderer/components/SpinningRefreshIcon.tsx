@@ -1,7 +1,7 @@
 import cn from 'classnames';
-import RefreshIcon from '@mui/icons-material/Refresh';
+import { Refresh as RefreshIcon } from '@mui/icons-material';
 import { styled } from '@mui/material';
-import { useDebouncedState } from '~renderer/hooks';
+import { useDebouncedState } from '~renderer/hooks/index.js';
 import { useEffect } from 'react';
 
 const Icon = styled(RefreshIcon)`

@@ -1,11 +1,8 @@
-import AddIcon from '@mui/icons-material/Add';
-import Chip from '@mui/material/Chip';
-import ClickAwayListener from '@mui/material/ClickAwayListener';
-import { setFatalError } from '~renderer/redux';
-import { styled } from '@mui/material';
-import TextField from '@mui/material/TextField';
-import type { TextFieldProps } from '@mui/material/TextField';
-import { useAppDispatch } from '~renderer/hooks';
+import { Chip, ClickAwayListener, styled, TextField } from '@mui/material';
+import { Add as AddIcon } from '@mui/icons-material';
+import { setFatalError } from '~renderer/redux/index.js';
+import type { TextFieldProps } from '@mui/material';
+import { useAppDispatch } from '~renderer/hooks/index.js';
 import { useState } from 'react';
 
 export interface AddCategoryChipProps {

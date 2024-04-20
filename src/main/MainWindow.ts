@@ -1,10 +1,10 @@
 import { BrowserWindow, Menu } from 'electron/main';
-import { ElectronDialog, ElectronIpcMain } from '~main/dot/tokens';
+import { ElectronDialog, ElectronIpcMain } from '~main/dot/tokens.js';
 import { injectable, unmanaged } from '@mscharley/dot';
-import { DEFAULT_VITE_PORT } from '~shared/defaults';
-import { DevTools } from '~main/services/DevTools';
+import { DEFAULT_VITE_PORT } from '~shared/defaults.js';
+import { DevTools } from '~main/services/DevTools.js';
 import log from 'electron-log';
-import type { OnReadyHandler } from '~main/interfaces/OnReadyHandler';
+import type { OnReadyHandler } from '~main/interfaces/OnReadyHandler.js';
 import path from 'path';
 import { shell } from 'electron/common';
 

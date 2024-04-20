@@ -1,9 +1,9 @@
 import { copyFile, rename, unlink, writeFile } from 'fs/promises';
-import { ElectronApp, ElectronIpcMain } from '~main/dot/tokens';
+import { ElectronApp, ElectronIpcMain } from '~main/dot/tokens.js';
 import { injectable } from '@mscharley/dot';
-import type { LinuxInstallOptions } from '~shared/model/LinuxInstallOptions';
+import type { LinuxInstallOptions } from '~shared/model/LinuxInstallOptions.js';
 import log from 'electron-log';
-import type { OnReadyHandler } from '~main/interfaces/OnReadyHandler';
+import type { OnReadyHandler } from '~main/interfaces/OnReadyHandler.js';
 import { resolve } from 'path';
 
 @injectable(ElectronApp, ElectronIpcMain)

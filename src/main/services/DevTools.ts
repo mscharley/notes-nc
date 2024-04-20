@@ -14,8 +14,8 @@ import log from 'electron-log';
 
 let isDevTmp = false;
 try {
-	const electronDev = require('electron-is-dev') as typeof import('electron-is-dev');
-	isDevTmp = electronDev;
+	const electronDev = await import('electron-is-dev') as typeof import('electron-is-dev');
+	isDevTmp = electronDev.default;
 } catch (e: unknown) {
 	/* do nothing, default is already set */
 }

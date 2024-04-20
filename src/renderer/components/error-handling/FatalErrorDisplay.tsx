@@ -1,10 +1,7 @@
+import { Alert, AlertTitle, Fab as FloatingActionButton } from '@mui/material';
+import { Refresh, Report as ReportIcon } from '@mui/icons-material';
 import { useCallback, useEffect } from 'react';
-import Alert from '@mui/material/Alert';
-import AlertTitle from '@mui/material/AlertTitle';
-import FloatingActionButton from '@mui/material/Fab';
-import Refresh from '@mui/icons-material/Refresh';
-import ReportIcon from '@mui/icons-material/Report';
-import { useAppSelector } from '~renderer/hooks';
+import { useAppSelector } from '~renderer/hooks/index.js';
 
 export interface FatalErrorDisplayProps {
 	children: React.ReactNode;

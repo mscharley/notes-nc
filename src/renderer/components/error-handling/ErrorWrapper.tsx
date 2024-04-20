@@ -1,4 +1,4 @@
-import { FatalErrorDisplay } from './FatalErrorDisplay';
+import { FatalErrorDisplay } from './FatalErrorDisplay.js';
 import React from 'react';
 
 export interface ErrorWrapperProps {

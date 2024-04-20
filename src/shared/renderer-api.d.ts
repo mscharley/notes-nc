@@ -7,7 +7,7 @@ import {
 	FolderConfiguration,
 	LinuxInstallOptions,
 	UpdateStatus,
-} from './model';
+} from './model/index.js';
 import { OpenDialogReturnValue } from 'electron';
 
 declare global {

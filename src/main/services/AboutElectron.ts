@@ -1,8 +1,8 @@
-import { ElectronApp, ElectronIpcMain } from '~main/dot/tokens';
+import { ElectronApp, ElectronIpcMain } from '~main/dot/tokens.js';
 import { injectable, unmanaged } from '@mscharley/dot';
-import type { AboutDetails } from '~shared/model/AboutDetails';
-import { DevTools } from '~main/services/DevTools';
-import type { OnReadyHandler } from '~main/interfaces/OnReadyHandler';
+import type { AboutDetails } from '~shared/model/AboutDetails.js';
+import { DevTools } from '~main/services/DevTools.js';
+import type { OnReadyHandler } from '~main/interfaces/OnReadyHandler.js';
 
 @injectable(ElectronApp, ElectronIpcMain, DevTools, unmanaged(globalThis.process))
 export class AboutElectron implements OnReadyHandler {

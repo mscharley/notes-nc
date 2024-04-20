@@ -1,6 +1,6 @@
 import { lazy, Suspense } from 'react';
 import { createRoot } from 'react-dom/client';
-import { sleep } from '~shared/util';
+import { sleep } from '~shared/util/index.js';
 
 const container = document.querySelector('#root');
 if (container == null) {

@@ -1,5 +1,5 @@
 import { createAction, createSlice } from '@reduxjs/toolkit';
-import type { FileDescription } from '~shared/model';
+import type { FileDescription } from '~shared/model/index.js';
 
 export type Overlays = 'about' | 'configuration' | 'delete';
 export interface OverlayConfig {
