@@ -1,7 +1,7 @@
-import type { FolderConfiguration } from '~shared/model';
-import { setFileListing } from '~renderer/redux';
-import TwoColumnLayout from './TwoColumnLayout';
-import { useAppDispatch } from '~renderer/hooks';
+import type { FolderConfiguration } from '~shared/model/index.js';
+import { setFileListing } from '~renderer/redux/index.js';
+import TwoColumnLayout from './TwoColumnLayout.js';
+import { useAppDispatch } from '~renderer/hooks/index.js';
 
 const availableFiles: FolderConfiguration = {
 	Test: {

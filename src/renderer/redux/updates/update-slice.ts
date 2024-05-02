@@ -1,5 +1,5 @@
 import { createAction, createSlice } from '@reduxjs/toolkit';
-import type { UpdateStatus } from '~shared/model';
+import type { UpdateStatus } from '~shared/model/index.js';
 
 export type UpdateSlice = { loading: false; status?: undefined } | { loading: true; status: UpdateStatus };
 

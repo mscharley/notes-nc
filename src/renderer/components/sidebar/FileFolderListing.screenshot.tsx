@@ -1,5 +1,5 @@
-import type { CategoryDescription } from '~shared/model';
-import { FileFolderListing } from './FileFolderListing';
+import type { CategoryDescription } from '~shared/model/index.js';
+import { FileFolderListing } from './FileFolderListing.js';
 
 const categories: CategoryDescription[] = [
 	{

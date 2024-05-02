@@ -1,12 +1,7 @@
-import { closeCurrentFile, setFatalError } from '~renderer/redux';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
-import { noop } from '~shared/util';
-import Typography from '@mui/material/Typography';
-import { useAppSelector } from '~renderer/hooks';
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Typography } from '@mui/material';
+import { closeCurrentFile, setFatalError } from '~renderer/redux/index.js';
+import { noop } from '~shared/util/index.js';
+import { useAppSelector } from '~renderer/hooks/index.js';
 import { useDispatch } from 'react-redux';
 
 export interface DeleteConfirmationDialogProps {

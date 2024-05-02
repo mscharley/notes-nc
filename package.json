@@ -4,6 +4,7 @@
 	"author": "Matthew Scharley <matt@scharley.me>",
 	"private": true,
 	"version": "0.8.0",
+	"type": "module",
 	"funding": {
 		"type": "individual",
 		"url": "https://github.com/sponsors/mscharley"
@@ -33,7 +34,7 @@
 		"start:vite": "node ./bin/vite-dev-server.mjs",
 		"clean": "rimraf -rf ts-build coverage dist",
 		"build": "node ./bin/build.mjs",
-		"build:esbuild": "esbuild ./src/main/index.ts ./src/main/preload.ts --color=true --bundle --minify --sourcemap=external --outdir=ts-build/main --platform=node --external:electron --external:electron-is-dev --external:electron-devtools-installer",
+		"build:esbuild": "esbuild ./src/main/index.ts ./src/main/preload.ts --color=true --bundle --minify --sourcemap=external --outdir=ts-build/main --platform=esm --external:electron --external:electron-is-dev --external:electron-devtools-installer",
 		"build:vite": "vite build",
 		"test": "npm run test:lint && npm run test:jest && npm run test:build",
 		"test:electronegativity": "electronegativity -i ./src -e $(electron --version)",
@@ -99,7 +100,7 @@
 		"electron": "30.0.1",
 		"electron-builder": "24.13.3",
 		"electron-devtools-installer": "3.2.0",
-		"electron-is-dev": "2.0.0",
+		"electron-is-dev": "3.0.1",
 		"esbuild": "0.20.2",
 		"generic-type-guard": "4.0.3",
 		"husky": "9.0.11",

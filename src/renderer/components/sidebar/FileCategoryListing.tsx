@@ -1,16 +1,9 @@
-import { useAppDispatch, useAppSelector } from '~renderer/hooks';
-import AddIcon from '@mui/icons-material/Add';
-import ClickAwayListener from '@mui/material/ClickAwayListener';
-import Divider from '@mui/material/Divider';
-import type { FileDescription } from '~shared/model';
-import { FileListItem } from './FileListItem';
-import Grow from '@mui/material/Grow';
-import IconButton from '@mui/material/IconButton';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
-import { setFatalError } from '~renderer/redux';
-import TextField from '@mui/material/TextField';
-import Tooltip from '@mui/material/Tooltip';
+import { ClickAwayListener, Divider, Grow, IconButton, ListItem, ListItemText, TextField, Tooltip } from '@mui/material';
+import { useAppDispatch, useAppSelector } from '~renderer/hooks/index.js';
+import { Add as AddIcon } from '@mui/icons-material';
+import type { FileDescription } from '~shared/model/index.js';
+import { FileListItem } from './FileListItem.js';
+import { setFatalError } from '~renderer/redux/index.js';
 import { useState } from 'react';
 
 export interface FileCategoryListingProps {

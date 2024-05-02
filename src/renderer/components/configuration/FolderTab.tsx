@@ -1,17 +1,10 @@
-import { useAppDispatch, useAppSelector } from '~renderer/hooks';
-import AddCategoryChip from './AddCategoryChip';
-import { AddFolder } from './AddFolder';
-import Box from '@mui/material/Box';
-import Chip from '@mui/material/Chip';
-import CircularProgress from '@mui/material/CircularProgress';
-import Delete from '@mui/icons-material/Delete';
-import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
+import { Box, Chip, CircularProgress, Divider, IconButton, List, ListItem, ListItemText } from '@mui/material';
+import { useAppDispatch, useAppSelector } from '~renderer/hooks/index.js';
+import AddCategoryChip from './AddCategoryChip.js';
+import { AddFolder } from './AddFolder.js';
+import { Delete } from '@mui/icons-material';
 import React from 'react';
-import { setFatalError } from '~renderer/redux';
+import { setFatalError } from '~renderer/redux/index.js';
 
 const handleDelete = (dispatch: ReturnType<typeof useAppDispatch>, uuid: string) => (): void => {
 	window.editorApi.deleteFolder(uuid).catch((e) => dispatch(setFatalError(e)));

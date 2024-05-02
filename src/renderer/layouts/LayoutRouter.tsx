@@ -1,7 +1,6 @@
+import { Box, CircularProgress } from '@mui/material';
 import { lazy, Suspense } from 'react';
-import Box from '@mui/material/Box';
-import CircularProgress from '@mui/material/CircularProgress';
-import { useAppSelector } from '~renderer/hooks';
+import { useAppSelector } from '~renderer/hooks/index.js';
 
 const TwoColumnLayout = lazy(async () => import('./TwoColumnLayout.js'));
 

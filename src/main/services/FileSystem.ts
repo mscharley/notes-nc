@@ -1,16 +1,16 @@
 /* eng-disable PROTOCOL_HANDLER_JS_CHECK */
 
-import * as http from '~shared/http';
-import type { CategoryDescription, FileDescription, FolderConfiguration, FolderDescription } from '~shared/model';
-import { ElectronApp, ElectronIpcMain } from '~main/dot/tokens';
+import * as http from '~shared/http.js';
+import type { CategoryDescription, FileDescription, FolderConfiguration, FolderDescription } from '~shared/model/index.js';
+import { ElectronApp, ElectronIpcMain } from '~main/dot/tokens.js';
 import { mkdirp, readdir, rename, rmdir, stat, unlink, writeFile } from 'fs-extra';
 import type { Protocol, ProtocolResponse } from 'electron/main';
-import { Configuration } from '~main/services/Configuration';
-import type { CustomProtocolProvider } from '~main/interfaces/CustomProtocolProvider';
+import { Configuration } from '~main/services/Configuration.js';
+import type { CustomProtocolProvider } from '~main/interfaces/CustomProtocolProvider.js';
 import { injectable } from '@mscharley/dot';
 import log from 'electron-log';
-import { MainWindow } from '~main/MainWindow';
-import type { OnReadyHandler } from '~main/interfaces/OnReadyHandler';
+import { MainWindow } from '~main/MainWindow.js';
+import type { OnReadyHandler } from '~main/interfaces/OnReadyHandler.js';
 import path from 'path';
 
 const matchMarkdownSuffix = /\.(?:md|markdown)/u;

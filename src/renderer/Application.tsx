@@ -3,12 +3,12 @@ import './index.scss';
 
 import { StrictMode, useEffect, useState } from 'react';
 import createCache from '@emotion/cache';
-import { DialogOverlays } from './components/DialogOverlays';
+import { DialogOverlays } from './components/DialogOverlays.js';
 import type { EmotionCache } from '@emotion/cache';
-import { generateStore } from '~renderer/redux';
-import { LayoutRouter } from './layouts/LayoutRouter';
-import { NotificationsOverlay } from './components/NotificationsOverlay';
-import { ProviderWrapper } from './ProviderWrapper';
+import { generateStore } from '~renderer/redux/index.js';
+import { LayoutRouter } from './layouts/LayoutRouter.js';
+import { NotificationsOverlay } from './components/NotificationsOverlay.js';
+import { ProviderWrapper } from './ProviderWrapper.js';
 
 const Application: React.FC = () => {
 	const [cache, setCache] = useState<EmotionCache | undefined>();

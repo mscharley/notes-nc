@@ -1,11 +1,8 @@
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import { FolderTab } from './FolderTab';
-import { setFatalError } from '~renderer/redux';
-import Tab from '@mui/material/Tab';
-import { TabPanel } from '~renderer/components/TabPanel';
-import Tabs from '@mui/material/Tabs';
-import { useAppSelector } from '~renderer/hooks';
+import { Box, Button, Tab, Tabs } from '@mui/material';
+import { FolderTab } from './FolderTab.js';
+import { setFatalError } from '~renderer/redux/index.js';
+import { TabPanel } from '~renderer/components/TabPanel.js';
+import { useAppSelector } from '~renderer/hooks/index.js';
 import { useDispatch } from 'react-redux';
 import { useState } from 'react';
 

@@ -1,14 +1,8 @@
-import AddIcon from '@mui/icons-material/Add';
-import type { CategoryDescription } from '~shared/model';
-import Divider from '@mui/material/Divider';
-import { FileCategoryListing } from './FileCategoryListing';
-import IconButton from '@mui/material/IconButton';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
-import Tooltip from '@mui/material/Tooltip';
+import { Add as AddIcon, Visibility as VisibilityIcon, VisibilityOff as VisibilityOffIcon } from '@mui/icons-material';
+import { Divider, IconButton, ListItem, ListItemText, Tooltip } from '@mui/material';
+import type { CategoryDescription } from '~shared/model/index.js';
+import { FileCategoryListing } from './FileCategoryListing.js';
 import { useState } from 'react';
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 export interface FileFolderListingProps {
 	name: string;

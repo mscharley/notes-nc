@@ -2,8 +2,8 @@
 
 import type { Dialog, IpcMain } from 'electron/main';
 import { Token, type TokenType } from '@mscharley/dot';
-import type { CustomProtocolProvider } from '~main/interfaces/CustomProtocolProvider';
-import type { OnReadyHandler } from '~main/interfaces/OnReadyHandler';
+import type { CustomProtocolProvider } from '~main/interfaces/CustomProtocolProvider.js';
+import type { OnReadyHandler } from '~main/interfaces/OnReadyHandler.js';
 
 export const ElectronApp = new Token<Electron.App>('electron.app');
 export type ElectronApp = TokenType<typeof ElectronApp>;

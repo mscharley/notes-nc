@@ -1,7 +1,7 @@
 import { injectable } from '@mscharley/dot';
 import { ipcMain } from 'electron';
 import log from 'electron-log';
-import type { OnReadyHandler } from '~main/interfaces/OnReadyHandler';
+import type { OnReadyHandler } from '~main/interfaces/OnReadyHandler.js';
 
 @injectable()
 export class RendererLogging implements OnReadyHandler {

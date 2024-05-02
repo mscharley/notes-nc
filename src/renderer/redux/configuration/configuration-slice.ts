@@ -1,5 +1,5 @@
 import { createAction, createSlice } from '@reduxjs/toolkit';
-import type { AppConfiguration } from '~shared/model/AppConfiguration';
+import type { AppConfiguration } from '~shared/model/AppConfiguration.js';
 
 const initialState: AppConfiguration = {
 	isAppImage: false,

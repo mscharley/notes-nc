@@ -1,5 +1,5 @@
 import { dialog, ipcMain } from 'electron/main';
-import { ElectronApp, ElectronDialog, ElectronIpcMain } from '~main/dot/tokens';
+import { ElectronApp, ElectronDialog, ElectronIpcMain } from '~main/dot/tokens.js';
 import type { interfaces } from '@mscharley/dot';
 
 export const ElectronModule

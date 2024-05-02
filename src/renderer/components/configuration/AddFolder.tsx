@@ -1,9 +1,6 @@
-import Button from '@mui/material/Button';
-import CreateNewFolderIcon from '@mui/icons-material/CreateNewFolder';
-import IconButton from '@mui/material/IconButton';
-import { setFatalError } from '~renderer/redux';
-import TextField from '@mui/material/TextField';
-import Typography from '@mui/material/Typography';
+import { Button, IconButton, TextField, Typography } from '@mui/material';
+import { CreateNewFolder } from '@mui/icons-material';
+import { setFatalError } from '~renderer/redux/index.js';
 import { useDispatch } from 'react-redux';
 import { useState } from 'react';
 
@@ -50,7 +47,7 @@ export const AddFolder: React.FC = () => {
 			/>
 			<div>
 				<IconButton onClick={handleOpenFolder}>
-					<CreateNewFolderIcon />
+					<CreateNewFolder />
 				</IconButton>
 				<Typography
 					component="span"

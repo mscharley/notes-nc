@@ -1,16 +1,9 @@
-import { closeCurrentFile, setCurrentFolder } from '~renderer/redux';
-import { useAppDispatch, useAppSelector } from '~renderer/hooks';
-import { FileCategoryListing } from './FileCategoryListing';
-import FormControl from '@mui/material/FormControl';
-import InputLabel from '@mui/material/InputLabel';
-import List from '@mui/material/List';
-import MenuItem from '@mui/material/MenuItem';
-import Paper from '@mui/material/Paper';
+import { closeCurrentFile, setCurrentFolder } from '~renderer/redux/index.js';
+import { FormControl, InputLabel, List, MenuItem, Paper, Select, styled, Typography } from '@mui/material';
+import { useAppDispatch, useAppSelector } from '~renderer/hooks/index.js';
+import { FileCategoryListing } from './FileCategoryListing.js';
 import type { PaperProps } from '@mui/material/Paper';
-import Select from '@mui/material/Select';
 import type { SelectChangeEvent } from '@mui/material/Select';
-import { styled } from '@mui/material';
-import Typography from '@mui/material/Typography';
 
 const ScrollablePaper = styled(Paper)<PaperProps>(() => ({
 	overflowY: 'auto',

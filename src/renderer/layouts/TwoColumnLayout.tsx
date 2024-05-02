@@ -1,14 +1,13 @@
-import * as http from '~shared/http';
-import { useAppDispatch, useAppSelector, useDebouncedState } from '~renderer/hooks';
+import * as http from '~shared/http.js';
+import { Box, Drawer } from '@mui/material';
+import { useAppDispatch, useAppSelector, useDebouncedState } from '~renderer/hooks/index.js';
 import { useCallback, useEffect } from 'react';
-import Box from '@mui/material/Box';
-import Drawer from '@mui/material/Drawer';
-import type { FileDescription } from '~shared/model';
-import { FileListing } from '~renderer/components/sidebar/FileListing';
-import { MarkdownEditor } from '~renderer/components/editor/MarkdownEditor';
-import { NoFile } from '~renderer/components/editor/NoFile';
-import { setSaving } from '~renderer/redux';
-import { SidebarFooter } from '~renderer/components/sidebar/SidebarFooter';
+import type { FileDescription } from '~shared/model/index.js';
+import { FileListing } from '~renderer/components/sidebar/FileListing.js';
+import { MarkdownEditor } from '~renderer/components/editor/MarkdownEditor.js';
+import { NoFile } from '~renderer/components/editor/NoFile.js';
+import { setSaving } from '~renderer/redux/index.js';
+import { SidebarFooter } from '~renderer/components/sidebar/SidebarFooter.js';
 
 const TITLE_SUFFIX = 'Notes';
 // TODO: Make this configurable.

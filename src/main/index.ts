@@ -3,8 +3,8 @@
 import 'source-map-support';
 import 'reflect-metadata';
 import { app } from 'electron/main';
-import { Entrypoint } from '~main/Entrypoint';
-import { getContainer } from '~main/dot';
+import { Entrypoint } from '~main/Entrypoint.js';
+import { getContainer } from '~main/dot/index.js';
 import log from 'electron-log';
 
 if (process.argv.includes('--self-test')) {

@@ -1,7 +1,7 @@
-import { FatalErrorDisplay } from './FatalErrorDisplay';
-import Paper from '@mui/material/Paper';
-import { setFatalError } from '~renderer/redux';
-import { useAppDispatch } from '~renderer/hooks';
+import { FatalErrorDisplay } from './FatalErrorDisplay.js';
+import { Paper } from '@mui/material';
+import { setFatalError } from '~renderer/redux/index.js';
+import { useAppDispatch } from '~renderer/hooks/index.js';
 
 export const NoError = () => (
 	<FatalErrorDisplay>

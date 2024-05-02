@@ -1,6 +1,6 @@
-import { ConfigurationForm, TabOptions } from './ConfigurationForm';
-import { setFileListing, updateAppConfiguration } from '~renderer/redux';
-import { useAppDispatch } from '~renderer/hooks';
+import { ConfigurationForm, TabOptions } from './ConfigurationForm.js';
+import { setFileListing, updateAppConfiguration } from '~renderer/redux/index.js';
+import { useAppDispatch } from '~renderer/hooks/index.js';
 
 export const NoteFolders = () => {
 	const dispatch = useAppDispatch();

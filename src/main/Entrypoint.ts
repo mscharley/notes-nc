@@ -1,9 +1,9 @@
 /* eng-disable REMOTE_MODULE_JS_CHECK */
 
-import { CustomProtocol, ElectronApp, ReadyHandler } from '~main/dot/tokens';
+import { CustomProtocol, ElectronApp, ReadyHandler } from '~main/dot/tokens.js';
 import { injectable, withOptions } from '@mscharley/dot';
 import log from 'electron-log';
-import { MainWindow } from '~main/MainWindow';
+import { MainWindow } from '~main/MainWindow.js';
 import { protocol } from 'electron/main';
 
 @injectable(

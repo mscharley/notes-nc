@@ -1,11 +1,8 @@
-import { closeCurrentFile, setActiveOverlay, setFatalError, setFileListing } from '~renderer/redux';
-import { useAppDispatch, useAppSelector } from '~renderer/hooks';
-import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
-import IconButton from '@mui/material/IconButton';
-import Paper from '@mui/material/Paper';
-import SettingsIcon from '@mui/icons-material/SettingsSharp';
-import { SpinningRefreshIcon } from '../SpinningRefreshIcon';
-import Tooltip from '@mui/material/Tooltip';
+import { closeCurrentFile, setActiveOverlay, setFatalError, setFileListing } from '~renderer/redux/index.js';
+import { HelpOutline as HelpOutlineIcon, Settings as SettingsIcon } from '@mui/icons-material';
+import { IconButton, Paper, Tooltip } from '@mui/material';
+import { useAppDispatch, useAppSelector } from '~renderer/hooks/index.js';
+import { SpinningRefreshIcon } from '../SpinningRefreshIcon.js';
 import { useState } from 'react';
 
 export interface SidebarFooterProps {

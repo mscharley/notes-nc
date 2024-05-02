@@ -1,11 +1,11 @@
-import { ElectronApp, ElectronIpcMain } from '~main/dot/tokens';
-import type { AppConfiguration } from '~shared/model';
+import { ElectronApp, ElectronIpcMain } from '~main/dot/tokens.js';
+import type { AppConfiguration } from '~shared/model/index.js';
 import EventEmitter from 'events';
 import { v4 as generateUuid } from 'uuid';
 import { injectable } from '@mscharley/dot';
-import { LinuxIntegration } from './LinuxIntegration';
-import { MainWindow } from '~main/MainWindow';
-import type { ReadyHandler } from '~main/dot/tokens';
+import { LinuxIntegration } from './LinuxIntegration.js';
+import { MainWindow } from '~main/MainWindow.js';
+import type { ReadyHandler } from '~main/dot/tokens.js';
 import type { Schema } from 'electron-store';
 import Store from 'electron-store';
 

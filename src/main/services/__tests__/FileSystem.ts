@@ -1,8 +1,8 @@
 import * as td from 'testdouble';
-import type { Configuration } from '~main/services/Configuration';
-import { FileSystem } from '~main/services/FileSystem';
-import type { MainWindow } from '~main/MainWindow';
-import type { Mutable } from '~shared/util';
+import type { Configuration } from '~main/services/Configuration.js';
+import { FileSystem } from '~main/services/FileSystem.js';
+import type { MainWindow } from '~main/MainWindow.js';
+import type { Mutable } from '~shared/util/index.js';
 
 describe('fileSystem', () => {
 	const app: Electron.App = td.object('app');
