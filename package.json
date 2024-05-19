@@ -70,7 +70,7 @@
 		"@mui/icons-material": "5.15.18",
 		"@mui/material": "5.15.18",
 		"@reduxjs/toolkit": "2.2.5",
-		"@uiw/react-codemirror": "4.22.0",
+		"@uiw/react-codemirror": "4.22.1",
 		"classnames": "2.5.1",
 		"electron-log": "5.1.4",
 		"electron-store": "8.2.0",
