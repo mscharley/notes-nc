@@ -17,6 +17,6 @@ jobs:
       - uses: doyensec/electronegativity-action@0a76b0251ac45f08eaaf49fdc26c75d1951f82b6 # v2.0
 
       - name: Upload sarif
-        uses: github/codeql-action/upload-sarif@b7cec7526559c32f1616476ff32d17ba4c59b2d6 # v3.25.5
+        uses: github/codeql-action/upload-sarif@9fdb3e49720b44c48891d036bb502feb25684276 # v3.25.6
         with:
           sarif_file: ../electronegativity_results
