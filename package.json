@@ -63,7 +63,7 @@
 		"@codemirror/lang-markdown": "6.2.5",
 		"@codemirror/language-data": "6.5.1",
 		"@emotion/cache": "11.13.1",
-		"@emotion/react": "11.13.0",
+		"@emotion/react": "11.13.3",
 		"@emotion/styled": "11.13.0",
 		"@fontsource/roboto": "5.0.14",
 		"@mscharley/dot": "1.6.1",
