@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
     "incremental": true,
-    "module": "commonjs",
-    "moduleResolution": "node",
+    "module": "node16",
+    "moduleResolution": "node16",
     "jsx": "react-jsx",
     "noEmit": true,
     "pretty": true,
