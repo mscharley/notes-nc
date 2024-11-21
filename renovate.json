@@ -4,8 +4,7 @@
   "ignoreDeps": ["node", "@types/node"],
   "packageRules": [
     {
-      "matchPackageNames": ["vite", "viteshot", "playwright"],
-      "matchPackagePrefixes": ["@vitejs/"],
+      "matchPackageNames": ["vite", "viteshot", "playwright", "@vitejs/{/,}**"],
       "groupName": "vite packages",
       "additionalBranchPrefix": ""
     }
